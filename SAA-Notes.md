@@ -1562,3 +1562,253 @@ in that case, it's better to decouple your applications,
     using sns: pub/sub model
     using kinesis: real time streaming model
 now these services can scale independently from our application
+
+amazon sqs
+what's a queue?
+
+producer - can have multiple messages
+consumer - pull the messages and process
+
+buffer for decouple between consumer and producers
+
+amazon sqs - standard queue
+    older offering but still current
+    over 10 years
+    fully managed service, used to decouple applications
+
+attributes:
+    unlimited thoughput, unlimited number of messages in queue
+    default retention of messages: 4 days, maximum of 14 days
+    low latency - (10 ms on publish and receive)
+    limitation of 1,024 KB per message sent
+
+Can have duplicate messages (at least once delivery, occasionally)
+Can have out of order messages - best effort ordering 
+
+SQS - producing messages
+    produced to sqs using the SDK (sendmessage api)
+    the message is persisted in sqs until the consumer deletes it
+    message retention: default 4 days, up to 14 days
+    example: send an order to be processed
+        order id
+        customer id
+        any attributes you want
+    SQS standard: unlimited throughput
+
+SQS - consuming messages
+    consumers - running on ec2 instances, servers, or aws lambda
+    poll sqs for messages - receive up to 10 messages at a time
+    process the messages - ex. insert the message into an rds database
+    delete the messages using the deletemessage api
+
+sqs - multiple ec2 instances consumers
+    consumers receive and process messages in parallel
+    at least once delivery
+    best effort message ordering
+    consumers delete messages after processing them
+    we can scale consumers horizontally to improve throuhput of processing
+
+SQS with Auto Scaling Group
+    ASG scaling using a metric
+        CloudWatch Metric - queue length
+            approximatenumberofmessages - trigger more servers to be created
+            alarm for breach
+            cloudwatch alarm to ASG
+            ASG creates more instances
+
+SQS to decouple between application tiers
+    requests > front end web app attached auto scaling > send message to sqs >
+    sqs queue > receivemessages > back end processing application (video processing) with ASG > insert to bucket
+
+Amazon SQS - security
+    encryption:
+        in fligth encryption using https api
+        at rest encryption using kms keys
+        client side encryption if the client wants to perform encryption/decryption itself
+    Acess Controls: IAM policies to regulate access to the sqs api
+    SQS Access Policies - similar to s3 bucket policies
+        useful for cross account access to sqs queues
+        useful for allowing other services (sns, s3..) to write to an sqs queue
+
+SQS - Message Visibility Timeout
+    after a message is polled by a consumer, it becomes invisible to other consumers
+    by default, the message visibility timeout is 30 seconds
+    that means the message has 30 seconds to be processed
+    after the message visibility timeout is over, the message is visible in sqs
+
+there is a flaw in this system as is
+if the timer for visibility starts and the message needs more than 30 seconds to process then it will re-do the same message. the fix is simple.
+
+if a message is not processed within the visiblity timeout, it will process twice
+a consumer could call the ChangeMessageVisibiloity API to get more time
+if visibility timeout is high (hours), and consumer crashes, re-processing will take time
+if visibility timeout is too low (seconds), we may get duplicates
+
+Amazon SQS - Long Polling
+    consumers jcan wait for a message to arrive at the sqs
+    you can adjust the time of wait and optimize when a message arrives, it is ready to start without lag
+    longpolling decreaases the number of api calls made to sqs while increasing the efficiency and reducing latency of your application
+    long polling is preferable to short polling
+    long polling can be enabled at the queue level or at the API level using WaitTimeSeconds
+
+Amazon SQS - FIFO Queue
+    FIFO = first in first out (ordering of messages in the queue)
+    limited throughput: 300 msg/s without batching, 3000 msg/s with
+    exactly-once send capability (by removing duplicates using Deduplication ID)
+    messages are processed in order by the consumer
+    Ordering by Message Group ID (all messages in the same group are ordered) - mandatory parameter
+
+SQS with Auto Scaling Group - scale up or down
+    SQS Queue -> poll for messages -> ASG with EC2 Instances
+    cloudWatch Metric - Queue Length
+    ApproximateNumberOfMessages is used to pull from SQS Queue 
+    so CloudWatch Metric -> alarm for breach -> CloudWatch Alarm -> scale -> ASG
+
+While that is great, a issue arises.
+if the load is too big, some transactions may be lost
+
+let's say you have RDS, Aurora, DynamoDB
+and if requests come in and are handled by ASG, then more flow 
+but it's too much for the back end, what to do?
+
+SQS as a buffer to database writes
+common exam pattern
+
+same build as before but now you add an SQS Queue (infinetly scalable)
+so now, the messages by the consumer are now ENQUEUE MESSAGE
+adding this additional step offsets the load on orgin
+so SQS Queue will receive SendMessage from the Enqueue Message Consumer
+now we can Dequeue message with ASG between the SQS Queue and the Database
+this covers all messages produced without dropping messages
+scales on reaction to workload from CloudWatch sending messages from metrics that trigger a threshold 
+this only works if the client doesn't need confirmation that it is applaying
+but this is fine for this kinda of model. it will just take some time but will be completed messages
+
+SQS to decouple between application tiers
+
+Amazon SNS
+    what if you want to send one message to many receivers?
+    
+SNS Security
+    encrption:
+        in-flight https api
+        kms at rest
+    
+    access controls: iam pligicies to regulare access to the sns api
+
+    snsd access policies (similar to s3 bucekt policies)
+        useful for cross-account access to sns topics
+        useful for allowing other services (s3...) to write to an sns topic
+
+Application: SNS to Amazon S3 throujgh kinesis data firehose
+    sns can send to kinesis and therefore we can have the following solutions architecture:
+        buying service > sns topic > kinesis data firehose > s3
+
+You can apply FIFO Topic
+
+SNS + SQS: Fan Out
+    push once in SNS Topic, receive in all SQS queues that are subscribers
+    fully decoupled, no data loss
+    SQS allows for: data persistence, delayed processing and retries of work
+    Ability to add more SQS subscribers over time
+    Make sure your SQS queue access policy allows for SNS to write
+    Cross-Region Delivery: works with SQS Queues in other regions
+
+Application: S3 Events to multiple queues
+    for the same combination of: event type (object create) and prefix (images/) you can only have one S3 Event rule
+    if you want to send the same S3 event to many SQS queues, use fan-out
+    so in fixing:
+        object created > events S3 > SNS topic > fan out to different SQS Queues, lambda functions
+
+Application: SNS to Amazon S3 through Kinesis Data Firehose
+    SNS can send to Kinesis and therefore we can have the following solutions architecture:
+        buying service > sns topic > KDF > s3 or kdf destinations
+    
+Amazon SNS - FIFO Topic
+    first in first out - ordering of messages in the topic
+    similar features as SQS FIFO:
+        ordering by message group id - all messages in the same group are ordered
+        deduplication using a deduplication id or content based deduplication
+    can have SQS Standard and FIFO queues as subscribers
+    limited throughput ( same throuput as SQS FIFO)
+
+SNS FIFO + SQS FIFO: fan out
+    in case you need fan out + ordering + deduplication
+
+SNS - message filtering
+    JSON policy used to filter messages sent to SNS topic's subscriptoons
+    if a subscribtiopn doesn't have a filter policy, it receives every message
+
+    buying service > new transaction (order #, product name, qty #, state:state) > SNS Topic
+    from SNS Topic > Filter Policy - State: Placed > SQS Queue - placed orders
+
+    same infrastructure but the new transaction instead in it's json state is Cancelled
+    so the filter policy directs to the sqs queue for cancelled orders
+
+Amazon Kinesis Data Streams
+    collect and store streaming data in real-time
+
+    realtime data or iot devices or metrics/logs > producers
+    producers can use a kinesis agent specific for kinesis
+    you can also use applications
+
+    that its taken to > amazon kinesis data streams > consumers
+    consumers can be apps, lambda, amazon data firehose, or managed service for apache flink
+
+Kinesis Data Stream
+    data can be retained in the stream for a year
+    ability to reprocess (replay) data by consumers
+    data can't be deleted from kinesis (until it expires)
+    data up to 10MiB(typical use case is a lot of small real time data)
+    data ordering guarantee for data with the same partition id
+    at rest KMS encryption, in flgith HTTTPS encryption
+    kinesis producer library (KPL) to write an optimized producer application
+    kinesis client library (KCL) to write an optimized consumer application
+
+Kinesis Data Streams - capacity modes
+    provisioned mode:
+        choose number of shards
+        each shard gets 1 MB/s in (or 1000 records per second)
+        each shard gets 2 MB/s out
+        scale manually to increase or decrease the number of shards
+        you pay per shard provioned per hour
+
+    on-demand mode:
+        no need to provision or manage the capacity
+        default capacity provioned (4 MB/s or 4000 records per second)
+        scales automatically based on observed throuput peak during the last 30 days
+        pay per stream per hour & data in/out per GB
+
+Amazon Data Firehose
+    point a to point b
+    Producers like applications, client, sdk, kinesis agent, kinesis data streams, amazon cloudwatch, aws iot will send a record to amazon data firehose
+    you can optional use a lambda function to transform
+    when sending to the destination, it can also go to third party partner destination
+    
+    it used to be called amazon kinesis data firehose
+    no longer
+    fully managed service
+        s3, redshift, opensearch
+        third party: splunk/mongodb/datadog/newrelic
+        custom http endpoint
+    automatic scaling, serverless, pay for what you use
+
+Kinesis Data Streams vs Amazon Data Firehose
+
+    Kinesis Data Streams
+        real life
+        you have to add a consumer and a producer
+        streaming data collection
+        data stored up to one year
+        replay capablity
+    
+    Amazon Data Firehose
+        near real time
+        option to use a lambda function to transform. ex. csv to json
+        fully managed
+        auto scaling
+        doesn't support replay capability
+        load streaming data into:
+            s3, redshift, opensearch, third parties, custom http
+        
+    
