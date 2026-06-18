@@ -1811,4 +1811,46 @@ Kinesis Data Streams vs Amazon Data Firehose
         load streaming data into:
             s3, redshift, opensearch, third parties, custom http
         
+Docker Introduction
+    docker is a software development platform to deploy apps
+    apps are packaged in containers that can be run on any OS
+    apps run the same, regardless of where they're run
+        any machine
+        no compatibility issues
+        preditable behaviour
+        less work
+        easier to maintain and deploy
+        works with any language, any os, any technology
+        use case: microservices architecture, lift and shift apps from on premise to the aws cloud
+
+Docker vs Virtual Machines
+    docker is a "sort of" a virtualization technology, but not exactly
+    resources are shared with the host => many containers on one server
+
+Docker Containers Management on AWS
+    amazon elastic container service (amazon ecs)
+        amazon's own container platform
     
+    amazon elastic kubernetes service (amazon eks)
+        amazon's managed kubernetes (open source)
+    
+    aws fargate
+        amazon's own serverless container platform
+        works with ecs and with eks
+    
+    amazon ecr
+        store container images
+    
+Amazon ECS - EC2 Launch Type
+Amazon ECS - Fargate Launch Type <- awesome appearantly 
+
+Amazon ECS - IAM Roles for ECS
+Amazon ECS - Data Volumes (EFS) - the goat move
+    mount efs file systems onto ecs tasks
+    works for both EC2 and Fargate launch types
+    tasks running in any AZ will share the same data in the EFS file system
+    Fargate + EFS = serverless
+    use case:
+        persistent multi-az shared storage for your containers
+        note:
+            S3 cannot be mounted as a file system
