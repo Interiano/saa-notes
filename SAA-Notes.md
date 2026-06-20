@@ -1854,3 +1854,35 @@ Amazon ECS - Data Volumes (EFS) - the goat move
         persistent multi-az shared storage for your containers
         note:
             S3 cannot be mounted as a file system
+
+ECS Service Auto Scaling
+    automatically increase/decrease the desired number of ECS tasks
+
+    amazon ecs auto scaling uses aws application auto scaling
+        ecs service average cpu utilization
+        ecs service average memory utilization - scale on ram
+        alb request count per target - metric coming from the alb
+    
+    target tracking - scale based on target value for a specific cloudwatch metric
+    step scaling - scale based on a specified cloudwatch alarm
+    scheduled scaling - scale based on a specified date/time - predictable changes
+
+    ecs service auto scaling - task level  ITS NOT EC2 Auto Scaling - EC2 instance level
+    Fargate Auto Scaling is much easier to setup - because serverless
+
+cloudwatch metric sends a trigger to cloudwatch alarm to scale the 
+
+Amazon EKS Overview
+    amazon eks = amazon elastic kubernetes service
+    it is a way to laucnh managed kubernetes clusters on aws
+    kubernetes is an open source system for automatic deployment, scaling and management of containerized (usually docker) application
+    it's an alternative to ecs, if you want to deploy worker nodes or Fargate to deploy serverless contgainers
+    use case: if your company is already using kubernetes on premises or in another cloud, and wants to migrate to aws using kubernetes
+
+eks and ecs are just different platforms but concept is the same
+ECS---EKS
+EC2 INSTANCE --- NODE
+TASK --- POD
+TASK DEFINITION --- POD SPEC
+ECS CLUSTER --- KUBERNETES CLUSTER
+ECS SERVICE --- DEPLOYMENT
