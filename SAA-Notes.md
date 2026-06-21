@@ -1886,3 +1886,44 @@ TASK --- POD
 TASK DEFINITION --- POD SPEC
 ECS CLUSTER --- KUBERNETES CLUSTER
 ECS SERVICE --- DEPLOYMENT
+
+Amazon EKS - Node Types
+    managed node groups
+        creates and manages nodes (ec2 instances) for you
+        nodes are part of an asg managed by eks
+        supports on-demand or spot instances
+    
+    self-managed nodes
+        nodes created by you and registered to the eks cluister and managed by an asg
+        you can use prebuil ami = amazon eks optimized ami
+        supports on-demand or spot instances
+
+    aws fargate
+        no maintenance requiredp; no nodes managed
+    
+Amazon EKS - Data Volumes
+    need to specify storageclass manifest on your eks cluster
+    leverages a container storage intgerface csi compliant driver
+
+support for...
+    amazon ebs
+    amazon efs - works with fargate
+    amazon fsx for lustre
+    amazon fsx for netapp ontap
+
+Things to do before going to bed:
+    overview of AWS Lake Formation
+    overview AWS Glue
+    overview S3 Apache Parquet format
+    overview Amazon QuickSight
+    overview OpenSearch
+    overview VPC
+    overview Amazon Cognito identity pool
+    overview S3 access tokens
+    overview Amazon Aurora DB cluster
+    overview XML data
+
+Serverless
+
+serverless == faas
+
