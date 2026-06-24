@@ -1927,3 +1927,229 @@ Serverless
 
 serverless == faas
 
+lambda by default
+
+by default, your lambda function is launched outside your own VPC - in an aws owned vpc
+therefore, it cannot access reesources in your vpc - rds, elasticache, internal elb
+
+launch your lambda function into vpc
+you need
+vpc id
+subnets
+security group
+
+lambda will creatd an ENI in your subnet
+
+Lambda Function > private subnet > ENI - elastic network interface > RDS
+
+Lambda in VPC
+
+    you must define the vpc id, the subnets it will be on, and the security groups
+    lambda will create an ENI (elastic network interface) in your subnets
+
+just like the diagram
+lambda > privatge subnet > ENI > RDS
+
+Lambda with RDS Proxy
+    rds in private gets accessed by multiple lambda requests
+    the issues come with connectivity and timeouts
+
+you can remedy this with rds proxy
+
+Lambda with RDS Proxy
+    the benefits:
+        improve scalability by pooling and sharinng DB connections
+        improve availability by reducing by 66% the failover time and preserving connections
+        improve security by enforcing IAM authentication and storing credentials in secrets manager
+    
+    lambda function must be deployued in your VPC, because RDS Proxy is never publicly available
+
+RDS Event Notifications
+    notifications that tells information about the db instance itself - created, stopped, start
+    you dont have any  info about the data itself
+    subscribe to the follwinng event categories: db instace, db snapshot, db parameter group, db security group, rds proxy, custom engine version
+    near real-time events - up to 5 minutes
+    send notifications to sns or subscribe to events using eventbridge
+
+Invoking Lambda from RDS & Aurora
+    invoke lambda functions from within your db instancce
+    allows you to process data events from within a database
+    supported for RDS for PostgreSQL and Aurora MySQL
+    must allow outbound traffic to your Lambda function from within your DB instance - public, nat gw, vpc endpoints
+    db instance must have the required permissions to invoke the Lambda function - Lambda Resource-based Policy & IAM Policy
+
+DynamoDB Accelerator (DAX)
+    fully managed, highly available, seamless in-memory cache for dynamodb
+    help solve read congestion by caching
+    microseconds latency for cached data
+    doesn't require application logic modification (compatible with exiting dynamodb apis)
+    5 minutes TTL for cache (default)
+
+DAX vs Elasticache
+DAX is in front of DynamoDB, helpful for individual cache or queries and scanned queries cache
+if you want to store aggregation results then amazon elasticache is better
+
+DynamoDB - Stream Processing
+    ordered stream of item-level modifications 
+    use cases:
+        react to changes in real time - welcome email to users
+        real-time usage analytics
+        inset into derivative tables
+        implement cross-region replication
+        invoke aws lambda on changes to your dynamodb table
+    
+    DynamoDB Streams
+        24 hr retention
+        limited # of consumers
+        process using aws lambda triggers, or dynamodb stream kinesis adapter
+
+    Kinesis Data Streams (newer)
+        1 year retention
+        high # of consumers
+        process using aws lambda, kinesis data analytics, kinesis data firehose, aws glue streaming etl
+    
+DynamoDB Streams flow:
+    application > create/update/delete > table > either 
+    dynamodb streams or kinesis data streams
+    if dynamodb streams:
+        then processing layer will be either lambda or dynamodb kcl adapter
+        in which case messagingin, notifications to amazon sns
+        or/and
+        filtering/transforming the DDB Table
+        or to amazon opensearch
+    if kinesis data streams:
+        then it can go onto kinesis data firehose
+        which can be sent to:
+            anaylytics to redshift
+            archiving to s3
+            indexing for amazon opensearch
+
+DynamoDB Global Tables
+     make dynamodb table accessbile with low latency in multiple regions
+     active-active replication
+     applications can read and write to the table in any region
+     must enable dynamodb streams as a pre-requisite
+
+DynamoDB - TTL - Time To Live
+auto delete items after an expiry timestamp
+
+DynamoDB - backups for disaster recovery
+    continuous backups using point-in-time recovery (PITR)
+    point-in-time recovery to any time within the backup window
+    the recovery process creates a new table
+On-Demand backups
+    full backups for long-term retention, until explicitely deleted
+    doesn't affect performance or latency
+    can be configured and managed in aws backup - enables cross-region copy
+    the recovery process creates a new table
+
+DynamoDB - Integration with Amazon S3
+    export to s3 - must enable PITR
+        works for any point of time in the last 35 days
+        doesn't affect the read capacity of your table
+        perform data analysis on top of DynamoDB
+        rertain snapshots for auditing
+        etl on top of s3 data before importing back into dynamodb
+        export in dynamodb json or ion format
+    
+    import from s3
+        import csv, dynamodb json or ion format
+        doesn't consume any write capacity
+        creates a new tables
+        import errors logged in CloudWatch Logs
+
+invoke a lambda function to get to dynanodb
+multiple ways:
+    alb between client and lambda function making it a http endpoint. it would be exposed.
+    there's another way
+        you can use an API Gateway
+            API Gateway is a serverless offering which allows us to create REST APIs
+            REST APIs
+                public and accessible for our clients
+                clients talk to the API gateway
+                    api gateway will proxy our request to our lambda functions
+
+Client > REST API > API gateway > proxy the request > LAMBDA > CRUD > DynamoDB
+
+API Gateway Overview
+    aws lambda + api gatewayZ: no infrastructure to manage
+    support for the websocket protocol
+    handle api versioning
+    handle different environments (dev, test, prod...)
+    handle security (authentication and authorization)
+    create api keys, handle request throttling
+    swagger/open api import to quickly define apis
+    transform and validate requests and responses
+    generate sdk and api specifications
+    cache api responses
+
+API Gateway - Integrations High Level
+    lambda function 
+        invoke lambda function
+        easy way to expose rest api BACKEND BY AWS LAMBDA
+    HTTP
+        expose https endpoints in the backend
+        example: internal http api on premise, application load balancer...
+        why? add rate limiting, caching, user authentications, api keys, etc...
+    AWS Service
+        expose any aws api through the api gateway?
+        example: start an aws step function workflow, post a message to sqs
+        why? add authentication, deploy publicly, rate control...
+    
+API Gateway - AWS Service Integration Kinesis Data Streams example
+
+client > requests > api gateway > send > kinesis data streams > records > kinesis data firehose > json files > s3
+
+3 ways to deploy API Gatway - Endpoint Types
+
+API Gateway - AWS Service Integration Kinesis Data Streams example
+
+client > requests > api gateway > send > kinesis data streams > store .json files > s3
+
+3 ways to deploy api gateway - endpoint types
+    edge optimized - default: for global clients
+        requests are routed through the cloudfront edge locations - improves latency
+        the api gateway still lives in only one region
+    regional:
+        for clients winthbikn the same region
+        could manually combine with cloudfront - more control over the caching strategies and the distribution
+    Private:
+        can only be accessed from your vpc using an interface vpc endpoint - eni
+
+API Gateway - Security
+    user authentication through
+        iam roles - useful for internal applications
+        cognito - identy for external users
+        custom authorizer - your own logic
+    
+    custom domain name https security through integration with aws certificate manager - acm
+        edge optimized endpoint, then the certificate must be in us-east-1
+        regional endpoint, the certificate must be in the api gateway region
+        must setup CNAME or A-alias record in Route 53
+    
+AWS Step Functions
+    build serverless visual workflow to orchestrate your lambda functions
+    features: sequence, parallel, conditions, timeouts, error handling,...
+    can integrate with ec2, ecs, on-premises servers, api gateway, sqs queues, etc...
+    possibility of implementing human approval feature
+    use cases: order fulfillment, data processing, web applications, any workflow
+
+Amazon Cognito
+    give users an identity to interact with our web or mobile application
+    cognito user pools:
+        sign in functionality for app users
+        integrates with api gateway and application load balancer
+    
+    cognito identity pools - federated identity:
+        provide aws credentials to users so they can access aws resources directly
+        integrate with cognito user pools as an identity provider
+    
+    Cognito vs IAM: hundreds of users, mobile users, authenticate with SAML
+
+Cognito User Pools (CUP) - User Features
+    create a serverless database of user for your web & mobile apps
+    simple login: username (or email) / password combination
+    password reset
+    email & phone number verification
+    multi-factor authentication (mfa)
+    federated identities: users from facebook, google, saml
