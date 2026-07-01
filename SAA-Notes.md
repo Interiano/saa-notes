@@ -2338,6 +2338,73 @@ project 02
 automation and monitoring
 build alerting pipeline
 cpu spikes
+draw.io is free
 
 project 03
 ci-cd pipeline
+
+1. the business problem
+2. the architecture
+3. the key decisions
+4. how to deploy it
+
+future projects must involve ci/cd pipeline and terraform
+
+Terraform and CI/CD Pipeline
+
+Amazon Lex is for ASR
+Connect is for call centers
+
+Amazon Comprehend
+Natural Language Processing - NLP
+fully manged and serverless service
+use maghine learning to find insights and relationships in text
+    langauge of the text
+    extract key s phrases, places, people, brands, or events
+    understrnad how positive or negative the text isx
+    analyzes trext using tokenization and parts of speech
+    automatically organizes a collection of text files by topic
+
+sample use cases:
+    analyze customer intgeraction (emails) to find what leads to a positive or negative experience
+    create and groups articles by topics that comprehend will uncover
+
+Amazon Comprehend Medical
+    Amazon Comprehend Medical detects and returns useful information in unstractured clinical text:
+    Phyusicisnas notes
+    dishcharge summaries
+    text results
+    case notes
+
+Uses NLP to detedct protected health information - phi - detectphi api
+
+sotre your documetns in s3, analyze real-time data with kinesis Data Firehose, or use Amazon Transcibe to transcibe patient narrativews into text that can be analyzed by Amazon comprehend medical
+
+Amazon Kendra
+    fully managted document search service powered by machine learning
+    extract answers from within a document - text, pdf, html, powerpoint, ms word, faq
+    natural language search cababilities
+    learn from user interactions/feedback to promote preffered results - incremental learning
+
+CloudWatch Logs
+    Log groups: arbitrary name, usually represneting an application
+    Log stream: instances within application/log files/containers
+    Can define log expeiration policies - never expire, 1 day to 10 years...
+    CloudWatch Logs can send logs to:
+        Amazon S3 - exports
+        Kinesis Data Streams
+        Kinesis Data Firehose
+        AWS Lambda
+        OpenSearch
+    Logs are encyrpted by default
+    can setup kms-based encry ption with your own keys
+
+CloudWatch Logs - Sources
+    SDK, CloudWatch Logs Agent, CloudWatch Unified Agent
+    Elastic Beanstalk: collection of logs from application
+    ECS: collection from containers
+    AWS Lambda: collection from function logs
+    VPC Flow Logs: VPC specific logs
+    API Gateway
+    CloudTrail based on filter
+
