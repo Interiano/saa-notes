@@ -2311,4 +2311,33 @@ can also use terdata on databases
 
  Amazon SageMaker AI
  fully managed service for developers / data scientists to build ML models
- 
+
+6/30/26
+shift the perspective and further dive myself into the world a step forward
+the more i surround my body with themes of cloud engineer.
+the less frustrated i get when i read a long problem correlation to the cloud engineer role.
+with this comfort, a new mood is come
+the discomfort kept me active to find why to questions
+now that i've been expose to these elements more and more
+my threshold is different
+i feel a sense of boredom
+i don't think it's a bad thing
+I think I need to continue leaning into the uncomfort and dive in moreso.
+
+work on projects now.
+now's the time to start proactively get started on drawing plans
+solve a real world problem
+documented well - what i built and why i built it
+
+project 01
+infrastructure and automation
+build a complete infrastructure with terraform
+it must be 3 tier
+
+project 02
+automation and monitoring
+build alerting pipeline
+cpu spikes
+
+project 03
+ci-cd pipeline
