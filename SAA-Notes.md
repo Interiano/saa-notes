@@ -434,10 +434,10 @@ Features of Aurora
     back up and recovery
     isolation and security
     industry compliance
-    push bujtton scaling
+    push button scaling
     auto patching with zero downtime
     advance monitor
-    routine mainter
+    routine maintenance
     backtrack restore data at any point or time
 
 Aurora Replica - Auto Scaling
@@ -2153,3 +2153,162 @@ Cognito User Pools (CUP) - User Features
     email & phone number verification
     multi-factor authentication (mfa)
     federated identities: users from facebook, google, saml
+
+Micro Services Architecture
+    we want to switch to a micro service architecture
+    many services interact with each other directly using a REST API
+    each architecture for each micro service may vary in form and shape
+
+    we want a micro-service architecture so we can have a leaner develoepement lifecycle for each service
+
+each service scale independentaly
+
+users talk to ELB thru https and elb to ecs to dynamodb
+dns query then use Route 53
+alias record back
+
+a second service
+api gateway to lambda to elasticache
+lambda makes a call to ELB to get a response from elb
+
+elb to ec2 auto scaling to rds
+ec2 autoscaling - not serverless to rds
+ec2 must make a call to the api gateway service
+
+it's all interconnected
+
+Discussions on Micro Services
+you are free to design each micro se4r5vice the way you want
+there's two patterns
+synchronous patterns: API Gateway, Load Balancers for https
+thers also
+asynchronous patterns: sqs, kinesis, sns, lambda triggers (s3)
+
+challenges:
+    repeated overhead for creating each new microservice,
+    issues with optimizing server density/utilization
+    complexity of running multiple versions of multiple microservices simultaenously
+    proliferation of client-side code requirements to inttegrate with many sepearttes services
+    some of the challenges are solved by servelsss patterns;
+        api gateway, lambda scale automatically and you pay per usage
+        you can easily close api, repoduce environments
+        generated client sdk through swagger integration for the api gateway
+
+Software updates offloading
+    we have an application running on ec2, that distributes software updates once in a while
+    when a new software update is out, we get a lot of request and the content is distributed in mass over the network. tit's very costly 
+    we dont want to change our application, but weant to optimize our cost and cpu, how can we do it?
+
+    our applicature current state
+
+Choosing the Correct Database
+Database Types
+RDBMS (sql/oltp): RDS, Aurora - great for joins
+NoSQL database - no joins, no SQL: DynamoDB (~json), Elasticache (key/value pairs), Neptune (graphs), DocumentDB (for MongoDB), Keyspaces (for Apache Cassandra)
+object Store: S3 - for big objects / glacier (for backups and archives)
+Data Warehouse - sql analytics/bi: redshit olap, ahtena, emr
+Search: OpenSearchj - json -0 free text, unstructured searchers
+Graphs: Amazon Neptune - displays relationships between data
+Ledger: amazon quantum ledger datbase
+Time series: amazon timestream
+
+Amazon RDS - Summary
+Managed PostgreSQL/MySQL/Oracle/SQL Server/DB2/Custom
+Provision RDS Instance Size and EBS Volume Type & Size
+Auto-Scaling capability for Storage
+Support for Read Replica and Multi AZ
+Security through IAM, Security Groups, KMS, SSL in transit
+Automated Backup with Point in time restore feature - up to 35 days
+Manual DB Snapshot for longer-term recovery
+Managed and Scheduled maintenance - with downtime
+
+Amazon RDS - Summary
+
+managed postgretsql/mysql/oracle/sql server/db2/custom
+provision rds instance size and ebs volume type and size
+auto scaling capabilityh for storage
+support for read replica and multi az
+security through iam, security groups, kms, ssl in transit
+automated backup with point in time restore feature - up to 35 days
+manual db snapshot for longer-term recory
+manual and scheduled maintenance with downtown
+Support for IAM Authentication, integration with Secrets Manager
+RDS Custm for access to and customize the underlying instance - oracle and sql server
+use case: store relational datasets - rdbms/oltp, perform sql queires, transactions
+
+Amazon Aurora - Summary
+
+Redshift Overview
+    Redshift is based on PostgreSQL but doesn't use OLTP - transactional database related
+    it's OLAP
+        online analytical processing - analytics andf data warehousing
+    10x better performance and other data warehouses, scale to PBs of data
+    Columndar storage of data - instead of row based and parallel query engin
+    two modes; provisioned cluster or serverless cluster
+    has a sql interface for performing th e queries
+    BI tools such as quicksit and tagbeau integrate with it
+    vs Athena: faster queires/joins/aggregations thanks to indexes
+
+Redshit Cluster
+    leader node: for query palnningf results aggregation
+    compute node: for perfomring the queries, send results to leader
+    provisoned mode:
+        choose instance types in advance
+        can reserve instances for cost savings
+    
+Redshift - Snapshots and DR
+    Redshift has multi-az mode for some clusters
+    Snapshots are point-in-time backups of a cluster, stored internally in S3
+    Snapshots are incremental - only waht has changed is saved
+    you can reestore a snapshot into a new cluster
+    automated: every 8 hours, every 5GB, or on a schedule. Set rentention
+    Manual: snapshot is retained until you delete it
+
+    you can configure Amazon Redshit toi automatically8 copy snapshots - automated or manual of a cluster to another aws region 
+
+Loading data into Redshit:
+Large inserts are much better
+amazon kinesis data firehose > amazon redhsit clustrer - thru s3 copy 
+
+If you wanted to insert data using the JDBC driver into Redshift Cluster, you could do so as well
+
+Redshift Spectrum
+
+Query data that is already in S3 without loading it 
+Must have a Redshift cluster
+available to start the query
+The query is then submitted to thousands of Redshift Spectrum nodes
+
+Amazon OpenSearch Service
+    Amazon OpenSearch is successor to Amazon ElasticSearch
+    In DynamoDB, queries only exit by primary key or indexes...
+    With OpenSearch, you can search as a complement to another database
+    It's common to use OpenSearch as a complement to another database
+    two modes: managed cluster or servelrss cluster
+    Does not natively support SQL - can be enabled via a plugin
+    Ingtestion from Kinesis Data Firehose, AWS IoT, and CloudWatch Logs
+    Security through Cognito & IAM, KMS encryption, TLS - on flight encryption is TLS
+    Comes with OpenSearch Dashboards - visualization
+
+QuickSight Integrations
+    what can quicksight integrate with?
+    RDS
+    aurora
+    redshift
+    athena
+    s3
+    opensearch
+    timestream
+
+can also use third party services SaaS
+can also use terdata on databases
+
+ Today is 6/29/26
+ My perspective of what I do makes more sense. It has taken a while to get to this point. I'm still far from finished. I haven't touched CI/CD or terraform. I need to increase the pace. I'm doing well. 
+
+ Around day 120.
+ I felt a little bit of confidence in what I'm doing. 
+
+ Amazon SageMaker AI
+ fully managed service for developers / data scientists to build ML models
+ 
