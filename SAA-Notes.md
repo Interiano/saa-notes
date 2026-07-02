@@ -2408,3 +2408,30 @@ CloudWatch Logs - Sources
     API Gateway
     CloudTrail based on filter
 
+CloudWatch Logs can be sent to S3 (exports) or Amazon Data Firehose or Amazon Data Stream. or Lambda, or OpenSearch
+
+CloudWatch Logs - Sources
+SDK, ClouidWatch Logs Agent, CloudWatch Unified Agent
+Elastic Beanstalk: collection of logs from application
+ECS: collection from containers
+AWS Lambda: collection from function logs
+VPC Flow Logs: VPC specific logs
+API Gateway
+CloudTrail based on filter
+Route 53: Log DNS queries
+
+CloudWatch Logs Insights
+    search and analyze log data stored in CloudWatch Logs
+    Example: find a specific IP inside a log, count occurrences of "ERROR" in your logs...
+    Provides a purpose-built query language
+        automatically discovers fileds from AWS services and JSON log events
+        fetch desired event fields, filter based on conditions, calculate aggregate statistics, sort events, limit number of events..
+        Can save queires and add them to CloudWAtch Dashboards
+    Can query multiple Log Groups in different AWS accounts
+    It's a query engine, not a real-time engine
+
+CloudWatch Logs - S3 Export
+    batch export can take up to 12 hours to become available
+    the API call is CreateExportTask
+
+CloudWatch Logs Aggregation Multi-Account & Multi Region
