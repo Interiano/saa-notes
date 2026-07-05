@@ -2547,3 +2547,31 @@ AWS Organizations - Tag Policies
     use EventBridge
     
 IAM Roles vs Resource-Based Policies
+
+SAA Trivia
+Alta3 Research
+AWS solutions ARchitect Associate FULL EXAM with Explanations - youtube
+
+q1 notes:
+boost performance and availability of its global platform
+UDP for data transmission
+needs to be failover incase of regional fail/outage. 
+
+AWS Global Accelerator
+anything that uses udp
+increasing speed
+instant regional failover
+
+q2 notes:
+transfer 2gb compressed data file daily to amazon s3 from a remote location. what is the most efficient method to achieve this?
+
+multi part uplaod with s3 transfer accelerator
+
+q8 notes:
+shared file system that can be accessed by both windows and linux
+NTFS persmissions
+Active Directory integraton
+
+ask the vendor to deploy a network load balancer NLV in front of the amazon rds for postgresql instance and use aws privatelink to expose the NLB as an interface VPC endpoint in the firm's vpc
+
+the most effective solution is for the vendor to set up a NLB in front of the rds for postresql insatnce and use aws privatelink to present the nlb as an interface vpc endpoint int he firm's vpc. this method provides secure and private connectivity without needing internet access, vpn, or direct connect, and it cmaintians dtat traffic within the aws instaructure, aligning with security standards
