@@ -2435,3 +2435,115 @@ CloudWatch Logs - S3 Export
     the API call is CreateExportTask
 
 CloudWatch Logs Aggregation Multi-Account & Multi Region
+
+CloudWatch Network Synthetic Monitor
+    monitor and detects network issues between your apps hosted on AWS and your on-premises data center
+    identify any network performance degradation - packet loss, latency, jitter..
+    no agnets required to be installed
+    tests icmp or tcp traffic to ipv4/ipv6 on-premises destinations through Direct Connect or S2S VPN connections
+    publishes data to CloudWatch Metrics
+
+CloudWatch Container Insights
+    collect, aggregate, summarize metrics and logs from containers
+    available for containers on...
+        ecs
+        eks
+        kubernetes platforms on ec2
+        fargate - both ecs and eks
+    
+CloudWatch Lambda Insights
+    monitoring and troubleshooting solution for serverless applications running on AWS lambda
+    collects, aggregates, and summarizes sytem-level metrics including CPU time, memory, disk, and network
+    collects, aggregates, and summarizes diagnostic information such as cold starts and lambda worker shutdowns
+    lambda insights is provided as a lambda layer
+
+CloudWatch Lambda insights
+    monitoring and troubleshooting solution for serverless applications running on AWS lambda
+    collects, aggregates, and summarizes system-level metrics including CPU time, memory, disk, and network
+    collects, aggregates, and summarizes idagnostic information such as cold starts and Lambda worker shutdowns
+    Lambda Insights is provided as a Lambda layer
+
+CloudWatch Contributor Insights
+    analyze log data and create time series that display contributor data
+        see metrics about the top-N contributors
+        the total number of unique contributors, and their usage
+    this helps you find top talkers and understand who or what is impacting system performance
+    works for any AWS-generated logs - VPC, DNS, etc
+    for example, you can find bad hosts, identify the heaviest netwrok users, or find the URLS that generate the most errors
+    you can build your rules from scratch, or you can also use sample rules that aws has created - leverages your CloudWatch Logs
+    CloudWatch also provides built-in rules that you can use to analyze metrics from other AWS services
+
+    VPC > CloudWatch Logs > CloudWatch Contributor Insights > Top 10 IP addresses
+
+    CloudWatch Application Insights
+        provides automated dashboards that show potential problems with monitored applications, to help isolate ongoin issues
+        your applications run on Amazon EC2 Instances with select technologies only - java, .net, microsoft iis web server, databases
+        and you can use other aws resources such as amazon ebs, rds, elb, asg, lambda, sqs, dynamoDB, S3 bucket, ECS, EKS, SNS, API gateway
+
+        powered by SageMaker
+        enhanced visibility into your application health to reduce the time it will take you to troubleshoot and repair your application
+
+CloudTrail Events
+    management events:
+        operations that are performed on resources in your aws account
+            examples: 
+                configuring security - IAM AttachRolePolicy
+                configuring rules for routing data - amazon ec2 CreateSubnet
+                setting up logging - AWS CloudTrail CreateTrail
+            
+        by default, trails are configured to log management events
+
+AWS Organizations
+    global service
+    allows to manage multiple aws accounts
+    the main account
+
+CI/CD deployment
+    AWS native tools mapping to each step:
+        code lives in CodeCommit - or github
+        CodePipeline orchestrates thew whole flow
+        CodeBuild runs the tests and builds the artifact
+        CodeDeploy pushes the verified build to EC2, Lambda, or ECS
+
+Declarative - you describe the desired end state and the tool figures out waht needs to change to get there
+Imperative - you tell it exactly what to do step by step with no memory of what already exists
+
+CloudFormation as the AWS native tool - YAML/JSON templates describing stacks
+
+AWS organizations
+    global service
+    allows to manage multiple aws accounts
+    the main account is the management account
+    other accounts are member accounts
+    memeber accounts can onlyh be part of one oraginition 
+    conoslidated billing across all accounts - single payment mtehod
+    pricng benefits from aggregatged usage - volume discount for ec2, s2..
+    shared reserved instances and savings plans discounts across accounts
+    api is available to automate aws account creation
+
+with AWS organizations
+the overall hierarch is trhe Root Organiational Unit (OU)
+then your main account is the management account
+you can create OU for Dev and another for OU for production
+in the dev ou, you can have memeber accounts
+
+for the ou in production, you can have memeber accounts and have other OU for 
+HR and Finance within the OU in production.
+
+NAT Gateway can connect an instance in a private subnet to the public internet
+
+Session Manager or EC2 Instance Connect - you can ssh into the instance in your AWS account
+
+I'd put a NAT Gateway in a public subnet, then add a route in the private subnet's route table 0.0.0.0./0 -> nat-gatway-id
+
+AWS Organizations - Tag Policies
+
+    helps you standardize tags across resources in an aws organiation
+    ensure consistent tages, audit taggged resources, maintain proper resources categoriation,...
+    you define tag keys and their allowed values
+    helps with aws cost allocation tags and attribute-based access control
+    porvent any non-compliant tagging operations on specififed services and resources - has no effect on resrouces without tags
+    generate a report that lists all tagged/non-compliant resources
+    use EventBridge
+    
+IAM Roles vs Resource-Based Policies
