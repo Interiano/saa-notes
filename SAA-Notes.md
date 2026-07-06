@@ -2575,3 +2575,31 @@ Active Directory integraton
 ask the vendor to deploy a network load balancer NLV in front of the amazon rds for postgresql instance and use aws privatelink to expose the NLB as an interface VPC endpoint in the firm's vpc
 
 the most effective solution is for the vendor to set up a NLB in front of the rds for postresql insatnce and use aws privatelink to present the nlb as an interface vpc endpoint int he firm's vpc. this method provides secure and private connectivity without needing internet access, vpn, or direct connect, and it cmaintians dtat traffic within the aws instaructure, aligning with security standards
+
+A company requires all the data stored in the cloud to be encrypted at rest. to easily integrate this with other AWS services, they must have full control over the encryption of the created keys and also the ability to immediately remove the key mateiral from AWS KMS. The solution should also be able to audit the key usage independently of AWS CloudTrail.
+
+The solution:
+use AWS Key Managment Service to create a KMS key in a custom key store and store the non-extractable key material in AWS CloudHSM.
+
+Overall explanation
+The AWS KMS custom key store feature combines the controls provided by AWS CloudHSM with the integration and ease of use of AWS KMS. You can configure your own CloudHSM cluster and authorize AWS KMS to use it as a dedicated key store for your keys rather than the default AWS KMS key store. When you create keys in AWS KMS you can choose to generate the key material in your CloudHSM cluster. KMS Keys that are generated in your custom key store never leave the HSMs in the CloudHSM cluster in plaintext and all AWS KMS operations that use those KMS keys are only performed on your HSMs.
+
+AWS KMS can help you integrate with otheer AWS services to encrypt the data that you store in these services and control access to the keys that decrypt it. To immediately remove the key material from AWS KMS, you can use a custom key sotre. Take note that each custome key store is a ssociated with an AWS CloudHSM cluster in your AWS account. Therefore, when you create an AWS KMS Key in a custom key store, AWS KMS generates and stores the non-extractable key material for the KMS key in an AWS CloudHSM cluster that you own and manage. This is also suitable if you want to be able to audit the usage of all your keys independently of AWS KMS or AWS CloudTrail.
+
+Since you control your AWS CloudHSM cluster, you have the option to manage the lifecycle of your KMS keys independently of AWS KMS. Here are the criteria why you might find a custom key store useful:
+1. you have encryption keys that you must be safeguarded within a dedicated hardware security module HSM under your direct ontrol, adhering to strict single-tenancy requirements
+2. you require the capability to promplty and independently revoke and revmove key material from AWS KMS, exercising complete control over the key lifecycle
+3. your compliance obligations mandate independent auditing and monitoring of all key usage activities, beyond the logging provided by AWS KMS and AWS Cloudtrail.
+
+A company is using AWS Fargate to run a batch job whenever an object is uploaded to an Amazon S3 bucket. The minimum ECS task count is initially set to 1 to save on costs and should only be increased based on new objects uploaded to the S3 bucket.
+
+Which is the most suitable option to implement with the LEAST amount of effort?
+
+goal: suitable option to implement with the LEAST amount of effort?
+
+the solution is EventBridge and fire after detect of S3 object put operations and set the target to the ECS cluster to run a new ECS task
+
+IAM Permission Boundaries
+
+AWS IAM Identity Center
+successor to AWS Single Sign-On
