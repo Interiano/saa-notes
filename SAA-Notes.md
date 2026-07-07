@@ -2603,3 +2603,47 @@ IAM Permission Boundaries
 
 AWS IAM Identity Center
 successor to AWS Single Sign-On
+
+AWS IAM Identity Center is for employees
+Cognito User Pools is for users for your app
+
+IAM Identity Center
+    one login, single sign-on, for all your:
+        aws accounts in aws organizations
+        business cloud applications
+        SAML2.0enabled applications
+        EC2 Windows Instances
+    identity providers:
+        built-in identity store in IAM Identity Center
+        3rd party: Active Directory (AD), OneLogin, Okta...
+
+Login flow
+login page > user name/password > identity center > 
+
+AWS Directory Services
+aws managed microsoft ad
+    create your on ad in aws, manage users locally, supports MFA
+    establish trust connections with your on-premise ad as in they are shared access across the two companies
+
+ad connector
+    acts as a proxy to redirect on-premise ad, supports mfa
+    user are managed on the on-premise ad
+
+simple ad
+    ad-compatbile managed directory on aws
+    cannot be joined with on-premise ad
+
+IAM Identity Center - Active Directory Setup
+
+KMS overview
+
+KMS Keys Types
+Symmetric AES-256 keys
+    single encryption key that is used to encrypt and decrypt
+    aws services that are integrated with kms use symmetric CMKs
+    you never get access to the KMS key unencrypted, must call KMS api to use
+Asymmetric, RSA & ECC key pairs
+    public(Encrypt) and Private Key (Decrypt) pair
+    used for Encrypt/Decrypt, or Sign/Verify operations
+    the public key is downloadable, but you can't access the Private Key unencrypted
+    use case: encryption outside of AWS by users who can't call the KMS API
