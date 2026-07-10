@@ -2647,3 +2647,80 @@ Asymmetric, RSA & ECC key pairs
     used for Encrypt/Decrypt, or Sign/Verify operations
     the public key is downloadable, but you can't access the Private Key unencrypted
     use case: encryption outside of AWS by users who can't call the KMS API
+
+AWS Directory Service provides multiple ways to use Amazon Cloud Directory and Microsoft Active Directory (AD) with other aws services. Directories store information and resources. AWS Directory Service provides multiple directory choices for customers who want to use existing Microsoft AD or Lightweight Directory Access Protocol (LDAP) - aware applications in the cloud. It also offers those same choices to developers who need a directory to manage users, groups, devices, and access.
+
+KMS key policies
+
+Tier 1
+aws owned keys
+no visibility, no trail, free, not visible to kms console at all
+
+Tier 2
+AWS managed keys
+can be trailed, arn naming convention is different
+
+Tier 3
+Customer managed keys
+you write the key policy, you set rotation, you share across accounts. 
+
+DynamoDB Global Tables:
+fully serverless, multi-master. every region can read and write simultanerously. conflicts resolved automatically by last-writer-wins? replication is automatic - you just enable global tabless and pick your regions. no management
+
+Aurora Global:
+one primary region handles writes. all other regions are read only replicas. replication lag is under 1 second. if primary region fails, you manulally promote a secondary region to primary - it doesn't happen automatically
+
+why not auto? is there not a way to do this autonomously
+
+Global DynamoDB Tables can encrypt specific attributes when sending information to KMS. When we have a case of Multi-Region Key, only the primary key can decrypt the sensible attributes in the DB when looked into by the global dynamodb table in another region. In the other region, you can then make an API call to the decrypt the attribute. It's a checks and balances. 
+
+Aurora Global and KMS Multi-Region Keys Client-Side encryption
+
+S3 replication
+when you replicate S3 bucket to another region, encryption adds complexity depending on which encryption type was used
+
+in order to replicate with a kms key. you first mist replicate the s3 bucket. grant it iam role permission and the key 
+
+grant the s3 replication iam role permission to decrypt with the soruce key and encrypt with the destination key
+lastly, enable the option explicityly in the replicaton configuration
+
+Projects 
+
+Parameters Policies (for advanced parameters)
+    allow to assing a TTL to a parameter (expiration date) to force updating or deleting sensitive data such as passwords
+
+    can assign multiple policies at a time
+
+Expiration (to delete a parameter)
+ExpirationNotification (EventBridge)
+NoChangeNotification (EventBridge)
+
+They live in SSM Parameter Store
+
+Projects
+
+CloudHSM - integration with AWS Services
+
+AWS Firewall Manager
+manage rules in all accounts of an aws organization
+security policy: common set of security rules
+    waf rules - application load balancer, api gateway, cloudfront
+    aws shield advaced - alb, clb, nlb, elastic ip, cloudfront
+    security groups like ec2 application load balaner and eni resources in vpc
+    aws network firewall - vpc level
+    amazon route 53 resolver dns firewall
+    policies are created at the region level
+
+rules are applied to new resources as they are created (good for compliance) across all and future accounts in your organization
+
+waf vs firewall manager vs shield
+
+waf - web application firewall - layer 7 protection. anything http. filter malicious attempts. 
+
+shield - free for everybody aws practioner. layer 3/4 protection in udp,tcp layer. for ddos attacks
+
+Firewall Manager - 
+
+all are comprehensive protection of your accounts
+
+oprah gives ip addressed to my electronics. router gives ip addresses. it's like oprah. my router gives ip addresses.
