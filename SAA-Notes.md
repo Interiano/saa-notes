@@ -2724,3 +2724,72 @@ Firewall Manager -
 all are comprehensive protection of your accounts
 
 oprah gives ip addressed to my electronics. router gives ip addresses. it's like oprah. my router gives ip addresses.
+
+route tables decide the direction
+security group/nacl deny
+
+route table match the packet's destination IP agianst the CIDR ranges in each row, then send it to that row's target (next hop)
+
+a company plans to migrate its on-premises workload to aws. the current architecture is composed of a microsoft sharepoint server that uses a windows shared fire storage. the solutions architect needs to use a cloud storage solution that is hihgly available and can be integrated with active directory for acces control and authentication, and must be accessbiel from on -premises via adirect connection 
+
+which of the following options can satisfy the given requirement?
+
+provision an amazon fsx for windows file server file system and join it to an aws active directory domain
+
+a car dealership website hosted in amazon ec2 stores car listings in an amazon aurora database managed by amazon rds. once a vehicle has been sold, its data must be removed from the current listings and forwarded to a distributed processing sytem
+
+which of the following options can satisfay the given requirement?
+
+aurora mysql native function to invoke an aws lambda function whenever a vhehicle listing is deleted. configure the lambda function to send thd data to an amazon sqs queue for the distributed processing system to consume
+
+### 1. Scenario: You have a microservices application that needs to scale dynamically based on traffic. How would you design an architecture for this using AWS services?
+
+I would use Amazon ECS or Amazon EKS for container orchestration, coupled with AWS Auto Scaling to adjust the number of instances based on CPU or custom metrics. Application Load Balancers can distribute traffic, and Amazon CloudWatch can monitor and trigger scaling events.
+
+### 2. Scenario: Your application's database is experiencing performance issues. Describe how you would use AWS tools to troubleshoot and resolve this.
+
+I would use Amazon RDS Performance Insights to identify bottlenecks, CloudWatch Metrics for monitoring, and AWS X-RAY for tracing requests. I'd also consider optimizing queries and using read replicas if necessary.
+
+### 3. Scenario: You're migrating a monolithic application to a microservices architecture. How would you ensure smooth deployment and minimize downtime?
+
+I would adopt a "strangler" pattern, gradually migrating components to microservices. This minimizes risk by replacing pieces of the monolith over time, allowing for testing and validation at each step.
+
+### 4. Scenario: Your team is frequently encountering configuration drift issues in your infrastructure. How could you prevent and manage this effectively?
+
+I would implement Infrastructure as Code (IaC) using AWS CloudFormation or Terraform. By versioning and automating infrastructure changes, we can ensure consistent and repeatable deployments.
+
+### 5. Scenario: Your company is launching a new product, and you expect a sudden spike in traffic. How would you ensure the application remains responsive and available?
+
+I would implement a combination of auto-scaling groups, Amazon CloudFront for content delivery, Amazon RDS read replicas, and Amazon DynamoDB provisioned capacity to handle increase load while maintaining performance.
+
+### 6. Scenario: You're working on a CI/CD pipeline for a containerized application. How could you ensure that every code change is automatically tested and deployed?
+
+
+
+### 7. Scenario: Your team wants to ensure secure access to AWS resources for different team members. How could you implement this?
+
+### 8. Scenario: You're managing a complex microservices architecture with multiple services communicating. How could you monitor and trace requests across services?
+
+### 9. Scenario: Your application has a front-end hosted on S3, and you need to enable HTTPS for security. How would you achieve this?
+
+### 10. Scenario: Your organization has multiple AWS accounts for different environments (dev, staging, prod). How would you manage centralized billing and ensure cost optimization?
+
+### 11. Scenario: Your application frequently needs to run resource-intensive tasks in the background. How could you ensure efficient and scalable task processing?
+
+### 12. Scenario: Your team is using Jenkins for CI/CD, but you want to reduce management overhead. How could you migrate to a serverless CI/CD approach?
+
+### 13. Scenario: Your organization wants to enable single sign-on (SSO) for multiple AWS accounts. How could you achieve this while maintaining security?
+
+### 14. Scenario: Your company is aiming for high availability by deploying applications across multiple regions. How could you implement global traffic distribution?
+
+### 15. Scenario: Your application is generating a significant amount of logs. How could you centralize log management and enable efficient analysis?
+
+### 16. Scenario: Your application needs to store and retrieve large amounts of unstructured data. How could you design a cost-effective solution?
+
+### 17. Scenario: Your team wants to enable automated testing for infrastructure deployments. How could you achieve this?
+
+### 18. Scenario: Your application uses AWS Lambda functions, and you want to improve cold start performance. How could you address this challenge?
+
+### 19. Scenario: Your application has multiple microservices, each with its own database. How could you manage database schema changes efficiently?
+
+### 20. Scenario: Your organization is concerned about data protection and compliance. How could you ensure sensitive data is securely stored and transmitted?
