@@ -2742,6 +2742,15 @@ which of the following options can satisfay the given requirement?
 
 aurora mysql native function to invoke an aws lambda function whenever a vhehicle listing is deleted. configure the lambda function to send thd data to an amazon sqs queue for the distributed processing system to consume
 
+ECS or EKS
+ASG
+Application Load Balancer
+CloudFront
+
+Users > DNS query > Route 53 > route traffic > CloudFront > Api Gateway > 
+
+I would use Amazon ECS or Amazon EKS for container orchestration, coupled with AWS Auto Scaling to adjust the number of instances based on CPU or custom metrics. Application load Balancers can distribute traffic, and Amazon CloudWatch can monitor and trigger scaling events.
+
 ### 1. Scenario: You have a microservices application that needs to scale dynamically based on traffic. How would you design an architecture for this using AWS services?
 
 I would use Amazon ECS or Amazon EKS for container orchestration, coupled with AWS Auto Scaling to adjust the number of instances based on CPU or custom metrics. Application Load Balancers can distribute traffic, and Amazon CloudWatch can monitor and trigger scaling events.
@@ -2764,19 +2773,31 @@ I would implement a combination of auto-scaling groups, Amazon CloudFront for co
 
 ### 6. Scenario: You're working on a CI/CD pipeline for a containerized application. How could you ensure that every code change is automatically tested and deployed?
 
-
+I would set up an AWS CodePipeline that integtrates with AWS CodeBuild for building and testing containers. After succesfful testing, I'd use AWS CodeDeploy to deploy the containers to an ECS cluster or Kubernete on EKS.
 
 ### 7. Scenario: Your team wants to ensure secure access to AWS resources for different team members. How could you implement this?
 
+I would use AWS Identity and Access Management (IAM) to create fine-grained policies for each team member. IAM roles and groups can be assigned permissions based on least priviledge principles.
+
 ### 8. Scenario: You're managing a complex microservices architecture with multiple services communicating. How could you monitor and trace requests across services?
+
+I would integrate AWS X-Ray into the application to trace requests as they traverse services. This would provide insights into latency, errosr, and dependencies between services.
 
 ### 9. Scenario: Your application has a front-end hosted on S3, and you need to enable HTTPS for security. How would you achieve this?
 
+I would use Amazon CloudFront to distrtibute content from the S3 bucket, configure a custom domain, and associated an SSL/TLS certificate through AWS Certificate Manager.
+
 ### 10. Scenario: Your organization has multiple AWS accounts for different environments (dev, staging, prod). How would you manage centralized billing and ensure cost optimization?
+
+I would use AWS Organizations to manage multiple accounts and enable consolidated billing. AWS Cost Explorer and AWS Budgets could be used to monitor and optimize costs across accounts.  
 
 ### 11. Scenario: Your application frequently needs to run resource-intensive tasks in the background. How could you ensure efficient and scalable task processing?
 
+I would use AWS Lambda for serverless background processing or AWS Batch for batch processing. Both services can scale automatically based on the workload. 
+
 ### 12. Scenario: Your team is using Jenkins for CI/CD, but you want to reduce management overhead. How could you migrate to a serverless CI/CD approach?
+
+I would consider using AWS CodePipeline and AWS CodeBuild. CodePipeline integrates seamlessly with CodeBuild, allowing you to create serverless CI/CD pipelines without managing infrastructure.
 
 ### 13. Scenario: Your organization wants to enable single sign-on (SSO) for multiple AWS accounts. How could you achieve this while maintaining security?
 
