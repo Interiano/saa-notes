@@ -2751,6 +2751,26 @@ Users > DNS query > Route 53 > route traffic > CloudFront > Api Gateway >
 
 I would use Amazon ECS or Amazon EKS for container orchestration, coupled with AWS Auto Scaling to adjust the number of instances based on CPU or custom metrics. Application load Balancers can distribute traffic, and Amazon CloudWatch can monitor and trigger scaling events.
 
+ 7/15/26
+ Direct Connect (sometimes called DX)
+
+ dedicated connection for on-premise to be physically connected via fiber cable to a DC
+ private connection, doesn't touch public
+ sometimes for compliance
+ you need to set up a virtual private gateway on your VPC
+ you access resources (S3) and private (EC2) on same connection
+ use cases:
+    increase bandwidth throughput - working with large data sets - lower cost
+
+7/19/26
+I finished the hardest part of VPC lecture on the SAA course. A lot feels into place now.
+I've deployed a VPC with a private and public subnet. public instance and private instance. I then found out I can ssh into a private instance with an endpoint.
+This was done to remedy CIDR triggering due to large number confusion. Exposure therapy is essentially what I did.
+I've started to do more SAA mock exams. 
+I've started youtube SAA trivia.
+I have more to go over but I'm feeling strong.
+I've quizzed twice and it's beenb 65% on the last one. I thought I had scored better than that honestly. I'll try again.
+
 ### 1. Scenario: You have a microservices application that needs to scale dynamically based on traffic. How would you design an architecture for this using AWS services?
 
 I would use Amazon ECS or Amazon EKS for container orchestration, coupled with AWS Auto Scaling to adjust the number of instances based on CPU or custom metrics. Application Load Balancers can distribute traffic, and Amazon CloudWatch can monitor and trigger scaling events.
