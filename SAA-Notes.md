@@ -2771,6 +2771,37 @@ I've started youtube SAA trivia.
 I have more to go over but I'm feeling strong.
 I've quizzed twice and it's beenb 65% on the last one. I thought I had scored better than that honestly. I'll try again.
 
+Network Protection on AWS
+To protect network on AWS we've seen
+    network access control lists (NACLs)
+    Amazon VPC secuirty groups
+    AWS WAF (protect against malicious requests)
+    AWS Shield and AWS Shield Advanced
+    AWS Firewall Manager (to manage them across accounts)
+
+ But what if we want to protect in a sophisticated way our entire VPC?
+ AWS Network Firewall
+ protect your entire amazon vpc
+ from layer 3 to layer 7 protection
+ any direction, you can inspect
+    vpc to vpc traffic
+    outbound to internet
+    inbound to internet
+    to/from direct connect and site-to-site vpn
+internally, the aws network firewall uses the aws gateway load balancer
+rules can be centrally managed cross-account by aws firewall manager to apply to many vpcs
+
+Network Firewall - Fine grained control
+between layer 3 to layer 7 protection
+supports 1000s of rules
+
+Network Firewall - Fine Grained Controls
+    supports 1000s of rules
+        ip and port - example: 10,000s of IPs filtering
+        Protocol - example: block the SMB protocol for outbound communications
+        stateful domain list rule groups: only allow outbound traffic to *.mycorp.com or third-party software repo
+        general pattern matching using regex
+
 ### 1. Scenario: You have a microservices application that needs to scale dynamically based on traffic. How would you design an architecture for this using AWS services?
 
 I would use Amazon ECS or Amazon EKS for container orchestration, coupled with AWS Auto Scaling to adjust the number of instances based on CPU or custom metrics. Application Load Balancers can distribute traffic, and Amazon CloudWatch can monitor and trigger scaling events.
@@ -2834,3 +2865,4 @@ I would consider using AWS CodePipeline and AWS CodeBuild. CodePipeline integrat
 ### 19. Scenario: Your application has multiple microservices, each with its own database. How could you manage database schema changes efficiently?
 
 ### 20. Scenario: Your organization is concerned about data protection and compliance. How could you ensure sensitive data is securely stored and transmitted?
+
