@@ -2808,7 +2808,21 @@ I would design my microservices as containers, so ECS on Fargate for orchestrati
 
 ### 2. Scenario: Your application's database is experiencing performance issues. Describe how you would use AWS tools to troubleshoot and resolve this.
 
-I would use Amazon RDS Performance Insights to identify bottlenecks, CloudWatch Metrics for monitoring, and AWS X-RAY for tracing requests. I'd also consider optimizing queries and using read replicas if necessary.
+before:I would use Amazon RDS Performance Insights to identify bottlenecks, CloudWatch Metrics for monitoring, and AWS X-RAY for tracing requests. I'd also consider optimizing queries and using read replicas if necessary.
+
+after:
+common RDS:
+read-heavy load = read replica
+repeated identical reads - elasticache 
+write bottleneck - scale up/shard
+
+common DynamoDB:
+read-heavy load = on-demand capacity scales reads
+repeated identical reads = DAX
+write bottleneck = raise write capacity
+
+Regardless of DB, I'd start with CloudWatch metrics to understand what kind of pressure the database is under - CPU, memory, read/write latency
+That tells me if it's compute-bound, connection-exhausted, or disk-bound
 
 ### 3. Scenario: You're migrating a monolithic application to a microservices architecture. How would you ensure smooth deployment and minimize downtime?
 
