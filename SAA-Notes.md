@@ -2804,7 +2804,7 @@ Network Firewall - Fine Grained Controls
 
 ### 1. Scenario: You have a microservices application that needs to scale dynamically based on traffic. How would you design an architecture for this using AWS services?
 
-I would use Amazon ECS or Amazon EKS for container orchestration, coupled with AWS Auto Scaling to adjust the number of instances based on CPU or custom metrics. Application Load Balancers can distribute traffic, and Amazon CloudWatch can monitor and trigger scaling events.
+I would design my microservices as containers, so ECS on Fargate for orchestration and AWS manages the machine. Each one is a service that keeps a desired number of tasks running and relaunches crashes. An ALB routes requests to each service via URL path. Auto Scaling raises or lowers tasks based on the number of request per task.
 
 ### 2. Scenario: Your application's database is experiencing performance issues. Describe how you would use AWS tools to troubleshoot and resolve this.
 
@@ -2852,17 +2852,32 @@ I would consider using AWS CodePipeline and AWS CodeBuild. CodePipeline integrat
 
 ### 13. Scenario: Your organization wants to enable single sign-on (SSO) for multiple AWS accounts. How could you achieve this while maintaining security?
 
+I would use AWS Single Sign-On (SSO) to manage user access across multiple AWS accounts. By configuring SSO integrations, users can access multiple accounts securely without needing separate credentials.
+
 ### 14. Scenario: Your company is aiming for high availability by deploying applications across multiple regions. How could you implement global traffic distribution?
+
+I would use Amazon Route 53 with Latency-Based Routing or Geolocation Routing jto direct traffic to the closest jor most appropriate region based on user location.
 
 ### 15. Scenario: Your application is generating a significant amount of logs. How could you centralize log management and enable efficient analysis?
 
+I would use Amazon CloudWatch Logs to centralize log storage and AWS CloudWatch Logs Insights to query and analyze logs efficiently, making it easier to troubleshoot and monitor application behavior.
+
 ### 16. Scenario: Your application needs to store and retrieve large amounts of unstructured data. How could you design a cost-effective solution?
+
+I would use Amazon S3 with appropriate storage classes (such as S3 Standard or S3 Intelligent-Tiering) based jon data access patterns.  This allows for durable and cost-effective storage of unstructured data. 
 
 ### 17. Scenario: Your team wants to enable automated testing for infrastructure deployments. How could you achieve this?
 
+I would integrate AWS CloudFormation StackSets into the CI/CD pipeline. StackSets allow you to deploy infrastructure templates to mulitple accounts and regions, enabling automated testing of infrastructure changes.
+
 ### 18. Scenario: Your application uses AWS Lambda functions, and you want to improve cold start performance. How could you address this challenge?
+
+I would implement an Amazon API Gateway with the HTTP proxy integration, creating a warm-up endpoint that periodically invokes Lambda functions to keep them warm.
 
 ### 19. Scenario: Your application has multiple microservices, each with its own database. How could you manage database schema changes efficiently?
 
+I would use AWS Database Migration Service (DMS) to replicate data between the old and new schema versions, allowing for seamless database migrations without disrupting application operations.
+
 ### 20. Scenario: Your organization is concerned about data protection and compliance. How could you ensure sensitive data is securely stored and transmitted?
 
+I would use Amazon S3 server-side encryption and Amazon RDS encryption at rest for data storage. For data transmission, I would use SSL/TLS encryption for comunication between services and implement security best practices.
