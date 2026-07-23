@@ -2802,27 +2802,68 @@ Network Firewall - Fine Grained Controls
         stateful domain list rule groups: only allow outbound traffic to *.mycorp.com or third-party software repo
         general pattern matching using regex
 
+7/21/26
+
+Disaster Recovery
+
+any event that has a negative impact on a company's business continuity or finances is a disaster.
+DR is about preparing for and recovering from a disaster
+what kind of disaster recovery?
+    on-premise: on-premise: traditional DR,, and very expensive
+    on-premise > aws clouid: hybrid recovery
+    aws cloud region a > aws cloud region b
+
+need to define two key terms:
+RPO - recovery point objective - how often do you do backups? how much of data loss are you willing to accept?
+RTO - recovery time objective - when do you recover from the disaster? the point of disaster to the point of operations
+
+Disaster Recovery Strategies
+
+Backup and Restore
+Pilot Light
+Warm Standby
+Hot Site/Multi Site Approach
+
+Faster RTO ->
+Backup& Restore - Pilot Light - Warm Standby - Multi Site
+AWS Multi Region covers all 4
+
+Faster RTO means less downtime
+
+Backup and Restore
+High RPO
+
+1. Backup and Restore
+RPO/RTO: hours to days
+Just take backups regulardly and restore when needed
+Cheapest - no standby infrastructure
+Slowest recovery
+
+2. Pilot Light
+RPO/RTO: tens of minutes
+Core systems running at minimal capacity in DR region - like a pilot light on a gas heater, always on but not heating
+Dattabase is replicated, servers are off but AMIs are ready
+Faster than backup/restore, cheaper than warm standby
+
+3. Warm Standby
+RPO/RTO: minutes
+Scaaled-down but fully functional version of your system running in DR region
+Flip treaffic over and scale up when disaster hits
+More expensive - infrastructure always running
+
+4. Multi-Site Active-Active
+RPO/RTO: near zero 
+Full production running in multiple regions simultaenously
+No recovery needed - traffic just shifts
+Most expensive - double the infrastructure
+
 ### 1. Scenario: You have a microservices application that needs to scale dynamically based on traffic. How would you design an architecture for this using AWS services?
 
 I would design my microservices as containers, so ECS on Fargate for orchestration and AWS manages the machine. Each one is a service that keeps a desired number of tasks running and relaunches crashes. An ALB routes requests to each service via URL path. Auto Scaling raises or lowers tasks based on the number of request per task.
 
 ### 2. Scenario: Your application's database is experiencing performance issues. Describe how you would use AWS tools to troubleshoot and resolve this.
 
-before:I would use Amazon RDS Performance Insights to identify bottlenecks, CloudWatch Metrics for monitoring, and AWS X-RAY for tracing requests. I'd also consider optimizing queries and using read replicas if necessary.
-
-after:
-common RDS:
-read-heavy load = read replica
-repeated identical reads - elasticache 
-write bottleneck - scale up/shard
-
-common DynamoDB:
-read-heavy load = on-demand capacity scales reads
-repeated identical reads = DAX
-write bottleneck = raise write capacity
-
-Regardless of DB, I'd start with CloudWatch metrics to understand what kind of pressure the database is under - CPU, memory, read/write latency
-That tells me if it's compute-bound, connection-exhausted, or disk-bound
+I would start with CloudWatch metrics to determine the nature of the fault. RDS/Aurora and DynamoDB acts differently so we will be able to differentiate based on the problem. RDS/Aurora has Performance Insights to show us what is driving the load and DynamoDB  has Contributor Insights to find hot partition.                       
 
 ### 3. Scenario: You're migrating a monolithic application to a microservices architecture. How would you ensure smooth deployment and minimize downtime?
 
