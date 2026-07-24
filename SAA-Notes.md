@@ -2834,7 +2834,7 @@ Backup and Restore
 High RPO
 
 1. Backup and Restore
-RPO/RTO: hours to days
+RPO/RTO: hours to days - High RPO AND RTO but cheapest
 Just take backups regulardly and restore when needed
 Cheapest - no standby infrastructure
 Slowest recovery
@@ -2842,7 +2842,7 @@ Slowest recovery
 2. Pilot Light
 RPO/RTO: tens of minutes
 Core systems running at minimal capacity in DR region - like a pilot light on a gas heater, always on but not heating
-Dattabase is replicated, servers are off but AMIs are ready
+Database is replicated, servers are off but AMIs are ready
 Faster than backup/restore, cheaper than warm standby
 
 3. Warm Standby
@@ -2857,13 +2857,133 @@ Full production running in multiple regions simultaenously
 No recovery needed - traffic just shifts
 Most expensive - double the infrastructure
 
+Disaster Recovery Tips
+
+Backup
+    ebs snapshots, rds automated backups/snapshots, etc...
+    regular pushes to s3/s3 ia/glacier, lifecycle policyh, cross region replication
+    from on-p-remise: snowball or storage gateway
+
+High Availability
+    use reoute 53 to migrate dns over from region to region
+    rds multi-az, elasticache multi-az, efs, s3
+    site to site vpn as a recovery from direct connect
+
+Replication
+    rds replication (cross region), aws aurora + global databases
+    databases replication from on-premise to rds
+    storage gateway
+
+Automation
+    CloudFormation/Elastic Beanstalk to re-create a whole new environment
+    recover/reboot ec2 instances with CloudWatch if alarms fail
+    aws lambda functrion for customized automations
+
+Chaos
+    netflix ahs a "simian-army" randomly terminating EC2
+
+AWS Elastic Disaster Recovery (DRS)
+    used to be named"CloudEndure Disaster Recovery"
+    quickly and easily recover your physical, vitural, and cloud-based servers into AWS
+    Example: protect your most critical databases (including oracle, mysql, and sql server), enterpirse apps(SAP), protect your data from ransomware attacks,...
+    continous block-level replication for your servedrs
+
+DMS - Database Migration Service
+    Quickly and securely migrate databases to AWS, resilient, self healing
+    The source database remains available during the migration 
+    Supports:
+        Homogenous migrations: ex Oracle to Oracle
+        Heterogeneous migrations: ex Microsoft SQL Server to Aurora
+    Continous Data Replican using CDC
+    You must create an EC2 instance to perform the replication tasks
+
+DMS Sources and Targets
+Sources:
+    on-premise and EC2 instances database: Oracle, MS SQL Server, MySQL, MariaDB, PostgreSQL, MongoDB, SAP, DB2
+    Azure: Azure SQL Database
+    Amazon RDS: all including Aurora
+    Amazon S3
+    DocumentDB
+
+Targets:
+    on-premises jand Ec2 isntances databases
+    Amazon RDS
+    Redshift, DynamoDB, S3
+    OpenSearch Service
+    Kinesis Data Streams
+    Apache Kafka
+    DocumentDB & Amazon Neptune
+    Redis & Babelfish
+
+AWS Schema Conversion Tool (SCT)
+    Convert your Database's Schema from one egnin to another
+    Example OLTP:(SQL Server or Oracle) to MySQL, PostgreSQL, Aurora
+    Example OLAP: (Teradata or Oracle) to Amazon Redshift
+    You do not need to use SCT if you are migrating the same DB engine
+        Ex: On-Premise PostgreSQL > RDS PostgreSQL (RDS is the platform)
+
+DMS - Continuous Replication
+setting up SCT on-premise is best practice when migrating
+
+There's a lot of specific tools depending on the DB being migrated but it's just important to know that if it's heterogeneous migration then pairing with SCT and possibly CDC? 
+
+You can just use snapshot for most cases, i think
+
+On-Premise strategy with AWS
+    ability to download amazon linux 2 ami as VM (.iso format)
+        VMWare, KVM, VirtualBox (Oracle VM), Microsoft Hyper-V
+    VM Import/ Export
+        Migrate existing applications into EC2
+        Create a DR repository stategy for your on-premise VMs
+        can export back the VMs from EC2 to on-premise
+    AWS Application Discovery Service
+        Gather information about your on-premise servers to plan a migration
+        Server utilization and dependency mappings
+        Track with AWS Migration Hub
+    AWS Database Migration Service (DMS)
+        replicate on-premise > aws, aws > aws, aws > on-premise
+        works with various database technologies (Oracle, MySQL, DynamoDB, etc..)
+    AWS Application Migration Service (MGN)
+        Incremental replication of on-premise live servers to AWS
+
+AWS Backup
+    Fully managed service
+    Centrally managed and automate backups across AWS services
+    No need to create custom scripts and manual processes
+    Supported services:
+        EC2/EBS
+        S3
+        RDS - all dbs engines / aurora/ dynamoDB
+        DocumentDB/ Amazon Neptune
+        EFS/FSx (Lustre and Windows File Server)
+        AWS Storage Gateway (Volume Gateway)
+    Supports cross region backups
+    Supports cross account backups
+    Supports PITR  for supported services like Aurora
+    On-Demand and Scheduled backups
+    Tag-based backup policies
+    you create backup policies known as Backup Plans
+        Backup frequency - every 12 weeks
+        Bakcup window
+        Transition to Cold Storage
+        Retention Period
+
+AWS Backup Vault Lock
+    enforce a WORM (write once read many) state for all backups that you store in your AWS Backup Vault
+    Additional layer of defense to protect yuour backups against:
+        Inadvertent or malicious delete operations
+        Updates that shorten or alter retention periods
+    Even the root user cannot delete backups when enabled
+
+
+
 ### 1. Scenario: You have a microservices application that needs to scale dynamically based on traffic. How would you design an architecture for this using AWS services?
 
 I would design my microservices as containers, so ECS on Fargate for orchestration and AWS manages the machine. Each one is a service that keeps a desired number of tasks running and relaunches crashes. An ALB routes requests to each service via URL path. Auto Scaling raises or lowers tasks based on the number of request per task.
 
 ### 2. Scenario: Your application's database is experiencing performance issues. Describe how you would use AWS tools to troubleshoot and resolve this.
 
-I would start with CloudWatch metrics to determine the nature of the fault. RDS/Aurora and DynamoDB acts differently so we will be able to differentiate based on the problem. RDS/Aurora has Performance Insights to show us what is driving the load and DynamoDB  has Contributor Insights to find hot partition.                       
+I'd begin with CloudWatch metrics to indicate the nature of the fault. We can then deduce based on the findings and implement a fix. Metrics indicate ThrottledRequests > 0 so we know this is related to DynamoDB and the deduction is exceepding capacity. We fix with on-demand or auto scaling. Metrics show throttling but low usage so we deduce hot partition and use Contributor Insights to lock in and to fix we just redesigned partition keys. Metrics show CPU high on RDS so deduce under provisioned instance or heavy query. Performance Insights can highlight heavy query and the fix would be optimize query or vertical scaling. Metrics show Database Connections near max then we deduce connection exhaustion and the fix is RDS Proxy. 
 
 ### 3. Scenario: You're migrating a monolithic application to a microservices architecture. How would you ensure smooth deployment and minimize downtime?
 
