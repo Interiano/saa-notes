@@ -2975,7 +2975,37 @@ AWS Backup Vault Lock
         Updates that shorten or alter retention periods
     Even the root user cannot delete backups when enabled
 
+On-Premise and migrate to the cloud
+plan your migration
+use aws application discovery service
+this gathers information about on-premises DC
+server utilization data and dependency mapping are important for migrations
 
+Agentless discovery  (aws agentless discovery connector)
+    vm inventory, configuration, and performance history such as cpu, momery, and disk usage
+
+Agent-based Discovery (AWS Application Discovery Agent)
+    system configuration, system performance, running processes, and details of the netwrok connections between systems
+
+    There's two different ways to go about finding out about your on-premise DC
+        you can run an agent or agentless
+
+Resulting data can be viewed within AWS Migration Hub
+
+AWS Application Migration Service (MGN)
+    Lift-and-Shift (rehost) solution which simplify migration applications to AWS
+    Converts your physical, virtual, and clouidp-based servers to run natively on AWS
+    Supports wide range of platforms, Operating Systems, and databases
+    Minimal downtime, reduced costs
+
+Transferring large amount of data into AWS
+
+VMware Cloud on AWS
+
+Event Processing
+
+Lambda, SNS, & SQS
+SQS + Lambda
 
 ### 1. Scenario: You have a microservices application that needs to scale dynamically based on traffic. How would you design an architecture for this using AWS services?
 
