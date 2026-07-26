@@ -3089,6 +3089,14 @@ Systems Manager - Automation
         On a schedule using Maintenance Windows
         By AWS Config for rules remediations
 
+Cost Explorer
+    Visualize, udnerstand, and manage your AWS costs and usage over time
+    Create custome reports that analyze cost and usage data.
+    Analyze your data at a hgih level: total costs and usagfe across all accounts
+    Or Monthly, hourly, resource level granularity
+    Choose an optional Savings Plan (to lower prices on your bill)
+    Forecast usage up to 18 months based on previous usage
+
 ### 1. Scenario: You have a microservices application that needs to scale dynamically based on traffic. How would you design an architecture for this using AWS services?
 
 I would design my microservices as containers, so ECS on Fargate for orchestration and AWS manages the machine. Each one is a service that keeps a desired number of tasks running and relaunches crashes. An ALB routes requests to each service via URL path. Auto Scaling raises or lowers tasks based on the number of request per task.
