@@ -3007,6 +3007,88 @@ Event Processing
 Lambda, SNS, & SQS
 SQS + Lambda
 
+7/25/26
+CloudFormation - Service Role
+    IAM role that allows CloudFormation to create/update/delete stack resources on your behalf
+    Give ability to users to create/update/delte the stack resources even if they don't have permissions to work with the resources in the stack
+    Use cases:
+        you want to achieve the least previlege principle
+        but you don't want to give the user all the requirec permissions to create the stack resources
+    User must have iam:PassRole permissions
+
+SES Simple Email Service
+    fully managed service to send emails securely, globally and at scale
+    allows inbound/outbound emails
+    reputation dashboard, performance insights, anti-spam feedback
+    provides statistics such as email deliveries, bounces, feedback loop results, email open
+    supports DomainKeys identified mail DKIM and Sender Policy Framework SPF
+    Flexible IP deployment: shared, dedicated, and customer-owned IPs
+    Send emails using your ap0plication using AWS Console, APIs, or SMTP
+
+Amazon Pinpoint
+    scalable 2-way (outbounmd/inbound) marketing communications service
+    supports email, SMS, push, voice, and in-app messaging 
+    ability to segment and personalize messages with the right content to customers
+    possibility to receive replies
+    Scales to billions of messages per day
+    Use cases: run campains by sending marketing, bulk, transactional SMS messages
+    Versus Amazon SNS or Amazon SES
+        In SNS & SES you managed each message's audience, content, and delivery schedule
+        In Amaxon Pinpoint, you create message templates, delivery schedules, highly-targeted segments, and full campaigns
+
+Unfortune Amazon Pinpoint
+but with all the services it use to create, you can just use other services:
+AWS End User Messaging
+Amazon SES
+SES Virtual Deliverability Manager 
+Amazon Connect
+Amazon Kinesis
+
+the underlying knowledge you want is SES=email delivery, SNS=pub/sub + basic SMS/push fan-out, End User Messaging home.
+
+Systems Manager - SSM Session Manager
+    Allows you to start a secure shell on your EC2 and on-premises servers
+    No SSH access, bastion hosts, or SSH keys needed
+    No port 22 needed (better security)
+    Supports Linux, macOS, and Windows
+    Send session log data to S3 or CloudWatch Logs
+
+Systems Manager - Run Command
+    Execute a document (= script) or just run a command
+    Run command across multiple instances (usinmg resources groups)
+    No need for SSH
+    Command Output can be shown in the AWS Console, sent to S3 bucket or CloudWatch Logs
+    Send notifications to SNS about command status (In progress, Success, Failed, ...)
+    Integrated with IAM & CloudTrail
+    Can be invoked using EventBridge
+
+Systems Manager - Patch Manager
+    Automates the process of patching managed instances
+    OS updates, applications updates, security updates
+    Supports EC2 instances and on-premises servers
+    Supports Linux, macOS, and Windows
+    Patch on-demand or on a schedule using Maintenance Windows
+    Scan instances and generate patch compliance report (missing patches)
+
+Systems Manager - Maintenance Windows
+    Defines a schedule for when to perform actions on your instances
+    Example: OS patching, updating drivers, installing software, ...
+    Maintenance Window contains
+        Schedule
+        Duration
+        Set of registgered instances
+        Set of regsitered tasks
+
+Systems Manager - Automation
+    Simplifies common maintenance and deployment tasks of EC2 instances and other AWS resources
+    Examples: restart instances, creat an AMI, EBS snapshot
+    Automation Runbook - SSM Documents to define actions preformed on your EC2 instances or AWS resources (pre-defined or custom)
+    Can be triggered using:
+        Manually using AWS Console, AWS CLI or SDK
+        Amazon EventBridge
+        On a schedule using Maintenance Windows
+        By AWS Config for rules remediations
+
 ### 1. Scenario: You have a microservices application that needs to scale dynamically based on traffic. How would you design an architecture for this using AWS services?
 
 I would design my microservices as containers, so ECS on Fargate for orchestration and AWS manages the machine. Each one is a service that keeps a desired number of tasks running and relaunches crashes. An ALB routes requests to each service via URL path. Auto Scaling raises or lowers tasks based on the number of request per task.
