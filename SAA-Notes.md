@@ -3097,6 +3097,59 @@ Cost Explorer
     Choose an optional Savings Plan (to lower prices on your bill)
     Forecast usage up to 18 months based on previous usage
 
+AWS Outposts
+
+    Hybrid Cloud: businesses that keep an on-premises infrastructure alongside a cloud infrastructure
+    Therefore, two ways of dealing with IT sytems:
+        One for the AWS cloud (using the AWS console, CLI, and AWS APIs)
+        One for their3 on-premises infrastructure
+    AWS Outposts are "server racks" that offers the same AWS infrastructure, services, APIs & tools to build your own applications on-premises just as in the cloud
+    AWS will setup and manage "Outposts Racks" within your on-premises infrastructure and you can start leveraging AWS services on-premises
+    You are responsible for the Outposts Rack physical security
+
+AWS Outposts
+    Benefits:
+        Low-latency access to on-premises sytems
+        Local data processing
+        Data residency
+        Easier migration from on-premises to the cloud
+        Fully managed service
+    Some services that work on Outposts: everything
+    
+AWS Batch
+run jobs start to finish
+
+AWS Amplify - web and mobile applications
+    A set of tools and services that helps you develop and deploy scazlable full stack web and mobile applications
+    Authentication, Storage, API (REST, GraphQL), C/CD, PubSub, Analytics, AI/ML Predictions, Monitoring....
+    Connect your source code from GitHub, AWS CodeCommit, Bitbcket, GitLab, or upload directly
+
+Amplify is like the elastic beanstalk for web and mobile applications
+
+Amplify backend
+Integrates S3, cognito, appsync, api gateway, amazon sagemaker, amazon lex, lambda, dynamodb
+
+deployed on Amplify Console and Amazon Cloudfront
+
+connect frontend to backend using Amplify Frontend Libraries
+Frontend
+ios
+android
+flutter
+ionic
+next
+
+Instance Scheduler on AWS 
+    AWS solution deployed through CloudFormation (not a service)
+    Automatically start/stop your AWS services to reduce costs (up to 70%)
+    Example: stop comppany's EC2 instances outside business hours
+    Supports EC2 instances, Ec2 Auto Scaling Groups, and RDS instances
+    Schedules are manged in a DynamoDB table
+    Uses resources' tags and Lambda to stop/start instances
+    Supports cross-account and cross-region resources
+
+
+
 ### 1. Scenario: You have a microservices application that needs to scale dynamically based on traffic. How would you design an architecture for this using AWS services?
 
 I would design my microservices as containers, so ECS on Fargate for orchestration and AWS manages the machine. Each one is a service that keeps a desired number of tasks running and relaunches crashes. An ALB routes requests to each service via URL path. Auto Scaling raises or lowers tasks based on the number of request per task.
@@ -3176,3 +3229,100 @@ I would use AWS Database Migration Service (DMS) to replicate data between the o
 ### 20. Scenario: Your organization is concerned about data protection and compliance. How could you ensure sensitive data is securely stored and transmitted?
 
 I would use Amazon S3 server-side encryption and Amazon RDS encryption at rest for data storage. For data transmission, I would use SSL/TLS encryption for comunication between services and implement security best practices.
+
+Day 180:
+1. What does the person who started on Day 1 not understand that you understand now?
+2. What was the hardest moment and what did it teach you about how you work?
+3. What does cloud engineering actually feel like now versus what you imagined it would feel like?
+4. What do you still not know — and are you okay with that?
+5. If someone handed you a junior cloud engineering role tomorrow, what would be the first thing you'd do on the job?
+
+1. Ai can do a lot for you. It can't make nuanced decision making. It's still dumb and requires prompts. You can create a loop method to continuous build an app but it doesn't mean it's a good app. It still requires human intellilect. So learn the infrastructure and the ideas behind the decisions that get made for the structure.
+2. I need to forgive myself. I don't have the attention span others have when it comes to studying and it's why I didn't do well in school. That didn't change now that I'm much older, so i learned to forgive myself and set a pace that was both reasonable and accomplisable. Some days it was a few hours of work and other days I'd nearly spend the whole day on the compouter just looking at coding questions, aws services, as long as it was related to what I'm studying, I was interested even if it was just listening. It may feel small but they compound because it stacks on itself. 
+3. I imagined knowing code by heart.  Cloud Engineering is looking at problems and fixing thru deductions. It's more detective work. 
+4. I still don't know the finer details of how to deploy instractructure without a guide. I'm okay with that. I can easily read a guide.  Day 1, it would of bothered me that i wouldn't be able to deploy complex structures without knowing the steps. Today, I understand what really matters. 
+5. I'd look at what the structure I'm working on is and what it takes to maintain it. ECS? EKS?  I don't know what Day 1 working as a Cloud Engineer looks like but I'd like to know what's the board I'm playing on. 
+
+Youtube Quiz
+https://www.youtube.com/watch?v=l3LMkl82asc&list=PLwRKAmP13yepycf93KO6-Efj_ai8_fBYr&index=11
+
+SAA-Triva
+1. wrong
+A company must meet regulatory requirement to maintain point-in-time backups of its Amazon RDS for PostgreSQL in data centers that are located at least 200 miles from each other. Which option offers the simplest way to satisfy this compliance requirement?
+
+A. Enable a Multi-AZ red replica configuration.
+B. Configure a cross-Region read replica.
+C. Perform snapshot copies to another AWS Region.
+D. Use Multi-AZ snapshot replication within the same Region. 
+
+2. right
+A media organization runs a multi-tier application on AWS. The web tier is deployed across two Availability Zones using an Auto Scaling group configured with the default termination policy. Currently 15 EC2 instances are active in the group. During a scale-in event, which instrances will be terminated first?
+
+A. The EC2 instance that was launched earliest in the Auto Scaling group.
+B. The instance that is nearest to the next billing hour.
+C. The instance running the Availabiltiy Zone with the highest number of instances.
+D. The instance associated with the oldest launch configuration or launch template version.
+
+3. wrong
+A company delivers a Voice over IP (VoIP) application that relies on UDP traffic. The workload runs on Amazon EC2 instances within an Auto Scaling group and is deployed in multiple AWS Regions. The company must direct users to the Region with the lowest network latency and ensure automatic failover if a Region becomes unavailable. Which solution satisfies these requirements?
+
+A. Deploy an Application Load Balancer (ALB) with a target group linked to the Auto Scaling group. Configure each ALB as an endpoint in AWS Global Accelerator.
+B. Deploy a Network Load Balancer (NLB) with a target group attached to the Auto Scaling group. Configure each NLB as an endpoint in AWS Global Accelerator.
+C. Deploy a Network Load Balancer (NLB) with its target group connected to the Auto Scaling group. Create Amazon Route 53 latency-based records pointing to each NLB alias, and place an Amazon CloudFront distribution in front using the latency record as the origin.
+D. Deploy an Application Load Balancer (ALB) with a target group connected to the Auto Scaling group. Create Amazon Route 53 weighted routing records for each ALB alias, and configure an Amazon CloudFront distribution using the weighted record as the origin.
+
+4. right
+A Solutions Architect is designing storage for a fleet of Linux-based seb servers. The storage must provide a shared file system interface and scale to support millions of files. Which AWS service is the most appropriate choice?
+
+A. Use Amazon EBS volumes attached to the instances.
+B. Use Amazon S3 for storing application files.
+C. Use Amazon ElasticCache as shared storage.
+D. use Amazon EFS to provide shared file storage.
+
+5. wrong
+A customer currently uses Chef for configuration management in their on-premises data center. They want to continue using their exiting Chef recipes after migrating workloads to AWS. Which AWS service is specifically built to support this requirement?
+
+A. AWS Elastic Beanstalk
+B. AWS OpsWorks
+C. AWS CloudFormation
+C. Amazon Simple Workflow Service
+
+6. right
+A Solutions Architect is designing a VPC where instances in a private subnet must initiate outbound IPv6 connections to the internet. The solution must automatically scale and should not introduce additional charges. Which option meets these requirements?
+
+A. Deploy a NAT Gateway in the public subnet
+B. Configure an egress-only internet gateway.
+C. Launch a custom NAT instance.
+D. Create a VPC endpoint for internet access.
+
+7. wrong
+A newly acquired subsidiary must quickly deploy its infrastructure on AWS and migrate several applications within one month. Each application includes about 50TB of data that must be transferred to AWS. After migration, both the subsidiary and its parent company require secure, reliable connectivity with predictable throuput from their on-premises data centers to AWS. Which solution best addresses both the bulk data transfer and the ongoing connectivity needs?
+
+A. Use AWS Direct Connect for the initial large-scale data transfer and for continous connectivity.
+B. Use AWS Snowball for the initial migration and AWS Site-to-Site VPN for ongoing connectivity.
+C. use AWS Snowball for the one-time data migration and AWS Direct Connect for long-term connectivity.
+D. Use AWS Site-to-Site VPN for both the initial migration and continuous connectivity.
+
+8. right
+A Solutions Architect is building an application that requires all stored data within an Amazon Redshift cluster to be encrypted. Which action ensures encryption of the data at rest?
+
+A. Encrypt the cluster using an AWS KMS customer-managed or default KMS key.
+B. Enable SSL/TLS for client connections to the cluster.
+C. Launch the cluster inside a private subnet within a VPC.
+D. Encrypt the underlying Amazon EBS volumes manually.
+
+9. right
+An Amazon EBS volume is currently attached to an EC2 instance in one Availability Zone. What is the correct method to move this volume to a different Availability Zone?
+
+A. Detach the volume and directly attach it to an EC2 instance in the target Availability Zone.
+B. Detach the volume and use an Ec2-migrate-volume command to transfer jit to another Availability Zone.
+C. Create a new volumen in the target Availability Zone by specifying the existing volume as the source.
+D. Take a snapshot of the volume and create a new volume from that snapshot in the desired Availability Zone.
+
+10. wrong
+A high-traffic e-commerce application hosted on AWS is experiencing database performance bottlenecks during peak usage periods. The database runs on the Amazon Aurora engine using the largest available instance size, yet it still cannot handle the query load. What action should the administrator take the improve the performance?
+
+A. Add one or more read replicas to the database cluster.
+B. Migrate the database to Amazon Redshift.
+C. Configure Amazon CloudFront in the front of the application.
+D. Modify the database to use Provisioned IOPS on Amazon EBS. 
