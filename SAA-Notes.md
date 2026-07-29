@@ -3148,6 +3148,84 @@ Instance Scheduler on AWS
     Uses resources' tags and Lambda to stop/start instances
     Supports cross-account and cross-region resources
 
+Fun Facts
+IAM policies are attached to IAM identities (users, groups, roles), not directly to EC2 instances.
+
+WhitePaper Section Introduction
+    Well Architected Framework Whitepaper
+    Well Architected Tool
+    AWS Trusted Advisor
+    Reference architectures resources
+    Disaster Recovery
+
+Well Architected Framework General Guiding Princicples
+    https://aws.amazon.com/architecture/well-architected
+    Stop guessing your capacity needs - auto scaling
+    Test systems at production scale - you should perform tests thru the code
+    Automate to make architectural experimentation easier
+    Allow for evolutionary architectures
+        Design based on changing requirements
+    Drive architectures using data
+    Improve through game days
+        Simulate applications for flash sale days
+
+Well Architected Framework
+6 Pillars
+1. Operational Excellence - 11
+2. Security Reliability - 10
+3. Reliability - 13
+4. Performance Efficiency - 8
+5. Cost Optimization - 10
+6. Sustainability - 6
+
+They are not something to balance, or trade-offs, they're a synergy
+
+AWS Well-Architected Tool
+Free tool to review your architectures against the 6 pillars Well-Architected Framework and adopt architectural best practices
+
+How does it work? 
+    Select your workload and answer questions
+    Review your answers against the 6 pillars
+    Obtain advice:P get videos and documentations, generate a report, see the results in a dashboard
+Let's have a look: https://console.aws.amazon.com/wellarchitected
+
+AWS Trusted Advisor
+    No need to install anything - high level AWS account assessment
+    Analyze your AWS accounts and provides recommendation 6 categories:
+        Cost optimization
+        Performance
+        Security
+        Fault tolerance
+        Service Limits
+        Operational Excellence
+    Business & Enterprise Support plan
+        Full Se of Checks
+        Programmatic Access using AWS Support API
+
+Recommendations for Architecture: <- take a look at it for later
+https://aws.amazon.com/architecture/
+https://aws.amazon.com/solutions/
+
+You can read about some AWS White Papers here:
+    Architecting for the Cloud: AWS Best Practices <- More reading
+    AWS Well-Architected Framework <- More reading
+    AWS Disaster Recovery (https://aws.amazon.com/disaster-recovery/) <- More reading
+
+Read each service's FAQ
+https://aws.amazon.com/vpc/faqs/
+
+Links to Whitepapers
+Links to Whitepapers
+
+
+1. Architecting for the Cloud: https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html
+
+2. Whitepapers related to Well-Architected Framework are mentioned here: https://aws.amazon.com/architecture/well-architected/
+
+3. Disaster Recovery Whitepaper: https://docs.aws.amazon.com/whitepapers/latest/disaster-recovery-workloads-on-aws/disaster-recovery-workloads-on-aws.html
+
+AWS now recommends a Well-Architected Framework Whitepaper: https://docs.aws.amazon.com/pdfs/wellarchitected/latest/framework/wellarchitected-framework.pdf
+\
 
 
 ### 1. Scenario: You have a microservices application that needs to scale dynamically based on traffic. How would you design an architecture for this using AWS services?
@@ -3326,3 +3404,92 @@ A. Add one or more read replicas to the database cluster.
 B. Migrate the database to Amazon Redshift.
 C. Configure Amazon CloudFront in the front of the application.
 D. Modify the database to use Provisioned IOPS on Amazon EBS. 
+
+11. wrong
+An application requires that messages be processed strictly in the order they are sent. The expected throuput will not exceed 300 transactions per second. Which AWS service should be selected to meet these requirements?
+
+A. Amazon SNS
+B. Amazon SQS
+C. Amazon ECS
+D. AWS Security Token Service
+
+12. right
+A Solutions Architect is building a web application where the web and application tiers must initiate outbound internet connections (for updates or external API calls) but must not be directly reachable from the internet. Whhich configuration is required to meet these requirements?
+
+A. Deploy a NAT Gateway in the public subnet and configure the private subnet's route table to send internet-bound traffic to it
+B. Assign an Elastic IP address to each Amazon EC2 instance and routing between private and public subnets.
+C. Launch the instances in a public subnet and allow outbound HTTP (port 80) traffic in the security group.
+D. Deploy a NAT gateway and a NAT instance within the private subnet.
+
+13. right
+A Solutions Architect is developing a web application that runs on an Amazon EC2 instance and stores data in Amazon DynamoDB. The Architect must ensure secure and recommended authorization for the application to access the DynamoDB table. Which two steps should be taken? (Choose two)
+
+A. Create an IAM role that grants write permissions to the DynamoDB table.
+B. Store AWS access keys directly on the EC2 instance with permissions to access the table.
+C. Attach an IAM policy directly to the EC2 instance.
+D. Associate the IAM role with the EC2 instance.
+E. Attach an IAM user to the EC2 instance.
+
+14. wrong
+A company operates a shopping application that stores customer data in Amazon DynamoDb. To protect against accidental data corruption, the Solutions Architect must design a recovery strategy that supports a Recovery Point Object (RPO) of 15 minutes and a Recovery Time Objective (RTO) of 1 hour. Which solution should be recommended?
+
+A.Enable DynamoDB point-in-time recovery (PITR) and restore the table to a specific timestamp when recovery is required.
+B. Configure DynamoDB global tables and redirect the application to another AWS Region during recovery.
+C. Perform daily exports of DynamoDB data to Amazon S3 Glacier and reload the data when recovery is needed.
+D. Schedule Amazon EBS snapshots every 15 minutes and restore the DyhnamoDB table from those snapshots.
+
+15. 
+A company plans to store data in an Amazon DynamoDB table and wants to minimize costs. The workload is idle during most mornings, but in the evenings traffic becomes unpreditable with sudden and rapid spikes and read and write requests. Which solution should a Solutions Architect recommend?
+
+A. Create the table using provisioned capacity mode and enable auto scaling.
+B. Create the table using on-demand capacity mode.
+C. Create the table with provisioned capacity and configure it as a gloabal table.
+D. Create the table and add a global secondary index (GSI).
+
+16. 
+A compnay runs applications on Amazon EC2 instances inside a VPC. One application must interact with the Amazon S3 API to store and retrive objects. Company security policies prohibit any application traffic from traversing the public internet. Which solution satisfies this requirement?
+
+A. Deploy a NAT gateway in the same subnet as the EC2 instances.
+B. Create an S3 bucket within a private subnet.
+C. Configure as S3 gateway VPC endpoint.
+D. Create the S3 bucket in the same AWS Region as the EC2 instances.
+
+17. 
+A company's application collects data from multiple SaaS p;roviders. Currently, Amazon EC2 instances recieve the incoming data, upload it to an Aamzon S3 bucket for analysis, and then notify users when the upload is finished. The company is experiecing performance degradation and wants to improve performance while minimizing operational overhead. Which solution should a Solutions Architect recommend?
+
+A. Create an Auto Scaling group for the EC2 instances to scale horizontally. Configure S3 event notifications to publish to an Aamazon SNS topic when uploads complete.
+B. Use Amazon AppFlow to transfer data directly from each SaaS source to the S3 bucket. Configure S3 event notifications to publish to an SNS topic when uploads complete.
+C. Configure Amazon EventBridge rules for each SaaS source to send data to S3. Create another EventBridge rule to trigger an SNS notification when uploads complete.
+D. Containerize the application and run it on Amazon Elastic Container Service. Use CloudWatch Container Insights to trigger SNS notifications after S3 uploads. 
+
+18. 
+A Solutions Architect is designing an application that must securely access data hosted in a different AWS account within the same Region. The traffic must remian private and must not traverse the public internet. Which solution provides the required connectivity at the lowest cost?
+
+A. Configure an AWS Direct Connect connection for each account.
+B. Establish a VPC peering connection between the two account's VPCs.
+C. Add a NAT gateway in the account the hosts the data.
+D. Modify security group rules in both accounts to allow cross-account access.
+
+19. 
+A Solutions Architect is designing a three-tier web application that uses an Auto Scaling group of Amazon EC2 instances behind an Elastic Load Balancing Classic Load Balancer. The security team mandates that web servers must only accept traffic from the load balancer and must not be directly reachable from the internet. What configuration should be implemented to meet this requirement?
+
+A. Configure the web tier's security group to allow inbound traffic only from the Classic Load Balancer's security group.
+B. Deploy a load balancer software solution on a seperate EC2 instance.
+C. Update the web servers' security group to block all traffic originating from the public internet.
+D. Place an Amazon CloudFront distribution in front of the Classic Load Balancer.
+
+20. 
+An application needs block-level storage to support frequent file updates. The total dataset size is 500 GB, and the workload must consistently sustain 100 MiB/s of combined read and write throughput. Which AWS storage service is most appropriate choice?
+
+A. Amazon EFS
+B. Amazon S3
+C. Amazon EBS
+D. Amazon S3 Glacier
+
+21. 
+A legacy application must connect to local storage using the iSCI protocol. The team wants to provision new, reliable storage on AWS maintaining compatibility with the application's exiting iSCI requirements. Which AWS storage solution should be selected?
+
+A. Use AWS Snowball as temporary storage until the application is modernized.
+B. Deploy AWS Storage Gateway in cached mode to present iSCSI voluimes while storing primary data in Amazon S3.
+C. Deploy AWS Storage Gateway in stored mode to provide iSCSI volumes with primary data stored locally and asynchronously backed up to Amazon S3.
+D. Mount an Amazon S3 bucket locally by using the File Gateway configuration.
