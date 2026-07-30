@@ -3493,3 +3493,45 @@ A. Use AWS Snowball as temporary storage until the application is modernized.
 B. Deploy AWS Storage Gateway in cached mode to present iSCSI voluimes while storing primary data in Amazon S3.
 C. Deploy AWS Storage Gateway in stored mode to provide iSCSI volumes with primary data stored locally and asynchronously backed up to Amazon S3.
 D. Mount an Amazon S3 bucket locally by using the File Gateway configuration.
+
+Maarek's Udemy Practice SAA Exam Notes
+1. 
+structure:
+ALB > ASG + REST API > DynamoDB + S3 (static image and content)
+goal:
+performance
+
+12. 
+structure:
+AWS direct connect connection for migrating its flagship application to the AWS Cloud
+what it does:
+writes hundreds of video files into a mounted NFS file system daily.
+
+Post migration, the company will host the app on an ec2 instance with a moundted efs file system.
+
+Before the migration cutover, the company must build a process that will replicated the newly created on-premises video files to the EFS file system.
+
+49. 
+company has custom data warehousing solution using Redshift.
+
+company wants to move any historical data (older than a year) into S3
+
+retain the ability to cross-reference this data with daily reports
+
+least amount of effort and minimim cost
+
+56. 
+aws cloud to manage infrastructure
+
+9 minutes and 20 seconds left
+
+Throttling is the process of limiting number of requests an authorized program can submit to a given operation in a given amount of time
+
+Amaon API Gateway, SQS, Kinesis
+
+To prevent your API from being overwhelemed by too many requests, amazon API Gateway throttles requests to your API using the token bucket algorithm, when a token counts for a request.
+Specificially, API Gateway sets a limit on a steady-state rate and burst of request submissions against all APIs in your account. In the token bucket algorithm, the burst is the maximum bucket size.
+
+Amazon SQS - fully managed message queuing service that enables you to decouple and scale microservices, distributed system, and servless applications. SQS offers buffer capabilities to smooth out temporary volume spikes without losing messages or increasing latency. 
+
+Kinesis - fully managed, scalable service that can ingest, buffer, and process streaming data in real-time.
