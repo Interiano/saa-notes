@@ -3438,61 +3438,94 @@ B. Configure DynamoDB global tables and redirect the application to another AWS 
 C. Perform daily exports of DynamoDB data to Amazon S3 Glacier and reload the data when recovery is needed.
 D. Schedule Amazon EBS snapshots every 15 minutes and restore the DyhnamoDB table from those snapshots.
 
-15. 
+15. wrong
 A company plans to store data in an Amazon DynamoDB table and wants to minimize costs. The workload is idle during most mornings, but in the evenings traffic becomes unpreditable with sudden and rapid spikes and read and write requests. Which solution should a Solutions Architect recommend?
 
-A. Create the table using provisioned capacity mode and enable auto scaling.
+A. Create the table using provisioned capacity mode and enable auto scaling. 
 B. Create the table using on-demand capacity mode.
-C. Create the table with provisioned capacity and configure it as a gloabal table.
+C. Create the table with provisioned capacity and configure it as a global table.
 D. Create the table and add a global secondary index (GSI).
 
-16. 
-A compnay runs applications on Amazon EC2 instances inside a VPC. One application must interact with the Amazon S3 API to store and retrive objects. Company security policies prohibit any application traffic from traversing the public internet. Which solution satisfies this requirement?
+16. right
+A company runs applications on Amazon EC2 instances inside a VPC. One application must interact with the Amazon S3 API to store and retreive objects. Company security policies prohibit any application traffic from traversing the public internet. Which solution satisfies this requirement?
 
 A. Deploy a NAT gateway in the same subnet as the EC2 instances.
 B. Create an S3 bucket within a private subnet.
-C. Configure as S3 gateway VPC endpoint.
+C. Configure as S3 gateway VPC endpoint. 
 D. Create the S3 bucket in the same AWS Region as the EC2 instances.
 
-17. 
-A company's application collects data from multiple SaaS p;roviders. Currently, Amazon EC2 instances recieve the incoming data, upload it to an Aamzon S3 bucket for analysis, and then notify users when the upload is finished. The company is experiecing performance degradation and wants to improve performance while minimizing operational overhead. Which solution should a Solutions Architect recommend?
+17. wrong
+A company's application collects data from multiple SaaS providers. Currently, Amazon EC2 instances receive the incoming data, upload it to an Amazon S3 bucket for analysis, and then notify users when the upload is finished. The company is experiecing performance degradation and wants to improve performance while minimizing operational overhead. Which solution should a Solutions Architect recommend?
 
-A. Create an Auto Scaling group for the EC2 instances to scale horizontally. Configure S3 event notifications to publish to an Aamazon SNS topic when uploads complete.
+A. Create an Auto Scaling group for the EC2 instances to scale horizontally. Configure S3 event notifications to publish to an Amazon SNS topic when uploads complete.
 B. Use Amazon AppFlow to transfer data directly from each SaaS source to the S3 bucket. Configure S3 event notifications to publish to an SNS topic when uploads complete.
-C. Configure Amazon EventBridge rules for each SaaS source to send data to S3. Create another EventBridge rule to trigger an SNS notification when uploads complete.
+C. Configure Amazon EventBridge rules for each SaaS source to send data to S3. Create another EventBridge rule to trigger an SNS notification when uploads complete. 
 D. Containerize the application and run it on Amazon Elastic Container Service. Use CloudWatch Container Insights to trigger SNS notifications after S3 uploads. 
 
-18. 
+18. right 
 A Solutions Architect is designing an application that must securely access data hosted in a different AWS account within the same Region. The traffic must remian private and must not traverse the public internet. Which solution provides the required connectivity at the lowest cost?
 
 A. Configure an AWS Direct Connect connection for each account.
-B. Establish a VPC peering connection between the two account's VPCs.
+B. Establish a VPC peering connection between the two account's VPCs. 
 C. Add a NAT gateway in the account the hosts the data.
 D. Modify security group rules in both accounts to allow cross-account access.
 
-19. 
+19. right
 A Solutions Architect is designing a three-tier web application that uses an Auto Scaling group of Amazon EC2 instances behind an Elastic Load Balancing Classic Load Balancer. The security team mandates that web servers must only accept traffic from the load balancer and must not be directly reachable from the internet. What configuration should be implemented to meet this requirement?
 
-A. Configure the web tier's security group to allow inbound traffic only from the Classic Load Balancer's security group.
+A. Configure the web tier's security group to allow inbound traffic only from the Classic Load Balancer's security group. 
 B. Deploy a load balancer software solution on a seperate EC2 instance.
 C. Update the web servers' security group to block all traffic originating from the public internet.
 D. Place an Amazon CloudFront distribution in front of the Classic Load Balancer.
 
-20. 
+20. wrong
 An application needs block-level storage to support frequent file updates. The total dataset size is 500 GB, and the workload must consistently sustain 100 MiB/s of combined read and write throughput. Which AWS storage service is most appropriate choice?
 
-A. Amazon EFS
+A. Amazon EFS 
 B. Amazon S3
 C. Amazon EBS
 D. Amazon S3 Glacier
 
-21. 
+21. right  
 A legacy application must connect to local storage using the iSCI protocol. The team wants to provision new, reliable storage on AWS maintaining compatibility with the application's exiting iSCI requirements. Which AWS storage solution should be selected?
 
 A. Use AWS Snowball as temporary storage until the application is modernized.
-B. Deploy AWS Storage Gateway in cached mode to present iSCSI voluimes while storing primary data in Amazon S3.
-C. Deploy AWS Storage Gateway in stored mode to provide iSCSI volumes with primary data stored locally and asynchronously backed up to Amazon S3.
+B. Deploy AWS Storage Gateway in cached mode to present iSCSI volumes while storing primary data in Amazon S3.
+C. Deploy AWS Storage Gateway in stored mode to provide iSCSI volumes with primary data stored locally and asynchronously backed up to Amazon S3. 
 D. Mount an Amazon S3 bucket locally by using the File Gateway configuration.
+
+22. wrong
+A production application frequently updates and deletes records. The application must always retrieve the latest committed version of the data wheenever it is accessed. Which AWS Storage Service is the most appropriate for this requirement?
+
+A. Amazon Redshift
+B. Amazon RDS
+C. AWS Storage Gateway
+D. Amazon S3
+
+23. right
+A Solutions Architect is developing a feature that uses AWS Lambda to generate metadata whenever a user uploads an image to Amazon S3. The metadata must be fully indexed to allow efficient lookups and queries. Which AWS service should be used to store this metadata?
+
+A. Kinesis
+B. Amazon S3
+C. Amazon EFS
+D. Amazon DynamoDB 
+
+24. wrong
+A company wants to track read and write IOPS metrics for its MySQL database running on Amazon RDS and receive real-time alerts when certain thresholds are exceeded. Which two AWS services should be used to implement this monitoring and alerting solution?
+
+A. SQS
+B. Amazon CloudWatch 
+C. Amazon Route 53
+D. SNS
+E. SES
+
+25.  right
+What is a primary distinction between an Amnazon EBS-backed EC2 instance and an instance store-backed EC2 instance?
+
+A. Auto Scaling can only be used with EBS-backed instances
+B. Instance store-backed instances support stopping and restarting
+C. Amazon EBS-backed instances can be stopped and later restarted.
+D. Amazon VPC requires the use of EBS-backed instances
 
 Maarek's Udemy Practice SAA Exam Notes
 1. 
@@ -3535,3 +3568,69 @@ Specificially, API Gateway sets a limit on a steady-state rate and burst of requ
 Amazon SQS - fully managed message queuing service that enables you to decouple and scale microservices, distributed system, and servless applications. SQS offers buffer capabilities to smooth out temporary volume spikes without losing messages or increasing latency. 
 
 Kinesis - fully managed, scalable service that can ingest, buffer, and process streaming data in real-time.
+
+AWS Lambda as a backbone for the architecture. 
+Key points.
+
+Be default, AWS Lambda functions always operate from an AWS-owned VPC and hence have access to any pu9blic internet address or public AWS APIs. Once an AWS Lambda function is VPC-enabled, it will need a route through a Network Address Translation gateway (NAT gateway) in a public subnet to access public resources.
+
+Since AWS Lambda functions can scale extremely quick, it's a good idea to deploy a Amazon CloudWatch Alarm that notifies your team when function metrics such as Concurrent Executions or Invocations exceeds the expected threshold.
+
+If you intend to reuse code in more than one AWS Lambda function, you should consider creating an AWS Lambda Layer for the reusable code
+
+5. 
+A Big Data processing company has created a disstributed data processing framework that performs best if the network performance betwen the processing machines is high. The  application has to be deployed on AWS, and the company is only looking at performance as the key measure.
+
+As a Solutions Architect, which deploymkent do you recommend?
+
+Cluster Placement Group
+
+7. 
+An e-commerce company has copied 1 petabyte of data from its on-premises data center3 to an Aamzon S3 bucket in the us-west-1 Region using an AWS Direct Connect link. The company now wants to set up a one-time copy of the data to another Amazon S3 bucket in the us-east-1 Region. The on-premises data center does not allow the use of AWS Snowball.
+
+As a Solutions Architect, which of the following options can be used to accomplish this goal? 
+
+- Copy data from the source bucket to the destination bucket using the AWS S3 sync command
+- Set up Amazon S3 batch replication to copy objects across Amazon S3 buckets in another Region using S3 console and then delete the replication configuration
+
+8. 
+The DevOps team at an IT company is provioning a two-tier applicaation in a VP:C with a public subnet and a private subnet. The team wants to use either a NAT instance or a NAT Gateway in the public subnet to enab le instances in the private subnet to initiates outbound IP:v4 traffic to the internet but needs some technical assitgance in terms of the configuartion options availbable for the NAT AINSTANCE AND THE nat GATEWAY
+
+aS A SOLUTIONS A4RCHITCECT, which of thge following options would you identify as correct?
+
+Security Groups can be associated with a NAT instance
+NAT instance can be used as a bastion server
+NAT instance supports port forwarding
+
+10. 
+A financial services company recently luanched an inititiative to improve the security of its AWS resources and it had enabled AWS Shield Advanced across multiple AWS accounts owned by the company. Up analysis, the company has found that the costs incurred are much higher than expected.
+
+Which of the following would you attribute as the underlying reason for the unexpectedly high costs for AWS Shield Advanced service?
+
+Consolidated billing has not been enabled. All the AWS accounts should fall under a single consolidated billing for the monthly fee to be charged only once.
+
+11. 
+A weather forecast agency collects key weather metrics across multiple cities in the US and sends this data in the form of key-value pairs to AWS Cloud at a one-minute frequency.
+
+As a solutions architect, which of the following AWS services would you use to build a solution for processing and then reliably storing this data with high availability?
+
+-DynamoDB
+-AWS Lambda
+
+13. 
+An engineering team wants to examine the feasibility of the user data feature of Amazon EC2 for an upcoming project.
+Which of the following are true about the Amazon EC2 user data configuration?
+
+By default, scripts entered as user data are executed with root user priviledges
+By default, user data runs only during the boot cycle when you first launch an instance
+
+Reasoning:
+User Data is generally used to perform common automated configuration tasks and even run scripts after the instacnce starts. When you launch an instance in Amazon EC2, you can pass two types of user data-shell scrips and cloud-init directives. You can also pass this data into the launch wizard as plain text or as a file. 
+
+Fun Notes:
+Volume Gateway (the Storage mode that presents iSCSI block volumes)
+File Gateway uses NFS/SMB
+Tape Gateway VTL (backup/archive)
+Volume Gateway iSCSI (block)
+
+
