@@ -3240,17 +3240,29 @@ I'd begin with CloudWatch metrics to indicate the nature of the fault. We can th
 
 I would adopt a "strangler" pattern, gradually migrating components to microservices. This minimizes risk by replacing pieces of the monolith over time, allowing for testing and validation at each step.
 
+My answer:
+I would use a "strangler" pattern, gradually migrating components to microservices. This minimizes risk by replacing pieces of the monolith over time, allowing for testing and validation at each step.
+
 ### 4. Scenario: Your team is frequently encountering configuration drift issues in your infrastructure. How could you prevent and manage this effectively?
 
 I would implement Infrastructure as Code (IaC) using AWS CloudFormation or Terraform. By versioning and automating infrastructure changes, we can ensure consistent and repeatable deployments.
+
+My answer:
+I would implement CloudFormation and it can manage configuration drifting. Configuration drifting is when the infrastructure doesn't match the code. We need to restrict manual deployment of resources and instead use templates for deployment. CloudFormation is IaC. It deploys with declarative methods.
 
 ### 5. Scenario: Your company is launching a new product, and you expect a sudden spike in traffic. How would you ensure the application remains responsive and available?
 
 I would implement a combination of auto-scaling groups, Amazon CloudFront for content delivery, Amazon RDS read replicas, and Amazon DynamoDB provisioned capacity to handle increase load while maintaining performance.
 
+My answer:
+I would implement a combintion of auto-scaling groups, Amazon CloudFront for content delivery, Amazon RDS read replicas, and Amazon DynamoDB provisioned capacity to handle increase load while maintaining performance.
+
 ### 6. Scenario: You're working on a CI/CD pipeline for a containerized application. How could you ensure that every code change is automatically tested and deployed?
 
-I would set up an AWS CodePipeline that integtrates with AWS CodeBuild for building and testing containers. After succesfful testing, I'd use AWS CodeDeploy to deploy the containers to an ECS cluster or Kubernete on EKS.
+I would set up an AWS CodePipeline that integrates with AWS CodeBuild for building and testing containers. After successful testing, I'd use AWS CodeDeploy to deploy the containers to an ECS cluster or Kubernetes on EKS.
+
+my answer:
+I would set up an AWS CodePipeline that integrates with AWS CodeBuild for building and testing containers. After successful testing. I'd use AWS CodeDeploy to deploy the containers to an ECS cluster or Kubernetes on EKS.
 
 ### 7. Scenario: Your team wants to ensure secure access to AWS resources for different team members. How could you implement this?
 
@@ -3325,15 +3337,15 @@ Youtube Quiz
 https://www.youtube.com/watch?v=l3LMkl82asc&list=PLwRKAmP13yepycf93KO6-Efj_ai8_fBYr&index=11
 
 SAA-Triva
-1. wrong
+1. C
 A company must meet regulatory requirement to maintain point-in-time backups of its Amazon RDS for PostgreSQL in data centers that are located at least 200 miles from each other. Which option offers the simplest way to satisfy this compliance requirement?
 
 A. Enable a Multi-AZ red replica configuration.
 B. Configure a cross-Region read replica.
-C. Perform snapshot copies to another AWS Region.
+C. Perform snapshot copies to another AWS Region. 
 D. Use Multi-AZ snapshot replication within the same Region. 
 
-2. right
+2. D
 A media organization runs a multi-tier application on AWS. The web tier is deployed across two Availability Zones using an Auto Scaling group configured with the default termination policy. Currently 15 EC2 instances are active in the group. During a scale-in event, which instrances will be terminated first?
 
 A. The EC2 instance that was launched earliest in the Auto Scaling group.
@@ -3341,7 +3353,7 @@ B. The instance that is nearest to the next billing hour.
 C. The instance running the Availabiltiy Zone with the highest number of instances.
 D. The instance associated with the oldest launch configuration or launch template version.
 
-3. wrong
+3. B
 A company delivers a Voice over IP (VoIP) application that relies on UDP traffic. The workload runs on Amazon EC2 instances within an Auto Scaling group and is deployed in multiple AWS Regions. The company must direct users to the Region with the lowest network latency and ensure automatic failover if a Region becomes unavailable. Which solution satisfies these requirements?
 
 A. Deploy an Application Load Balancer (ALB) with a target group linked to the Auto Scaling group. Configure each ALB as an endpoint in AWS Global Accelerator.
@@ -3349,7 +3361,7 @@ B. Deploy a Network Load Balancer (NLB) with a target group attached to the Auto
 C. Deploy a Network Load Balancer (NLB) with its target group connected to the Auto Scaling group. Create Amazon Route 53 latency-based records pointing to each NLB alias, and place an Amazon CloudFront distribution in front using the latency record as the origin.
 D. Deploy an Application Load Balancer (ALB) with a target group connected to the Auto Scaling group. Create Amazon Route 53 weighted routing records for each ALB alias, and configure an Amazon CloudFront distribution using the weighted record as the origin.
 
-4. right
+4. D
 A Solutions Architect is designing storage for a fleet of Linux-based seb servers. The storage must provide a shared file system interface and scale to support millions of files. Which AWS service is the most appropriate choice?
 
 A. Use Amazon EBS volumes attached to the instances.
@@ -3357,7 +3369,7 @@ B. Use Amazon S3 for storing application files.
 C. Use Amazon ElasticCache as shared storage.
 D. use Amazon EFS to provide shared file storage.
 
-5. wrong
+5. B
 A customer currently uses Chef for configuration management in their on-premises data center. They want to continue using their exiting Chef recipes after migrating workloads to AWS. Which AWS service is specifically built to support this requirement?
 
 A. AWS Elastic Beanstalk
@@ -3365,7 +3377,7 @@ B. AWS OpsWorks
 C. AWS CloudFormation
 C. Amazon Simple Workflow Service
 
-6. right
+6. B
 A Solutions Architect is designing a VPC where instances in a private subnet must initiate outbound IPv6 connections to the internet. The solution must automatically scale and should not introduce additional charges. Which option meets these requirements?
 
 A. Deploy a NAT Gateway in the public subnet
@@ -3373,7 +3385,7 @@ B. Configure an egress-only internet gateway.
 C. Launch a custom NAT instance.
 D. Create a VPC endpoint for internet access.
 
-7. wrong
+7. C
 A newly acquired subsidiary must quickly deploy its infrastructure on AWS and migrate several applications within one month. Each application includes about 50TB of data that must be transferred to AWS. After migration, both the subsidiary and its parent company require secure, reliable connectivity with predictable throuput from their on-premises data centers to AWS. Which solution best addresses both the bulk data transfer and the ongoing connectivity needs?
 
 A. Use AWS Direct Connect for the initial large-scale data transfer and for continous connectivity.
@@ -3381,7 +3393,7 @@ B. Use AWS Snowball for the initial migration and AWS Site-to-Site VPN for ongoi
 C. use AWS Snowball for the one-time data migration and AWS Direct Connect for long-term connectivity.
 D. Use AWS Site-to-Site VPN for both the initial migration and continuous connectivity.
 
-8. right
+8. A
 A Solutions Architect is building an application that requires all stored data within an Amazon Redshift cluster to be encrypted. Which action ensures encryption of the data at rest?
 
 A. Encrypt the cluster using an AWS KMS customer-managed or default KMS key.
@@ -3389,15 +3401,15 @@ B. Enable SSL/TLS for client connections to the cluster.
 C. Launch the cluster inside a private subnet within a VPC.
 D. Encrypt the underlying Amazon EBS volumes manually.
 
-9. right
+9. D
 An Amazon EBS volume is currently attached to an EC2 instance in one Availability Zone. What is the correct method to move this volume to a different Availability Zone?
 
 A. Detach the volume and directly attach it to an EC2 instance in the target Availability Zone.
-B. Detach the volume and use an Ec2-migrate-volume command to transfer jit to another Availability Zone.
+B. Detach the volume and use an Ec2-migrate-volume command to transfer it to another Availability Zone.
 C. Create a new volumen in the target Availability Zone by specifying the existing volume as the source.
 D. Take a snapshot of the volume and create a new volume from that snapshot in the desired Availability Zone.
 
-10. wrong
+10. A
 A high-traffic e-commerce application hosted on AWS is experiencing database performance bottlenecks during peak usage periods. The database runs on the Amazon Aurora engine using the largest available instance size, yet it still cannot handle the query load. What action should the administrator take the improve the performance?
 
 A. Add one or more read replicas to the database cluster.
@@ -3405,7 +3417,7 @@ B. Migrate the database to Amazon Redshift.
 C. Configure Amazon CloudFront in the front of the application.
 D. Modify the database to use Provisioned IOPS on Amazon EBS. 
 
-11. wrong
+11.  B
 An application requires that messages be processed strictly in the order they are sent. The expected throuput will not exceed 300 transactions per second. Which AWS service should be selected to meet these requirements?
 
 A. Amazon SNS
@@ -3413,7 +3425,7 @@ B. Amazon SQS
 C. Amazon ECS
 D. AWS Security Token Service
 
-12. right
+12. A
 A Solutions Architect is building a web application where the web and application tiers must initiate outbound internet connections (for updates or external API calls) but must not be directly reachable from the internet. Whhich configuration is required to meet these requirements?
 
 A. Deploy a NAT Gateway in the public subnet and configure the private subnet's route table to send internet-bound traffic to it
@@ -3421,7 +3433,7 @@ B. Assign an Elastic IP address to each Amazon EC2 instance and routing between 
 C. Launch the instances in a public subnet and allow outbound HTTP (port 80) traffic in the security group.
 D. Deploy a NAT gateway and a NAT instance within the private subnet.
 
-13. right
+13. A & D
 A Solutions Architect is developing a web application that runs on an Amazon EC2 instance and stores data in Amazon DynamoDB. The Architect must ensure secure and recommended authorization for the application to access the DynamoDB table. Which two steps should be taken? (Choose two)
 
 A. Create an IAM role that grants write permissions to the DynamoDB table.
@@ -3430,15 +3442,15 @@ C. Attach an IAM policy directly to the EC2 instance.
 D. Associate the IAM role with the EC2 instance.
 E. Attach an IAM user to the EC2 instance.
 
-14. wrong
+14. A 
 A company operates a shopping application that stores customer data in Amazon DynamoDb. To protect against accidental data corruption, the Solutions Architect must design a recovery strategy that supports a Recovery Point Object (RPO) of 15 minutes and a Recovery Time Objective (RTO) of 1 hour. Which solution should be recommended?
 
-A.Enable DynamoDB point-in-time recovery (PITR) and restore the table to a specific timestamp when recovery is required.
+A. Enable DynamoDB point-in-time recovery (PITR) and restore the table to a specific timestamp when recovery is required.
 B. Configure DynamoDB global tables and redirect the application to another AWS Region during recovery.
 C. Perform daily exports of DynamoDB data to Amazon S3 Glacier and reload the data when recovery is needed.
 D. Schedule Amazon EBS snapshots every 15 minutes and restore the DyhnamoDB table from those snapshots.
 
-15. wrong
+15. B
 A company plans to store data in an Amazon DynamoDB table and wants to minimize costs. The workload is idle during most mornings, but in the evenings traffic becomes unpreditable with sudden and rapid spikes and read and write requests. Which solution should a Solutions Architect recommend?
 
 A. Create the table using provisioned capacity mode and enable auto scaling. 
@@ -3446,7 +3458,7 @@ B. Create the table using on-demand capacity mode.
 C. Create the table with provisioned capacity and configure it as a global table.
 D. Create the table and add a global secondary index (GSI).
 
-16. right
+16. C
 A company runs applications on Amazon EC2 instances inside a VPC. One application must interact with the Amazon S3 API to store and retreive objects. Company security policies prohibit any application traffic from traversing the public internet. Which solution satisfies this requirement?
 
 A. Deploy a NAT gateway in the same subnet as the EC2 instances.
@@ -3454,7 +3466,7 @@ B. Create an S3 bucket within a private subnet.
 C. Configure as S3 gateway VPC endpoint. 
 D. Create the S3 bucket in the same AWS Region as the EC2 instances.
 
-17. wrong
+17. B
 A company's application collects data from multiple SaaS providers. Currently, Amazon EC2 instances receive the incoming data, upload it to an Amazon S3 bucket for analysis, and then notify users when the upload is finished. The company is experiecing performance degradation and wants to improve performance while minimizing operational overhead. Which solution should a Solutions Architect recommend?
 
 A. Create an Auto Scaling group for the EC2 instances to scale horizontally. Configure S3 event notifications to publish to an Amazon SNS topic when uploads complete.
@@ -3462,7 +3474,7 @@ B. Use Amazon AppFlow to transfer data directly from each SaaS source to the S3 
 C. Configure Amazon EventBridge rules for each SaaS source to send data to S3. Create another EventBridge rule to trigger an SNS notification when uploads complete. 
 D. Containerize the application and run it on Amazon Elastic Container Service. Use CloudWatch Container Insights to trigger SNS notifications after S3 uploads. 
 
-18. right 
+18.  B
 A Solutions Architect is designing an application that must securely access data hosted in a different AWS account within the same Region. The traffic must remian private and must not traverse the public internet. Which solution provides the required connectivity at the lowest cost?
 
 A. Configure an AWS Direct Connect connection for each account.
@@ -3470,7 +3482,7 @@ B. Establish a VPC peering connection between the two account's VPCs.
 C. Add a NAT gateway in the account the hosts the data.
 D. Modify security group rules in both accounts to allow cross-account access.
 
-19. right
+19. A
 A Solutions Architect is designing a three-tier web application that uses an Auto Scaling group of Amazon EC2 instances behind an Elastic Load Balancing Classic Load Balancer. The security team mandates that web servers must only accept traffic from the load balancer and must not be directly reachable from the internet. What configuration should be implemented to meet this requirement?
 
 A. Configure the web tier's security group to allow inbound traffic only from the Classic Load Balancer's security group. 
@@ -3478,7 +3490,7 @@ B. Deploy a load balancer software solution on a seperate EC2 instance.
 C. Update the web servers' security group to block all traffic originating from the public internet.
 D. Place an Amazon CloudFront distribution in front of the Classic Load Balancer.
 
-20. wrong
+20. C
 An application needs block-level storage to support frequent file updates. The total dataset size is 500 GB, and the workload must consistently sustain 100 MiB/s of combined read and write throughput. Which AWS storage service is most appropriate choice?
 
 A. Amazon EFS 
@@ -3486,7 +3498,7 @@ B. Amazon S3
 C. Amazon EBS
 D. Amazon S3 Glacier
 
-21. right  
+21. C 
 A legacy application must connect to local storage using the iSCI protocol. The team wants to provision new, reliable storage on AWS maintaining compatibility with the application's exiting iSCI requirements. Which AWS storage solution should be selected?
 
 A. Use AWS Snowball as temporary storage until the application is modernized.
@@ -3494,7 +3506,7 @@ B. Deploy AWS Storage Gateway in cached mode to present iSCSI volumes while stor
 C. Deploy AWS Storage Gateway in stored mode to provide iSCSI volumes with primary data stored locally and asynchronously backed up to Amazon S3. 
 D. Mount an Amazon S3 bucket locally by using the File Gateway configuration.
 
-22. wrong
+22. B
 A production application frequently updates and deletes records. The application must always retrieve the latest committed version of the data wheenever it is accessed. Which AWS Storage Service is the most appropriate for this requirement?
 
 A. Amazon Redshift
@@ -3502,7 +3514,7 @@ B. Amazon RDS
 C. AWS Storage Gateway
 D. Amazon S3
 
-23. right
+23. D
 A Solutions Architect is developing a feature that uses AWS Lambda to generate metadata whenever a user uploads an image to Amazon S3. The metadata must be fully indexed to allow efficient lookups and queries. Which AWS service should be used to store this metadata?
 
 A. Kinesis
@@ -3510,7 +3522,7 @@ B. Amazon S3
 C. Amazon EFS
 D. Amazon DynamoDB 
 
-24. wrong
+24. B & D
 A company wants to track read and write IOPS metrics for its MySQL database running on Amazon RDS and receive real-time alerts when certain thresholds are exceeded. Which two AWS services should be used to implement this monitoring and alerting solution?
 
 A. SQS
@@ -3519,7 +3531,7 @@ C. Amazon Route 53
 D. SNS
 E. SES
 
-25.  right
+25.  C
 What is a primary distinction between an Amnazon EBS-backed EC2 instance and an instance store-backed EC2 instance?
 
 A. Auto Scaling can only be used with EBS-backed instances
@@ -3633,4 +3645,72 @@ File Gateway uses NFS/SMB
 Tape Gateway VTL (backup/archive)
 Volume Gateway iSCSI (block)
 
+30. 
+A big data analytics company writes data and log files in Amazon S3 buckets. The company now wants to stream the existing data files as well as any ongoing file updates from Amazon S3 to Amazon Kinesis Data Streams.
 
+writes data and log files into S3
+now stream existing data files as well as ongoing file updates from S3 to Kinesis
+
+It's the choice that takes data to migrate straight to the streams
+
+Leverage AWS Database Migration Service (AWS DMS) as a bridge between Amazon S3 and Amazon Kinesis Data Streams
+
+Question: What's the point of Firehose?
+
+Kinesis Data Streams
+Two modes:
+
+1. provision mode
+think of kinesis data stream is a pipeline
+data comes in
+producers > consumers
+
+Inside the pipeline, there's shards.
+Shards - control throughput of the pipeline
+DataBlob = data payload
+
+Producers - produce data into the stream
+data packages go into the shard
+record = package
+In the record(package):
+1) Seq# - added by kinesis
+2) Partition Key and Data Blob < 1mb> - both included by producer
+
+Question 55. 
+You have been hired as a Solutions Architect to advice a company on the various authentication/authorization mechanisms that AWS offers to authorize an API call within the Amazon API Gateway. The company would prefer a solution that offers built-in user management.
+
+Which of the following solutions would you suggest as the best fit for the given use-case?
+
+Use Amazon Cognito User Pools
+
+2. on demand
+
+don't know how much throughput you need so it adjusts the shards
+
+partition act differently
+
+Question 54.
+A media agency stores its re-creatable assets on Amazon Simple Storage Service (Amazon S3) buckets. The assets are accessed by a large number of users for the first few days and the frequency of access falls down drastically after a week. Although the assets would be accessed occasionally after the first week, but they must continue to be immediately accessible when required. The cost of maintaining all the assets on Amazon S3 storage is turning out to be very expensive and the agency is looking at reducing costs as much as possible. 
+
+As an AWS Certified Solutions Architect - Associate, can you suggest a way to lower the storage costs while fulfilling the business requirements?
+
+Configure a lifecycle policy to transition the objects to Amazon S3 One Zone-Infrequent Access (S3 One Zone-IA) after 30 days
+
+Question 51.
+A retail company wants to rollout and test a blue-green deployment for its global application in the next 48 hours. Most of the customers use mobile phones which are prone to Domain Name System (DNS) caching. The company has only two days left for the annual Thanksgiving sale to commence.
+
+As a Solutions Architect, which of the following options would you recommend to test the deployment on as many users as possible in the given time frame?
+
+Use AWS Global Accelerator to distribute a portion of the traffic to a particular deployment
+
+Blue/green deployment is a technique for releasing applications by shifting traffic between two identical environments running different versions of the application: "Blue" is the currently running version and "green" the new version. This type of deployment allows you to test features in the green environment wihtout impacting the currently running version of your application. When you're satisfied that the green version is working properly, you can gradually reroute the traffic from the old blue environment to the new green environment. Blue/green deployments can mitigate common  risks associated with deploying software, such as downtime and rollback capability.
+
+Use AWS Global Accelerator to distribute a portion of traffic to a particular deployment
+
+AWS Global Accelerator is a network layer service that directs traffic to optimal endpoints over the AWS global network, this improves the availability and performance of your internet applications. It provides two static anycast IP addresses that act as a fixed entry point to your application endpoints in a single or multiple AWS Regions, such as your Application Load Balancers, Network Load Balancers, Elastic IP addresses or Amazon EC2 instances, in a single or in multiple AWS regions.
+
+AWS Global Accelerator uses endpoint weights to determine the proportion of traffic that is directed to endpoints in an endpoint group, and traffic dials to control the percentage of traffic that is directed to an endpoint group (an AWS region where your application is deployed).
+
+While relying on the DNS service is a great option for blue/green deployments, it may not fit use-cases that require a fast and controlled transition of the traffic. Some client devices and internet resolvers cache DNS answers for long periods; the DNS feature improves the efficiency of the DNS service as it reduces the DNS traffic across the Internet, and serves as a resiliency technique by preventing authoritative name-server overloads. The downside of this in blue/green deployments is that you don't know how long it will take before all of your users receive updated IP addresses when you update a record, change your ourting preference or when there is an application failure.
+
+With AWS Global Accelerator, you can shift traffic gradually or all at once between the blue and the green environment, and vice-versa without being subject to DNS caching on client devices and internet resolvers, traffic fials and endpoint weights changes are effective within seconds.
