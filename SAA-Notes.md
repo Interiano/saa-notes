@@ -3270,15 +3270,24 @@ I would use AWS Identity and Access Management (IAM) to create fine-grained poli
 
 ### 8. Scenario: You're managing a complex microservices architecture with multiple services communicating. How could you monitor and trace requests across services?
 
-I would integrate AWS X-Ray into the application to trace requests as they traverse services. This would provide insights into latency, errosr, and dependencies between services.
+I would integrate AWS X-Ray into the application to trace requests as they traverse services. This would provide insights into latency, error, and dependencies between services.
+
+My answer:
+I would integrate AWS X-Ray into the application to trace requests as they traverse services. This would provide insights into latency, error, and dependencies between services.
 
 ### 9. Scenario: Your application has a front-end hosted on S3, and you need to enable HTTPS for security. How would you achieve this?
 
 I would use Amazon CloudFront to distrtibute content from the S3 bucket, configure a custom domain, and associated an SSL/TLS certificate through AWS Certificate Manager.
 
+My answer:
+I would use Amazon CloudFront to distribute content from the S3 bucket, configure a custom domain, and associated an SSL/TLS certificate through AWS Certificate Manager.
+
 ### 10. Scenario: Your organization has multiple AWS accounts for different environments (dev, staging, prod). How would you manage centralized billing and ensure cost optimization?
 
 I would use AWS Organizations to manage multiple accounts and enable consolidated billing. AWS Cost Explorer and AWS Budgets could be used to monitor and optimize costs across accounts.  
+
+My answer:
+
 
 ### 11. Scenario: Your application frequently needs to run resource-intensive tasks in the background. How could you ensure efficient and scalable task processing?
 
@@ -3714,3 +3723,98 @@ AWS Global Accelerator uses endpoint weights to determine the proportion of traf
 While relying on the DNS service is a great option for blue/green deployments, it may not fit use-cases that require a fast and controlled transition of the traffic. Some client devices and internet resolvers cache DNS answers for long periods; the DNS feature improves the efficiency of the DNS service as it reduces the DNS traffic across the Internet, and serves as a resiliency technique by preventing authoritative name-server overloads. The downside of this in blue/green deployments is that you don't know how long it will take before all of your users receive updated IP addresses when you update a record, change your ourting preference or when there is an application failure.
 
 With AWS Global Accelerator, you can shift traffic gradually or all at once between the blue and the green environment, and vice-versa without being subject to DNS caching on client devices and internet resolvers, traffic fials and endpoint weights changes are effective within seconds.
+
+Resiliency is the ability of a workload to recover to recover from infrastructure, service, disruptions, such as misconfigurations or transient network issues.
+
+Disaster recovery (DR) is an important part of your resiliency strategy and concerns how your workload responds when a disster strikes (an event that causes a serious negative impact on your business). this response must be based on your organization's business objectives which specify your workloads in the cloud to meet your recovery objectives (RPO and RTO) for a given one-time disaster event. This approach helps your organization to maintain business continuity as part of BCP (Business Continuity Planning).
+
+Resiliency = Disaster Recovery + Availability
+
+Disaster Recover = RTO + RPO
+
+Availability = MTBF + MTTR
+
+MTBF = Mean Time Between Failures
+MTTR = Mean Time To Recover
+
+SLA - AWS Server Level Agreements
+
+AWS Global Cloud Infrastructure - built with availaibility zones
+
+AWS Auto Scaling
+
+Responsibility for resilience 'in' the cloud:
+continuous testing of critical infrastructure, workload architecture, change managment and operational resilience, observability and failure management
+
+Responsibility for resilience 'of' the cloud:
+hardware and services, computer, storage, database, networking. AWS infrastructure regions, availability zones, edge locations
+
+BCP - Business Continuity Plan
+
+AWS services
+
+EBS snapshot
+DynamoDB backup
+RDS snapshot
+Aurora DB snapshot
+EFS backup
+Redshift snapshot
+Neptune snapshot
+DocumentDB
+FSx for Windows File Server, Amazon FSx for Lustre, Amazon FSx for NetApp ONTOP, and Amazon FSx for OpenZFS
+
+S3, you can use S3 Cross-Region Replication (CRR) to asynchronously copy objects to an S3 bucket in the DR region continuously, while providing versioning for the stored objects so that you can choose your restoration point. Continuous replication of data has the advantage of being the shortest time (near zero) to bak up data, but may not protect against disaster events such as data corruption or maliciaons
+
+AWS Backup supports copying backups across Regions, such as to disaster recovery Region.
+
+As an additional disaster recovery strategy for your S3 data, enable S3 object versioning. Object versioning protects your data in S3 from the consequences of deletion or modivication actions by retianing the original version before the actio. Object versioning can be useful mitigation for human-error type disasters. If you are using S3 replication to back up data to your DR region, then, by default, when an object is deleted in the source bucket, S3 adds a delete marker in the source bucket only. This approach protects data in the /dr region from malicious deletions in the source Region.
+
+Question 49.
+An IT company has built a custom data warehousing solution for a retail organization by using Amazon Redshift. As part of the cost optimizations, the company wants to move any historical data (any data older than a year) into Amazon S3, as the daily analytical reports consume data for just the last one year. however the analysts want to retain the ability to cross-reference this historical data along with the daily reports.
+
+The company wants to develop a solution with the Least amount of effort and Minimum cost. As a solutions architect, which option would you recommend to faciliate this use-case?
+
+Use Amazon Redshift Spectrum to create Amazon Redshift cluster tables pointing to the underlyi8ng historical data in Amazon S3. The analytics team can then query this historical data to cross-reference with the daily reports from Redshift. 
+
+Question 45
+An IT company provides Amazon Simple Storage Service (Amazon S3) bucket access to specific users within the same account for completing project specific work. With changing business requirements, cross-account S3 access requests are also growing every mopnth. Thje comapnyu is looking for a solution that can offer user level as well account-level access permissions for the data stored in Amazon S3 bukcets. As a Solutions Architect, which of the following would you suggest as the MOST optimized way of controlling access for this use-case?
+
+Use Amazon S3 Bucket Policies
+
+Question 44.
+An e-commerce application uses an Amazon Aurora Multi-AZ deployment for its database. While analyzing the performance metrics, the engineering team has found that the database reads are causing high input/output (I/O) and adding latency to the write requests against the database. As an AWS Certified Solutions Architect Associate, what would you recommend to separate the read requests from the write requests?
+
+Set up a read replica and modify the application to use the appropriate endpoint
+
+Question 42.
+A financial services company has deployed its flagship application on Amazon EC2 instances. Since the application handles sensitive customer data, the security team at the company wants to ensure that any third-party Secure Sockets Layer certificate (SSL certifivate) SSL/Transport Layer Security (TLS) certificates configured on Amazon EC2 instances via the AWS Certificate Manager (ACM) are renewed before their expiry date. The company has hired you as an AWS Certified Solutions Architect Associate to build a solution that notifies the secuirty team 30 days before the certifivate expiration. The solution should require the least amount of scripting and maintenance effort.
+
+Leverage AWS Config managed rule to check if any third-party SSL/TLS certifivates imported into ACM are marked for expiration within 30 days. Configure the rule to trigger an Amazon SNS notification to the security team if any certificate expires within 30 days
+
+Question 40.
+A company has hired you as an AWS Certified Solutions Architect - Associate to help with redesigning a real-time data processor. The company wants to build custom applications that process and analyze the streaming data for its specialized needs.
+
+Which solution will you recommend to address this use-case?
+
+Use Amazon Kinesis Data Streams to process the data streams as well decouple the producers and consumers for the real-time data processor
+
+Question 37.
+Your company is deploying a website running on AWS Elastic Beanstalk. The website takes over 45 minutes for the installation and contains both static as well as dynamic files that must be generated during the installation process.
+
+As a Solutions Architect, you would like to bring the time to create a new instance in your AWS Elastic Beanstalk deployment to be less than 2 minutes. Whuich the following options should be combined to build a solution for this requirement?
+
+Create a Golden Amazon Machine Image (AMI) with the static installation components already setup
+
+Use Amazon EC2 user data to customize the dynamic installation parts at boot time
+
+Question 36.
+A company has grown from a small startup to an enterprise employing over 1000 people. As the team size has grown, the company has recnetly observed some strange behavior, with Amazon S3 buckets settings being changed regularly. How can you figure out what's happening without restircting the rights of the users?
+
+Enable CloudTrail analyze tool
+
+Question 35. 
+An Elastic Load Balancer has marked all the Amazon EC2 instances in the target group as unhealthy. Surprisingly, when a developer enters the IP address of the Amazon EC2 instances in the web browser, he can acxcess the website. What could be the reason the instances are being marked as unhealthy?
+
+The route for the health check is misconfigured
+
+The security group of the Amazon EC2 instance does not allow for traffic from the security group of the Application Load Balancer
