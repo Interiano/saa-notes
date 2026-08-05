@@ -3951,7 +3951,42 @@ A DevOps Engineer is required to design a cloud architecture in AWS. The Enginee
 
 Which configuration will satisfy the given requirement?
 
-A company has multiple VPCs with IPv6 enabled for its suite of web applications. Thje Solutions ARchitect attempted to deploy a new Amazon EC2 instance but encountered an error indicating that there were no availabie IP addresses on the subnet. The VPC has a comination of IPv4 and IP{v6 CIDR blocks, but the IpV4 cidr blocks are nearing exhaustion. The architect needs a solution that will resolve this issue while allowing futre scalability.
+A company has multiple VPCs with IPv6 enabled for its suite of web applications. Thje Solutions ARchitect attempted to deploy a new Amazon EC2 instance but encountered an error indicating that there were no availabie IP addresses on the subnet. The VPC has a comination of IPv4 and IPv6 CIDR blocks, but the IpV4 cidr blocks are nearing exhaustion. The architect needs a solution that will resolve this issue while allowing futre scalability.
 
 How should the Solutions ARchitect resolve this problem?
 
+A healthcare company has developed an AWS Lambda function to handle requests from a third-party analytics service. When new patient dat is available, the servic3 send aqn HTTP POST request to a webhook intendted to trfgigger the Lambda function.
+
+What would be the MOST operationally efficient solution to ensure that the service can ccall the Lambda fun ctioni'?
+
+Generate a Lambda Functiuon URL and use it as the webhook for the third-party analytics service.
+
+A digital bank has recently deployed a fraud detection model in AWS Lambda. The company intends to put the model to test by processing transactions that are recorded in the production DynamoDB table. The security team must be immediately notified when a transaction is flagged as fraudulent.
+
+How can the solutions architect satisfy the requirements while minimizing the iumpact on database operations and performance?
+
+8/4/26
+Both historical records and requently accessed data are stored on an on-premise storage system. The amount of current data is growing at an exponential rate. As the storage's capacity is nearing its limit, the company's Solutions Architect has decided to move the historical records to AWS to free up space for the active date.
+
+Which of the following architectures deliver the best solution in terms of cost and operational management?
+
+Use AWS DataSync to move the historical records from on-premises to AWS. Choose Amazon S3 Glacier Deep Archive to be the destgination for the data. 
+This is because it being on-premise, you are able to go straight into Glacier.
+
+In Amazon EC2, you can manage your instances from the moment you launch them up to their termination. You can flexibly control your computing costs by changing the EC2 instance state.
+
+Which of the following statements is true regarding EC2 billing?
+
+When preparing hibernation in stop status
+
+When RI stop you still get billed.
+
+A company has established a dedicated network connection from its on-premise data center to AWS Cloud using AWS Direct Connect (DX). The core network services, such as the Domain Name System (DNS) service and Active Directory services, are all hosted on-premises. The company has new AWS accounts that will also require consistent and dedicated access to these network services.
+
+Which of the following can satisfy this requirement with the LEAST amount of operational overhead and in a cost-effective manner?
+
+Create a new Direct Connect gateway and integrate it with the existing Direct Connect connection. Set up a Transit Gateway betweeen AWS acdcounts and associate it with the Direct Connect gateway.
+
+An e-commerce company plans to optimize its disaster recovery configuration using AWS Cloud to minimize opertional disruptions during outages or major system maintenance for its on-premises Microsoft SQL Server-based application. The objective is to achieve a recoveryu point objective (RPO) of 60 seconds or less and recov ery time (RTO) of 1 hour
+
+Set up a pilot light strategy using AWS Elastic Disaster Recovery (AWS DRS) to replicate the changes of the on-premises application to AWS.
