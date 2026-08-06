@@ -3989,4 +3989,113 @@ Create a new Direct Connect gateway and integrate it with the existing Direct Co
 
 An e-commerce company plans to optimize its disaster recovery configuration using AWS Cloud to minimize opertional disruptions during outages or major system maintenance for its on-premises Microsoft SQL Server-based application. The objective is to achieve a recoveryu point objective (RPO) of 60 seconds or less and recov ery time (RTO) of 1 hour
 
-Set up a pilot light strategy using AWS Elastic Disaster Recovery (AWS DRS) to replicate the changes of the on-premises application to AWS.
+Set up a pilot light strategy using AWS Elastic Disaster Recovery (AWS DRS) to 
+replicate the changes of the on-premises application to AWS.
+
+
+An organiazation plans to run an application in a dedicated physical server that doesn't use virtualization. The application data will be sorted in a storage solution that uses an NFS protocol. To prevent data loss, you need to use a durable cloud storage service to store a copy of your data. Which of the following is the mopst suitable solution to meet requiremtn?
+
+Storage Gateway physical appliance on premise on your compute resources. configure file gateway to store the application data and create an amazon S3 bucket to store a buackup of your data. 
+
+Volume Gateway using iSCSI protocol
+
+An organization plans to run an application in a dedicated physical server that doesn't use virtualizatiuon. The application data will be stored in a sotrage solution that6 uses an NFS protocl. To prevent data loss, you need to use a durable cloud storage service to stroe a dopy of your data. 
+
+Which of the following is the most5 suitable solution to meet the requirement?
+
+Use an AWS Storage Gateway hardware appliance for your compute resources. Configure File Gateway to store the application data and create an Amazon S3 bucket to store a backup of your data.
+
+A company has a web-based ticketing service that utilizes Amazon SQS and a fleet of EC2 instances. The EC2 instances that consume messages from the SQS queue are configured to poll the queue as often as possible to keep end-to-end throughput as high as possible. The Solutions Architect noticed that polling the queue in tight loops is using unnecessary CPU cycles, resulting in increased operational costs due to empty responses.
+
+In this scenario, what should the Solutions Architedct do to make the system more cost-effective?
+
+A game development company operates several virtual reality (VR) and augmented reality (AR) games that use various RESTful web APIs hosted in its on-premises data center, which currently sits behind a content delivery network (CDN) for faster global delivery. Due to the unprecendented growth of the company, the management decided to migrate its system to AWS Cloud to scale out its resources as well as to minimize costs.
+
+Which of the following is the mos t5ocst-effective and scalable solution to meet the above requirement?
+
+Lambda and API
+
+A company is using an Amazon RDS for MySQL 5/6 with Multi-AZ deployment enabled and several web servers across two AWS Regions. The database is currentlyh experiencing highly dynamic reads due to growth of the company's websxite. The Solutions Architect tried to test the read perfformanced from the secondary AWS Region and noticed a notable slowdown on the SWL queries.
+
+Which of the following options would provide a read replication latency of less than 1 second?
+
+Migrate the existing datbase to Amazon Aurora and create a cross-region read replica.
+
+A Forex trading platform, which frequently processes and stores global financial data every minute, is hosted in an on-premises data center and uses an Oracle database. Due to recent cooling problem in its data center, the company urgenlty needs to migrate its infrastructure to AWS to improve the performance of its applications. As the Solutions Architect, the responsibility is to ensure that the databse is properly migrated and remains availabled in case of databse server failure in the future, folowwing AWS Prescriptive Guiidance for datbase migration and high availability.
+
+Which combination of actions would meet the requirement?
+
+Migrate & Multi-AZ
+
+A company plans to host a web application in an Auto Scaling group of Amazon EC2 instances. The application will be used globally by users to upload and store several types of files. Based on user trends, files that are older than 2 years must be stored in a different storage class. The Solutions Architect of the company needs to create a cost-effective and scalable solution to store the old files yet still provdie durability and high availability.
+
+Which of the following approach can be sued to fulfill this requirement?
+
+A company needs to use Amazon Aurora as the Amazon RDS database engine for its web application. The Solutions Architect has been instructed to implement a 90-day RDS backup retention policy.
+
+Which of the following options can satisfy the given requirement?
+
+Create a AWS Backup plan to take daily snapshots with a retention of 90 days.
+
+A company deployed an online enrollment system database on prestigious university, which is hosted in RDS. The Solutions Architect is required to monitor the database metrics in Amazon CloudWatch to ensure the availability of the enrollment system. What are the enhanced monitoring metrics that Amazon CloudWatch gathers from Amazon RDS DB instances which provide more accurate information?
+
+Amazon RDS provides metrics in real-time for the operating system (OS) that your DB instance runs on. You can view the metrics for your DB instance using the console or consume the Enhanced Monitoring JSON output from CloudWatch Logs in a monitoring system of your choice.
+
+CloudWatch gathers metrics about CPU utilization from the hypervisor for a DB instance, and Enhanced Monitoring gathers its metrics from an agent on the instance. As a result, you might find differences between the measurements because the hypervisor layer performs a small amount of work. The differences can be greater if your DB instances use smaller instance classes because than there are likely more virtual machines (VMs) that are managed by the hypervisor layer on a single physical instance. Enhanced Monitoring metrics are useful when you want to see how differnet processes or threads on a DB instance use the CPU.
+
+CloudWatch Metrics for RDS = CPU, connections, storage, memory (hypervisor view)
+Enhanced Monitoring = process-level detail, child processes, OS processes (agent view)
+
+A company has an application that uses multiple EC2 instances located in various AWS regions such as US Eaast (Ohio), US West (N. Carolina), and EU (Ireland). The manager instructured the Solutions Architect to set up a latency-based routing to route incoming traffic for www.tutotialsdojo.com to all the EC2 instances accross all AWS regions.
+
+Which of the following options can satisfy the given requirement?
+
+An advertising company is currently working on a proof of concept project that automaitcally provides SEO analytics for its clients. Your company has a VPC in AWS that operates in a dual-stadck mode in which IPv4 and IPv6 is allowed. You deployed the application to an Auto Scaling group of EC2 instances jwith an Application Load Balancer in front that evenly bdistributes the incoming traffic. You are ready to go live but you need to point your domain name to the Application Load Balancer.
+
+In Route  53, which record  types will you use to point the DNS name of the Application Load Balancer?
+
+A record set
+AAAA record set
+CNAME can't create at the zone apex
+
+A medical records company is planning to store sensitive clinical trial data in an Amazon S3 repository with the object-level versioning feature enabled.  The Solutions ARchitect is tasked with ensuring that no object can be overwritten or deleted by any user for a period of one year only. To meet the strict compliance requirements, the root user of the company's AWS account must also be restricted fromi making any changes to an object in the S3 bucket. Backup Vault Lock offers similar immutability, but the company requrires object-level protection in S3.
+
+Which of the following is the most secure way of storing the data in S3?
+
+Enable S3 Object Lock in compliance mode with a retention period of one year
+
+A Solutions Architect is designing a monitoring application which generates audit logs of all operational activities of the company's cloud infrastructure. Their IT Security and Compliance team mandates that the application retain the logs for 5 years before the data can be deleted.
+
+How can the Architect meet the above requirement?
+
+A multinational bank is storing its confidential files in an S3 bucket. The security team recently performed an audit, and the report shows that multiple files have been uplaoded without 256-bit Advanced Encryption Standard (AES) server-side encryption. For added protection, the encryption key must be automatically rotated every year. The solutions architect must ensure that there would be no other unencryupted files uploaded in the S3 bucket in the future. 
+
+Which of the following meet these requiremets with the LEAST operational overhead?
+
+A media company needs to configure an Amazon S3 bucket to serve static assets for the public-facing web application. Which methods ensure that all of the objects uploaded to the S3 bucket can be read publicly all over the internet?
+
+recount ontap vs other FSx file system services
+
+NFSv4 protocol? look into protocols
+
+IAM policy to enforce start, stop, and terminate EC2 instances IN us-west-1 region
+
+also
+
+any requests originating outside of the company's network range should be denied
+192.158.1.0/24
+
+What's EC2 Nitro System?
+
+CloudFormation: read some
+
+planning to use DX connection to establish a dedicated connection
+
+multiple research departments in AWS cloud
+
+each department is free to provision resources as needed but to ewnsure normal operations, 
+
+TRACK aws resources usage so it doesnt reach quotas
+
+bombination of two choice
+
