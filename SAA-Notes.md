@@ -4085,9 +4085,30 @@ also
 any requests originating outside of the company's network range should be denied
 192.158.1.0/24
 
+###
 What's EC2 Nitro System?
 
 CloudFormation: read some
+What does IRSA  IAM Role for Service Accounts means?
+
+What's the difference between HPA Horizontal Pod Autoscaler vs Cluster Autoscaler
+Horizontal Pod Autoscaler - automatically adds/removes pods based on CPU, memory, or custom metrics. Needs Kubernetes Metrics Server to collect those metrics.
+
+# kubernetes metrics and not cloudwatch for eks?
+
+Vertical Pod Autoscaler - adjusts how much CPU/memory each pod gets
+
+Cluster Autoscaler, AWS's orignal tool for add/removing EC2 nodes when pods can't be scheduled. Works but slower.
+
+# what does it mean when pods can't be scheduled?
+
+Karpenter - AWS's newer, faster node scaling tool. Provisions nodes in seconds not minutes. Less operational overhead than Cluster Autoscaler. 
+
+# is there a use case for Karpenter over Cluster Autoscaler?
+
+
+
+
 
 planning to use DX connection to establish a dedicated connection
 
@@ -4099,3 +4120,93 @@ TRACK aws resources usage so it doesnt reach quotas
 
 bombination of two choice
 
+A financial services company plans to migrate its trading application from on-premises Microsoft Windows Server to Amazon Web Services (AWS). The solution must ensure high availability across multiple Availability Zones and offer low-latency access to block storage.
+
+Which of the following solutions will fulfill these requirements?
+
+Configure the trading application on Amazon EC2 Windows Server instances across two Availability Zones. Use Amazon FSx for NetApp ONTAP to create a Multi-AZ file system and access the data via iSCI protocol.
+
+iSCI protocol is block format
+
+A company has several EC2 Reserved Instances in their account that need to be decommissioned and shut down since they are no longer used by the development team. However, the data is still required by the audit team for compliance purposes.
+
+Which of the following steps can be taken in this scenerio?
+
+sell them
+save the ebs snapshots and terminate the EC2 instances
+
+An organization uses a Microsoft SQL Server database to support its suit of applications. The organiazation plans to transition to an Amazon Aurora PostgreSQL database while minimizing application code modifications. 
+
+Which combination of actions will achieve these objecttives?
+
+Turn on Babelfish on Aurora PostgreSQL to allow applications to continue using existing SQL queries
+
+Schema Tool
+
+A company installed sensors to track the number of people who visit the park. The data is sent every day to an Amazon Kinesis strream with default settings for processing, in which a consumer is configured to process the data every other day. The employee noticed that the Amazon S3 bucket is not receiving all of the data that is being sent to the Kinesis stream. The employee checked the sensors to see if its properly sending the data to Kinsesis and verified that the data is indeed sent every day.
+
+What could be the reaosn for this?
+
+By default, the data records are only accesible for 24 hours from the time they are added to Kinesis stream. 
+
+A data analytics company, which uses machine learning to collect and analyze consumer data, is using Redshift cluster as their data warehouse. You are instructured to implement a disaster recovery plan for their systems to ensure business continuity even in the event of an AWS region outage.
+
+Which of the following is the best approach to meet this requirement?
+
+Enabled Cross-Region Snapshots Copy in your Amazon Redshift Cluster
+this is also can be made autonomously 
+
+Amazon Elastic Kubernetes Service (Amazon EKS) with IAM Role for Service Accounts (IRSA) is used by an e-commerce company to deploy and manage its containerized applications. The website experien ces a surge in traffic around the holidays, which significantly adds to the effort. The goal is to ensure that its underlying infrastructure automaitcally scales in and out in response to demand.
+
+Which of the following would meet the requirements with the LEAST amount of operational overhead?
+
+Install the Kubernetes Metrics Server on the EKS cluster and activate the Horizontal Pod Autoscaling.
+
+Set up Karpenter to automatically adjust the number of nodes in the EKS cluster when pods fail or are rescheduled onto other nodes.
+
+Fundamentally, I must learn Kubernetes and in particular how EKS (Elastic Kubernetes Service) works to get this answer correct.
+
+A client is hosting their company website on a cluster of web servers that are behind a public-facing Application Load Balancer (AWS ALB). The client also uses Amazon Route 53 to manage their public DNS.
+
+How should the client configure the DNS zone apex record to point to the laod balancer?
+
+Create an A record aliased to the load balancer DNS name.
+
+An e-commerce company is redesigning the architecture of its application. The new architecture needs a more robust application layer and an online transactional processing (OLTP) relational database that can handle spiky traffic loads. The company also wants to ensure the application is always available while minimizing computing costs during idle periods.
+
+As the company's solution architect, which solution would be the most cost-effective to meet these requirements?
+
+A company uses multiple AWS acounts consolidated under AWS Organizations. The company needs to copy multiple Amazon S3 objects to an S3 bucket in a different owned AWS account. The Solutions Architect must configure permissions to enable this transfer while ensring the destination account owns the copied objects rather than the source account.
+How can the Architect accoplish this requiremehnt
+
+A hospital has a mission-critical application that uses a RESTful API powered by Amazon API Gateway and AWS Lambda. The medical officers upload PDF reports to the system which are then stored as static media content in an Amazon S3 bucket. 
+
+The security team wants to imporve its visibility when it comes to cyber-attacks and ensure HIPAA (Health Insurance Portability and Accountability Act) compliance. The company is searching for a solution that continuously monitors object-level S3 API operations and identifies protected health information (PHI) in the reports, with minimal changes in the existing Lambda function.
+
+Which of the following solutions will meet these requirements with the LEAST operational overhead?
+
+A startup plans to scale out its cloud resources. With its rapid growth, the company needs an automated way of scanning its Amazon EC2 instances for security purposes. The company needs to automatically discover software vulnerabilities on its cloud resources and validate that its workloads meet security compliances.
+
+Which of the following options should be implemented to meet the company requirements?
+
+Amazon Inspector to publish results to Amazon EventBridge (Amazon CloudWatch Events) and send notifications using Amazon Simple Notification Service (Amazon SNS)
+
+Amazon Inspector is a vulnerability management service that continuosusly scans your AWS workloads for vulnerabilities. Amazon Inspector automatically discovers and scans Amazon EC2 instances and container imnages residing in Amazon Elastic Container Registry (Amazon ECR) for software vulnerabilties and unintented network exposure.
+
+When a software vulenerability or network issue is discovered, Amazon Inspector creates a finding describes the vulnerability, indentifies the affected resource, rates the severity of the vulnerability, and provides remediation guidance.
+
+Friendly reminder: GuardDuty is for malicious activity and it is a threat detection service that continuously monitors your AWS workloads 
+
+A healthcare company has migrated its Electornic Health Record (EHR) system to AWS and is now seeking to protect its production VPC from a wide range of potential threats. The company requires a solution to monitor both incoming and outgoing VPC traffic and block any malicioius connections.
+
+As a Solution Architect, how will you meet these requirements?
+
+Create custom security rules in AWS Network Firewall to detect and filter traffic passing to and from the production VPC
+
+AWS Network Firewall is a managed service offering advanced network security capabilities to protect VPCs (Virtual Private Clouds) against potential threats. It enables you to define custome security rules and policies to monitor and control the traffic flow passinug to and from your VPC. With AWS Network Firewall, you can create highly customizablew rules based on various criteria, such as IP addresses, domains, ports, and protocols. These rules allow you to precisely detect and filter incoming outgoing traffic, enabling you to identify and block any malicious connections.
+
+In the given scenario, the company can monitor incoming and outgoing VPC traffic by implementing custom security rules in AWS Network Firewall. The rules can be tailored to detect suspicious or malicious connections that could compromise the security of the EHR system or put sensitive patient data at risk. The granular approach ensures that the healthcare company can enforce a strict security posture and mitigate the risk of unauthorized access or data breaches.
+
+A multimedia company needs to deploy web services to an AWS region that they never used before. The company currently has an IAM role for its Amazon EC2 instance that permits the instance to access Amazon DynamoDB. They want their EC2 instances in the new region to have the exact same prvileges.
+
+What should be done to accomplish this?
