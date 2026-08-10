@@ -4210,3 +4210,24 @@ In the given scenario, the company can monitor incoming and outgoing VPC traffic
 A multimedia company needs to deploy web services to an AWS region that they never used before. The company currently has an IAM role for its Amazon EC2 instance that permits the instance to access Amazon DynamoDB. They want their EC2 instances in the new region to have the exact same prvileges.
 
 What should be done to accomplish this?
+
+Company has:
+regional API Gateway (us-east-2) that servers as a proxy to a backened service
+has a hosted zone for its domain on Amazon Route 53
+
+clients connect to the service using the invoke URL of the api stage. 
+
+We want custom domain name with the API.
+The domain name must support HTTPS
+
+
+company has a datacenter with  several applictions hosted on hurded of VM running
+
+company wants to take advantage of 
+SCALABILITY and cost effeectiveness
+
+
+migrate app to cloud.
+before starting the migration, managent wants to have an inventory of all th4e servers and watns the ab9ility to track the miogration of each applicatiuon
+
+
