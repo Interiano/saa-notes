@@ -4230,4 +4230,197 @@ SCALABILITY and cost effeectiveness
 migrate app to cloud.
 before starting the migration, managent wants to have an inventory of all th4e servers and watns the ab9ility to track the miogration of each applicatiuon
 
+A company is running a batch job on an EC2 instance inside a private subnet
+
+ALB - Ec2 instances for web application + auto scaling group behind ALB
+
+ASG
+
+A manufacturing company is building an IoT-based system to detect faults in its proudction process in real-time. 
+real-time
+
+the system will feed sensor data to API Gateway REST API, where the dat will be analyzed for any anomalies for faults
+
+the resulf ot the processing will then determine remedial action to be taken.  it's critical that the data is process in the sxequence in chi
+
+8/9/26
+
+What is a Service Quota?
+
+AWS limits how much of each serivce you can use. Examples;
+
+    Maximum 5 VPC per region
+    Maximum 20 EC2 per region
+    Maximum 100 S3 bvuckets per accouunt
+
+These are service quotas - hard limits AWS enforces
+
+The proglem:
+
+Multiple departments freely provioning resources. Nobody is tracking how lcose they are to hitting these limits
+
+One day - someone tries to create a 6th VPC and it fails. Unexpected outage. BAd.
+
+The goal:
+
+Get warned before you hit the limit. Not after.
+
+How do you track service quotas in AWS?
+AWS trusted advisor has a feature called service limits check
+
+AWS Trusted Adviusor has a feature called Service Limits Check
+
+It looks at your current usage vs your quota limits and says:
+"Hey, you're at 80% of your EC2 limit in us-east-1. You might want to request an increase"
+
+How do automate this for 24 hours?
+
+Lambda functiuon runs every 24 hours
+Calls DescribeTrustedAdvisorChecks API
+Gets current service limit status
+If approaching likmit > send SNS notification > team gets alerted
+
+A company has multiple research departments that have deployed several resources to the AWS cloud. Each department is free to provision resrouces as needed. To ensure normal operations, the coimpany wants to track its AWS resources usage so that6 it does not reach the AWS service quotas unexpectedly.
+
+Which combination of actions should the Solutions Architect implement to meet the company requirements?
+
+Write an AWS Lambda function that refreshes the AWS TRusted QAvisor Serive Limits checks and set it to run every 24 hours.
+
+Capture the events using Amazon EventBridge (Amazon CloudWatch Events) and use an Amazon Simple Notification Service (Amazon SNS) topic as the target for notifications.
+
+A company has a web-based ticketing service that utilizes Amazon SQS and a fleet of EC2 instances. The EC2 instances that consume messages from the SQS queue are configured to poll the queue as often as possible to keep end-to-end throughput as high as possible. The Solutions Architect noticed that polling the queue in tight loops is using unnecessary CPU cycles, resulting in increased operational costs due to empty responses.
+
+In this scenario, what should the Solutions Architect do to make the system more cost-effective?
+
+(view)	1	0	1	00:00:00	
+ Configure Amazon SQS to use long polling by setting the ReceiveMessageWaitTimeSeconds to zero.
+ Configure Amazon SQS to use long polling by setting the ReceiveMessageWaitTimeSeconds to a number greater than zero.
+ Configure Amazon SQS to use short polling by setting the ReceiveMessageWaitTimeSeconds to a number greater than zero.
+ Configure Amazon SQS to use short polling by setting the ReceiveMessageWaitTimeSeconds to zero.
+In this scenario, the application is deployed in a fleet of EC2 instances that are polling messages from a single SQS queue. Amazon SQS uses short polling by default, querying only a subset of the servers (based on a weighted random distribution) to determine whether any messages are available for inclusion in the response. Short polling works for scenarios that require higher throughput. However, you can also configure the queue to use Long polling instead, to reduce cost.
+
+The ReceiveMessageWaitTimeSeconds is the queue attribute that determines whether you are using Short or Long polling. By default, its value is zero which means it is using Short polling. If it is set to a value greater than zero, then it is Long polling.
+
+Hence, configuring Amazon SQS to use long polling by setting the ReceiveMessageWaitTimeSeconds to a number greater than zero is the correct answer.
+
+Quick facts about SQS Long Polling:
+
+- Long polling helps reduce your cost of using Amazon SQS by reducing the number of empty responses when there are no messages available to return in reply to a ReceiveMessage request sent to an Amazon SQS queue and eliminating false empty responses when messages are available in the queue but aren't included in the response.
+
+- Long polling reduces the number of empty responses by allowing Amazon SQS to wait until a message is available in the queue before sending a response. Unless the connection times out, the response to the ReceiveMessage request contains at least one of the available messages, up to the maximum number of messages specified in the ReceiveMessage action.
+
+- Long polling eliminates false empty responses by querying all (rather than a limited number) of the servers. Long polling returns messages as soon any message becomes available.
+
+
+A company is implementing its Business Continuity Plan. As p0art of this initiative, the IT Director instructed the IT team to set up an automated backup of all the Amaon EBS volumes attached to the company's Amaon EC2 instances. The solution muhst be implemented as soon as possib le and should be both cost-effective and simple to maintain.
+
+Whbat is the fastest and most cost-effective solution to automatically back up all of the EBS volumes?
+
+Use Amazoln Data Lifecycle Manager (Amazon DLM) t4o auotmate the creation of EBS snapshots.
+
+A retail website has intermittent, sporadic, and unpredictable transactional workloads throughout the day that are hard to predict. The website is currently hosted on-premises and is slated to be migrated to AWS. A new relational database is needed that autoscales capacity to meet the needs of the application’s peak load and scales back down when the surge of activity is over.
+
+Which of the following option is the MOST cost-effective and suitable database setup in this scenario?
+
+Launch an Amazon Aurora Serverless DB cluster then set the minimum and maximum capacity for the cluster.
+
+Launch an Amazon Aurora Provisioned DB cluster with burstable performance DB instance class types.
+
+Launch an Amazon Redshift data warehouse cluster with Concurrency Scaling.
+
+Launch a DynamoDB Global table with Auto Scaling enabled.
+
+The Problem:
+Company has 20 AWS accounts. Each account has security groups. Security groups have CIDR rules like:
+    Allow: 192.168.1.0/24 (new york office) 
+    Allow: 10.0.0.0/16 (london office)
+
+New office opens in Tokyo > need to add its CIDR to every security group in every account
+Old office closes > need to remove the CIDR from every securityh group in every account
+doing this manually = nightmare. 20 accounts x multiple security groups each = hundreds of updates
+
+The fix:
+What is a Prefix List?
+instead of putting CIDRs directly in security groups, you put them in prefix list. Then security groups reference the prefix list ID.
+
+"The maximum number of entries for the prefix lists counts against the quota for entries for the resource."
+
+### Category: CSAA - Design Resilient Architectures
+
+A company hosts its web application on a set of Amnazon EC2 instances in an Auto Scaling group bgehind an Application Load Balancer (ALB). The application has an embedded NoSQL database. As the application receives more traffic, the application becomes overloaded maiunly due toi database requests. The managmenet wants to ensure that the database is eventually consitstent and highly availbalbe.
+
+Which of the following options can meet the company requirements with the least operational overhead?
+
+Configure the Auto Scaling group to spread the EC2 instances across three Availability Zones. Use the AWS Database Migration Service (AWS DMS) with a replication server and an ongoing replication task to migrate the emebedded NoSQL database to Amazon DynamoDB.
+
+An online registration system hosted in an Amazon EKS cluster stores data to a db.t4g.medium Amazon Aurora DB cluster. The database performs well during regular hours but is unable to handle the traffic surge that occurs during flash sales. A solutions architect must move the database to Aurroa Serverless while minimizing downtime and the impact on the operation of the application.
+
+Which change should be taken to meet the objective?
+
+Use AWS Database Migration Service (AWS DMS) to migrate to a new Aurora Serveless database
+
+A tech startup is launching an on-demand food delivery platform using an Amazon ECS cluster with an AWS Fargate serverless compute engine and Amazon Aurora. It is expected that the database read queries will significantly increase in the coming weeks. A Solutions Architect recently launched two Read Replicas to the database cluster to improve the platform's scalability. The team considered using lazy loading to cache results, but that does not balance read traffic across replicas.
+
+Which of the following is the MOST suitable configuration that the Architect should implement to load balance all of the incoming read requests equally to the two Read Replicas?
+
+The Scene:
+your company has 1200 employees. They already log into work computers using Active Directory (AD) - the standard Windows corportate login system.
+
+You want those same employees to access S3 without creating 1200 separate AWS accounts.
+
+You also want each employee to only see their own folder in S3
+
+3 problems to solve:
+
+1. how do employees use their existing corportate login to access AWS?
+2. how do you issue AWS credentials without creating IAM users?
+3. how do you restrict each person to only their folder?
+
+1. SSO (single sign-on) with corporate AD:
+you need a federation proxy or Identity Provider that sits between your corporate AD and AWS.
+
+It says to AWS: "This person already authentitcated with out corporate system - trust me"
+
+AWS trusts it because you've set it up as a trusted Identity Provider.
+
+
+Problem 2 - Temporary AWS credentials
+aws sts (security token service) issues temporary credentials to the federated user.
+
+No permanent IAM user created. No long-lived access keys. Just a temporary token that expires.
+
+Problem 3 - restrict to their own S3 folder
+IAM policy uses a policy variable ${aws:username} to dynamically restrict access
+
+Resource: "arn:aws:s3:::company-bucket/${aws:username}/*"
+
+John logs in > only see company-bucket/john
+
+Full Flow:
+employee enters AD credentials 
+>
+federation proxy verifies with AD
+>
+AWS STS issues temporary credentials
+> 
+employee accesses S3
+>
+IAM policy restricts to their folder only
+
+federation + STS
+Iam role + policy for folder restriction
+
+read endpoint for read operations, such as queries. this endpoint reduces the overhead on the primary instance
+
+cluster endpoint for writes
+
+A launch template is a template that an Auto Scaling group uses to launch EC2 instances. When you create a launch template, you specify information for the instances, such as the ID of the Amazon Machine Iamge (AMI), the instance type, a key pair, one or more security groups, and a block device mapping. If you've launched an EC2 instance before, you specified the same information in order to launch the instance.
+
+You can specify your launch template with multiple Auto Scaling groups. However, you can only specify one launch template
+
+For the MS SQL rule, change the source to the security group ID attached to the application tier
+
+AWS IAM Identity Center centralizes access management for various AWS accounts and applications. It provides single sign-on access, enabling users to manage all their aasigned accounts from a single location. Users can synchronize with an existing identity provider to create new users and groups directly within the service.
+
+IAM Identity Center utilizes permission sets - collections of IAM policies - to manage user access across AWS Organizations. It includes a user-frinedly AWS Access Porta for easy access to applications and supports deployment for both organization and account intances. Designed for high availability across multiple availability zones, the service ensures secure access through AWS Identity and Access Management (IAM) roles and policies.
 
