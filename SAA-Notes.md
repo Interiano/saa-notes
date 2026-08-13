@@ -4424,3 +4424,193 @@ AWS IAM Identity Center centralizes access management for various AWS accounts a
 
 IAM Identity Center utilizes permission sets - collections of IAM policies - to manage user access across AWS Organizations. It includes a user-frinedly AWS Access Porta for easy access to applications and supports deployment for both organization and account intances. Designed for high availability across multiple availability zones, the service ensures secure access through AWS Identity and Access Management (IAM) roles and policies.
 
+S3 Glacier has three retrieval speeds:
+
+Retrieval Type:     Speed:              Cost:
+Expedited           1 - 5 minutes       Most expensive
+Standard            3 - 5 hours         Medium
+Bulk                5 - 12 hours        Cheapest
+
+The problem with Expedited:
+Expedited retrieval is fast BUT capacity is not guaranteed during high-demand periods.
+If everyone needs data at once - you might not get capacity
+
+Provisioned Capacity:
+
+You can purchase provisioned retrieval capacity in advance. This guarantees Expedited retrieval is available whenever you need it.
+
+Guarantees at least 3 expedited retrievals per 5 minutes
+Supports up to 150 MB/s throughput
+
+### Category:   CSAA - Design High-Performing Architectures
+
+mobile application that collects votes for a singing competition
+
+millions of users
+around the world
+
+submit using mobile phones
+
+votes are collected and stored in a highly scalable and highly available database
+
+queried for real-time ranking
+
+db will undergo frequent schema changes throughout the time frame
+
+needs to have read capacity units (RCU) that scale for live rankings
+
+DynamoDB is fully managed, serverless, key-value NoSQL database designed to run high-performance at scale
+
+built in security
+automated multi-region replication, in-memory caching, and data import and export tools
+DynamoDB tables are schemaless - other than the primary key, you do not need to define any extra attributes or data types when you create a table, which is why it's suitable for data with a frequently changing schema
+
+
+IT consulting company have an application processes a large stream of financial data by ECS Cluster results go to a DynamoDB table.
+
+detect new entries in DynamoDB table then Lambda function to run processing
+
+What solution can be easily implemented to alert Lambda?
+
+DynamoDB Streams is integrated with Lambda. It's minimal effort to enable Lambda to be triggered on an event
+
+
+migrate
+trading application from on-premise 
+Microsfot Windows Server to AWS
+ensure high availability across multiple Availability Zones
+low-latency acess to block storage (iSCSI)
+
+fufill requirements
+
+EC2 Windows Server across two Availability Zones
+use Amazon FSx for NetApp ONTAP to create a Multi-AZ file system and access the data via iSCI protocol
+
+
+real-time monitoring app senses items and deducts from customer accounts
+analyze items that are frequently being bought and store the results in S3 storage to determine the purchase behavior of its customers
+
+capture, transform, and load streaming data into S3, Amazon OpenSearch Service, and Splunk
+
+Amazon Data Firehose
+
+
+startup needs file system for its .net web app on Ec2 Windows instance
+
+high throughput and IOPS integrated with Microsoft Active Directory
+
+MOST suitable service
+
+Amazon FSx for Windows File Server
+
+AWS Storage Gateway - File Gateway is incorrect. It can integreate with Windows and Mircosoft Active Directory
+
+FSx has higher throughput and IOPS
+providing hundreds of thousands (or even millions) of IOPS
+
+
+microservices architecture, decoupled services
+
+remove the need to provision and manage servers
+application isolation by design
+
+MOST suitable
+
+Use AWS Fargate on Amazon EKS with Kubernetes Cluster Autoscaler to run the containerized banking platform
+
+Fargate is a serverless compute engine for containers
+Fargate removes provision and manage of servers
+lets you specify and pay for resources per application
+app isolation by design
+
+The kubernetes cluster autosacler is well-known solution for cluster autoscaling
+maintained by the SIG Autoscaling team. Its primary function is to ensure that your cluster has enough nodes to successfully schedule your pods without wasting resources. The Cluster Autosacler monitors for pods that are unable to schedule and itentifies underutitlized nodes. It then simulates the addition or removal of nodes before implementing any changes to your cluster
+
+
+game development company operates several Virtual Reality (VR) and Augmented Reality (AR) games that use various RESTful web APIs hosted on-premises data center
+sits behind content delivery network (CDN) for faster glocal delivery.
+
+migrate to AWS 
+cost-effective scalable solution
+
+Use AWS Lambda and Amazon API Gateway
+
+
+Route 53 instead of ELB to load balance the incoming request to the web app
+two EC2 isntances to which EC2 instance distributed to
+specific percentage of traffic to go to each instance
+
+routing policy to use?
+
+Weighted
+
+Weighted routing lets you associate multiple resources with a single domain name or subdomain name and choose how much traffic is routed to each resource
+
+useful for variety of purposes including load balancing and testing new versions of software
+
+you can set a specific percentage of how much traffic will be allocated to the resourced by specifying the weights
+
+
+app hosted in Auto Scaling group of EC2 instances
+improve monitoring process, configure current capacity to increase or decrease based on a set of scaling adjustments
+
+specify scaling metrics and threshold values for CloudWatch alarms that trigger the scaling process
+
+most suitable type of scaling policy
+
+step scaling lets you choose scaling metrics and threshold values for the ClouidWatch alarms trigger scaling process as well as define how your scalable target should be scaled when a threshold is in breach for a specified number of evalutation periods.
+
+EC2 Auto Scaling supports the following types of scaling policies:
+    Target tracking scaling - increase or decrease the current capacity of the group based on a target value of a specific metric. This is similar to the way thqat your thermostat maintains the temperature of your home - you select a temperature and the thermostate does the rest
+
+    Step scaling - increase or decrease the current capacity of the group based on a set of scaling adjustments, known as step adjustments, that vary based on the size of the alarm breach
+
+    Simple scaling - incrase or decrease the current capacity of the group based on a single scaling adjustment
+
+If you are scaling based on a utilization metric that increases or decreases proportionally to the nuimber of instaces in an Auto Scaling group, then it is recommended that you use target tracking scaling policies. Otherwise, it is better to use step scaling policies instead
+
+1. Simple Scaling
+    one rule, one action
+    if cpu > 70% > add 2 instances
+    after scaling > waits for cooldown period before doing anything else
+    oldest and most basic policy
+
+2. Step Scaling
+    multiple rules, multiple actions based on how bad the metric is
+    if cpu > 70% > add 2 instances
+    if cpu > 90% > add 5 instances
+    responds proportionally to severity
+    no cooldown wait - acts immediately
+
+3. Target Tracking
+    you set a target metric value - AWS handles everything else
+    keep CPU at 50%
+    ASG automatically adds/removes instances to maintain that target
+    Simplest to configure - least operational overhead
+    Like a thermostat - set the temperature, it handles the rest
+
+4. Scheduled Scaling
+    scale based on time not metrics
+    every monday 8 am > add 5 instances
+    every sunday midnight > remove 5 instances
+    used when traffic patterns are predictable
+
+5. Predictive Scaling
+    uses ML to forecast future traffic
+    proactively scales before traffic hits
+    combines historical patterns with real-time data
+
+
+company receives semi-structured and structured data from different sources
+S3 data lake
+client side encryption w custom client side root key (CSE-Custom) 
+big data processing framework to analyaze data and access it using various business intelligence tools and standard SQL queries
+
+MOST high-performing solution
+
+Use EMR to Redshift
+
+EMR is managed cluster platfrom that simplifies running big data frameworks
+like Haddop and Apache Pig
+
+Redshift allows you to run complex analytic queries against terabytes to petabytes of structured and semi-strctured data, using sophisticated query optimization, columnar storage on high-performance storage, and massively parallel query execution
