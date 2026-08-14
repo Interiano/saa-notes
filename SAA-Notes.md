@@ -4613,4 +4613,211 @@ Use EMR to Redshift
 EMR is managed cluster platfrom that simplifies running big data frameworks
 like Haddop and Apache Pig
 
-Redshift allows you to run complex analytic queries against terabytes to petabytes of structured and semi-strctured data, using sophisticated query optimization, columnar storage on high-performance storage, and massively parallel query execution
+Redshift allows you to run complex analytic queries against terabytes to petabytes of structured and semi-strctured data, using sophisticated query optimization, columnar storage on high-performance storage, and massively parallel query 
+
+
+company has hundreds of VPCs with multiple VPN connections to their data centers spanning 5 AWS Regions
+number grows, scale its network across multiple accounts and VPCs to keep up. 
+interconnect all of the company's on-premises networks, VPNs, and VPCs into a single gateway
+
+Best solution
+
+Set up an AWS Transit Gateway in each region to interconnect all networks within it. Then, route traffic between the transit gateways through a peering connection
+
+Transit Gateway operates at layer 3, where the packets are sent to a specific next-hop attachment, based on their destination IP addresses
+
+A Transit Gateway attachment is both a source and a destination of packets. You can attach the following resources to your transit gateway:
+    one or more vpcs
+    one or more VPN connections
+    one or more AWS Direct Connect gateways
+    one or more transit gateway peering connections
+
+If you attach a transit gateway peering connection, the transit gateway must be in a different Region
+
+
+ EC2 + ASG behind ALB across multiple AWS regions
+ global
+ majority is Japan and Sweden
+ compliance requirements in these two locations, you want the japanese users to connect to the servers in the ap-northeast-1 Asia Pacific (Tokyo) region
+ Swedish users should be connected to the servers in the eu-west-1 EU (Ireland) region
+
+ fulfill the requirement
+
+ use Route 53 Geolocation Routing Policy
+
+Geolocation routing:
+choose the resource that serve your traffic based on the geographical location of your users
+meaning the DNS queries' origin
+
+example: you want all queries from Europ to go routed to an ELB in the Frankhurt region
+
+when you use geolocation routing, you can localize yhour content and present some or all of your website in the language of your users
+
+you can also use geolocation routing to restrict the distribution of content to only the locations in which you have distribution rights.
+
+Geolocation = routes by WHERE the user is. Use for compliance
+Geoproximity = routes by distance between user and your resources, with a bias slider to expand/shrink a region's pull
+great for shifting load/performance tuning
+
+If the question says "must connect to" it's Geolocation
+If it says "shift more traffic toward" or "bias" it's Geoproximity
+
+If users location doesn't match any record (say a user in Brazil, and you only defined Japan + Sweden), Route 53 returns no answer/ NODATA unless you create a default location record. 
+
+
+e-commerce company is in need of:
+storage solution that can be simultaneously accessed by 1000 linux servers
+multiple az
+
+servers are ec2 via NFSv4 protocol. 
+handle rapidly changing data at scale and high performance
+highly durable
+highly available when pull data, little management
+
+most cost-effective choice to meet requirement
+
+Amazon EFS
+
+key: rapidlyh changing data and 1000 linux servers
+
+file storage service = EFS
+
+high avaiability and high scalability, POSIX-compatible file system
+
+
+website accepts high-quality photos and turns photo into downloadable video montage
+
+offers:
+free and premium accounts
+
+premium account faster processing
+both go thru a single SQS and then by group of EC2 instances that generate the videos
+
+premium users, who paid service, have higher priority than free
+
+re-design the architecture to address the requirement
+
+Create an SQS queue for free members and another one for premium members. Configure your EC2 instances to consume messages from the premium queue first and if it is empty, poll the free members' SQS queue
+
+SQS for decoupling
+distributed systems, scale microservices 
+
+It's best to create two queues
+one for premium members can be polled first
+once completed, the messages from the free members can be processed next
+
+
+whitelisted issues? bypass with CloudFront - WRONG
+I'd have to whitelist configre every new IP
+
+instead, attack at the layer 4
+Network Load Balancer
+handles millions, attempts TCP connection on target on the port specified in the listener configuration
+
+based on the given scenario, web service clients can only baccess trusted I8P addresses
+use BYOIP
+Bring Your Own IP feature
+use trusted IPs as Elastic IP addresses to a Network Load Balancer, 
+you don't have to re-establish the whitelists with the new IP addresses
+
+
+design an infrastructure
+serverless
+
+docker in ECR
+must be deployed on a fully managed serverless compute service
+Addionally, the application requires 5 GB of ephemeral storage for temporary data processing
+
+deploy the application in an AWS Lambda function with Container image support. Set the function's storage to 5 GB
+
+One key feature of AWS Lambda is the ability to allocate ephemeral storage for each function instace
+by default, 512 MB of temporary storage
+can configure up to 10 GB of storage
+
+
+monitor EC2 based on a specific metric that is not readily available in CloudWatch
+
+Memory Utilization of an EC2 instance
+
+CloudWatch monitoring scripts are written in Perl
+CloudWatch agent to get more from EC2
+you can get:
+    MEMORY utilization
+    disk swap utilization
+    disk space utilization
+    page file utilization
+    log collection
+
+
+launch an app that trakcs GPS coordinates of trucks
+coordinates are transmitted from each truck every 5 seconds
+multiple consumers real-time
+aggergated data will be analyzed in a separate reporting application
+
+Kinesis
+
+with kinesis, you can ingest realp-time data such as video, audio, application logs, webiste clickstreams, and IoT telemetry data for machine learning, analytics, and other applications. Kinesis enables you to process and analyze data as it arrives and responds instantly instaed of having to wait until all your data are collected before the processing can begin
+
+
+several Reserved EC2 instances have been decommissioned
+cost-effective steps in this circumstance:
+    sell aws reserved instance marketplace and sell the reserved instances
+    terminate the reserved instgances as soon as possible to avoid getting billed at the on-demand price when it expires
+
+
+fast food company
+ALB > ASG + Ec2 + Multi AZ
+ handle traffic incoming from various digital devices, new routing logic to apply
+ requests with URLs matching should be directed to targets
+
+Use path conditions to define rules that forward requests to different target groups based on the URL in the request
+
+
+Storage Optimized Instances:
+workload that require high, sequential read and write access to very large data sets on local storage
+designed to deliver tens of thousands of low-latency, random I/O operations per second (IOPS) to applications
+
+
+CloudFront web distribution
+static content around globe
+but long login times
+HTTP 504 errors. 
+
+reduce login time and further optimize the system
+
+cost-effective solution, select two:
+    customize the content that the CloudFront web distribution delivers to your users using Lambda@Edge, which allows yopur AWS Lambda functions to execute the authentication process in AWS locations closer to the users
+    Implement an origin failover by creating an origin group that includes two origins. Assign one as the primary origina and the other as secondary, which enables CloudFront to autoomatically switch if the primary orgin encounts specific HTTP status code failure responses
+
+
+A global company has deployed numerous AWS Outposts servers in various remote locations worldwide. These servers frequently need to download software updates consisting of multiple files from an S3 bucket in the us-west-2 region. The company is experiencing significant delays in distributing these updates across all servers.
+What solution would most effectively reduce the deployment latency while minimizing operational overhead?
+
+
+Set up an Amazon CloudFront distribution with the us-west-2 S3 bucket as the primary origin and create a secondary origin in another region, implementing a CachingDisabled cache policy. Use signed URLs for downloads.
+Use Amazon S3 Transfer Acceleration on the existing S3 bucket and have the Outposts servers use the Transfer Acceleration endpoint for downloads.
+
+Create an Amazon CloudFront distribution with the us-west-2 S3 bucket as the origin. Use signed URLs for software downloads.
+
+Set up AWS Global Accelerator to route traffic from Outposts servers to the nearest AWS edge location, then use private VIF connections to access the S3 bucket in us-west-2.
+
+Correct
+AWS Outposts is a fully managed service that brings AWS infrastructure, services, APIs, and tools directly to customer locations. It’s tailored for workloads that must remain on-premises due to low latency or the need for local data processing.
+
+Amazon S3 is an object storage service offering industry-leading scalability, data availability, security, and performance. It’s commonly used to store large amounts of unstructured data, including datasets for machine learning.
+
+Amazon CloudFront is a fast CDN service that securely delivers data, videos, applications, and APIs to customers worldwide, ensuring low latency and high transfer speeds. It seamlessly integrates with other AWS services and provides easy-to-use APIs for developers to customize the service to meet their needs. CloudFront utilizes a global network of edge locations to cache content closer to end users, enhancing performance and reducing the load on origin servers.
+
+Amazon CloudFront Distribution
+
+To address the company’s challenge of distributing large software updates to AWS Outposts servers globally with reduced latency and minimal operational overhead, use Amazon CloudFront with the S3 bucket in us-west-2 as the origin. This solution provides global content delivery through edge locations, reducing latency for all Outposts servers. It also offers caching capabilities, which can significantly speed up access to frequently downloaded files. Next, the Signed URLs add an extra layer of security for software distribution. Lastly, it can potentially reduce overall data transfer costs compared to direct S3 access, and once set up, CloudFront requires minimal ongoing management.
+
+Hence, the correct answer is: Create an Amazon CloudFront distribution with the us-west-2 S3 bucket as the origin. Use signed URLs for software downloads.
+
+The option that says: Set up an Amazon CloudFront distribution with the us-west-2 S3 bucket as the primary origin and create a secondary origin in another region, implementing a CachingDisabled cache policy. Use signed URLs for downloads is incorrect. While CloudFront can help distribute content globally, setting up a secondary origin in another region doesn’t add significant value. The CachingDisabled policy would only negate the benefits of CloudFront’s caching, which is crucial for reducing latency for large files.
+
+The option that says: Set up AWS Global Accelerator to route traffic from Outposts servers to the nearest AWS edge location, then use private VIF connections to access the S3 bucket in us-west-2 is incorrect. Global Accelerator is designed to improve applications’ availability and performance, not optimize S3 downloads. It doesn’t integrate directly with S3 for file downloads. Additionally, Private VIF (Virtual Interface) is typically used with Direct Connect, not S3 buckets.
+
+The option that says: Use Amazon S3 Transfer Acceleration on the existing S3 bucket and have the Outposts servers use the Transfer Acceleration endpoint for downloads incorrect. While this option can improve transfer speeds over long distances by leveraging Amazon’s global network infrastructure, it may not provide significant benefits for all locations, especially those closer to us-west-2. It incurs additional costs for data transfer and does not provide caching capabilities, which could benefit frequently accessed files.
+
+ 
