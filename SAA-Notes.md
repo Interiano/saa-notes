@@ -4821,3 +4821,206 @@ The option that says: Set up AWS Global Accelerator to route traffic from Outpos
 The option that says: Use Amazon S3 Transfer Acceleration on the existing S3 bucket and have the Outposts servers use the Transfer Acceleration endpoint for downloads incorrect. While this option can improve transfer speeds over long distances by leveraging Amazon’s global network infrastructure, it may not provide significant benefits for all locations, especially those closer to us-west-2. It incurs additional costs for data transfer and does not provide caching capabilities, which could benefit frequently accessed files.
 
  
+ Look into:
+ Lazy Loading to cache results?
+
+
+ EKS with IAM Role
+ e-commerce
+ deploy and manage containers
+
+ surge in traffic
+
+ scale the infrastructure
+
+ karpenter to automatically adjust the number of nodes in the EKS cluster when pods fail or are rescheduled onto other nodes
+ install the kubernetes metrics server on the EKS cluster and activate the Horizontal Pod Autoscaling
+
+ 
+ so far, three wrong. one is a typo error
+
+
+serverless computing w/ Lambda
+Lambda > MongoDB
+third-party API
+
+create an environment variables for the DB hostname, usernazme, and password, as well as the API credentials that will be used by the Lambda function for EV, SIT, UAT, and PROD environments
+
+
+hybrid cloud architecture
+on-premise data center to AWS
+
+requires durable storage backup for documents stored on-premises 
+a loacl cache that provides low-latency access to recnelty accessed data
+documents must be stored on SMB protocol
+S3 standard retrieval for 6 months and archive for anoterh decade for compliance
+
+Mock Review:
+
+The Bureau of Census and Statistics manages a geographic information systems (GIS) image database which has a single-table design. The system hosts high-resolution images that are uniquely identified by geographic codes. The database is updated on a minute-by-minute basis to detect any natural disasters like floods, volcanic eruptions, and other calamities.
+
+Due to the substantial volume of data, the department wants to migrate its existing Oracle database to the AWS Cloud. The department also aims to achieve a highly available and scalable solution, particularly during critical events and high data inflow.
+
+MOST cost-effective solution
+
+Utilize an Amazon S3 bucket for storing the images. Launch an Amazon DynamoDB table with the geographic code as the primary key and the corresponding image S3 URL as the associated value
+
+Utilizing Amazon S3 buckets for storing images can provide various benefits, including a centralized location for storing all images, making them easily accessible whenever needed. This can streamline the workflow and make it more efficient overall.By DynamoDB, the department can further enhance its GIS iamge database management. DynamoDB can provide fast and reliable performance, even at scale. The department can efficiently retrieve specific images based on their location by using the geographic code as the 
+
+
+A company needs to accelerate the development of its GraphQL APIs for its new customer service portal. The solution must be servless to lower the monthly operating cost of the business. Their GraphQL APIs must be accessible via HTTPS and have a custom domain.
+
+What solution should the Solutions ARchitect implement to meet the above requirements?
+
+Develop the application using the AWS AppSync service and use its built-in custom domain feature. Associate an SSL certificate to the AWS AppSync API using the AWS Certificate Manager (ACM) service to enable HTTPS communication.
+
+AWS AppSync is a serverless GraphQL and Pub/Sub API service that simplifies building modern web and mobile applications. It provides a robuts, scalable GraphQL interface for application developers to combine data from multiple sources, including Amazon DynamoDB, AWS Lambda, and HTTP APIs.
+
+The difference of:
+Geoproximitiy
+Geolocation
+
+Geolocation: routes based on WHERE THE USER IS
+Geoproximity: routes based on DISTANCE between the user and your SERVERS
+
+Generate a Lambda Function URL
+Deploy HTTPS endpoint on the Lambda function
+
+and
+
+use it as the webhook for the third-party analytics service
+use the sercured network endpoint for the third-party apps
+
+STS:
+STS gives out temporary credentials
+short lived = safer
+
+STS credentials:
+    1. Access key ID
+    2. Secret access key
+    3. Session token < this third piece is the tell. Permanent credentials have only the first two. "Session Token" means temporary
+
+
+### Category: CSAA - Design Secure Architectures
+
+A large financial firm needds to set up a Linux bastion host to allow access to the Amazon EC2 instances running in their VPC. For security purposes, only the clients connecting from the corporate external public IP address 175.45.116.100 should have SSH access to the host.
+
+SG inbound rule: Protocol -TCP. Port Range -22, Source 175.45.116.100/32
+
+A bastion host sits in a public subnet so people can reach it from the internet - but "public subnet" doesn't decide how you control access to it. 
+
+Every EC2 instance is protected by two layers at once: NACL at the subnet's edge and SG around instance level.
+
+If you allow one specific IP to SSH into one specific host - that's SG
+
+
+An application is hosted in an Auto Scaling group of EC2 instances and a Microsoft SQL Server on Amazon RDS. There is a requirement that all in-flight data between applications and RDS should be secured.
+
+Which of the following options is the MOST suitable solution that you should implement?
+
+Download the Amazon RDS Root CA certificate. Import the certificate to your servers and configure your application to use SSL to encrypt the connection to RDS.
+
+Force all connections to your DB instance to use SSL by setting the rds.force_ssl parameter to true. Once done, reboot your DB instance.
+
+In order for you to establish an SSH connection from your home computer to your EC2 instance, you need to do the following:
+    On the security group, add an inbound rule to allow ssh traffic to EC2
+    On the NACL, add both inbound and outbound rule to allow ssh traffic to your ec2
+
+
+A company developed a meal planning application that provides meal recommendations for the week, as well as the food consumption of the users. The application resides on an EC2 instance, which requires acesss to variouis AWS service for its day-to-day operations.
+
+Which of the following is the best way to allow the EC2 instances to access the Amazon S3 bucket and other AWS services?
+
+Create a role in IAM and assign it to the EC2 instance
+
+Create a role in IAM and assign it to the EC2 instance.
+
+best practice in handling API Credentials is to create a new role in IAM service and then assign it to the specific EC2 instace. 
+
+
+A company has a web application that uses Amazon CloudFront to distribute its images, videos, and other static content stored in its Amazon S3 bucket to users around the world. The company has recently introduced a new member-only access feature for some of its high-quality media files. There is a requirement to provdie access to multiple private media files only to paying subscribers without having to changvbe the current URLs.
+
+Which of the following is the most suitable solution to implement to satisfy this requirement?
+
+Use Signed Cookies to contorl who can access the private files in your CloudFront distribution by modifying your application to determine whether a user should have access to your content. For members, send the requ ired Set-Cookie headers to the viewer which will unlock the content only to them.
+
+CloudFront signed URLs and signed cookies provide the same basic functionality: they allow you to control who can access your content
+
+Signed URLs:
+    you want to use an RTMP distribution. Signed cookies aren't supported for RTMP distributions
+    you want to restrict access to indifvidual files, for example, an installation download for your applicatiuon
+    your users are using a client (for example, a custom HTTP client) that doesn't support cookies.
+Signed cookies:
+    you want to provide access to multiple restricted files, for example, all of the files for a video in HLS format or all of the files in the subscribers area of a website
+    you don't want to change the current URLs
+
+
+A top IT Consultancy has a VPC with two On-Demand EC2 instances with Elastic IP addresses. You were notified that the EC2 instances are currently under SSH brute force attacks over the Internet. The IT Security team has identified the IP addresses where these attacks orginated. you have the immediately implement a temporary fix to stop these attacks while the team is setting up AWS WAF, GuardDuty, and AWS Shield Advanced to permanently fix the security vulnerability.
+
+Which of the following provides the quickest way to stop the attacks to the instances?
+
+Block the IP addresses in the Network Access Control List
+
+A network ACL contains a numbered list of rules that we evaluate in order, starting with the lowest numbered rule, to determine whether traffic is allowed in or out of any subnet associated with the network ACL. The highest number that yolu can use for a rul,e is 32766. We recommend that you start by creating rules of increments so that you can insert new rules where you need to later on.
+
+
+A solutions architect is writing an AWS Lambda function that will process encrypted documents from an Amazon FSx for NetApp ONTAP file system. The doucments are protected by an AWS KMS customer key. After processing the documents, the Lambda function will store the results in an S3 bucket with an Amazon S3 Glacier Flexible Retrieval storage class. The solutions architect must ensure that the files can be decrypted by the Lambda function.
+
+What action accomplishes the requirement?
+
+Attach the kms:decrypt permission to the Lambda function's execution role. Add a sttement to the AWS KMS key's policy that grants the functionk's exectuion role the kms:decrypt permission.
+
+Lambda interacts with other AWS services using the permissions associated with an execution role
+
+
+A company has clients all across the globe that access product files stored in several Amazon S3 buckets, which are behind each of trhe respective Amazon CloudFront web distributions. The company currently wants to deliver conten to a specific client, ensuring that only that client can access the data. At present, all clients can access the S3 buckets directly using an S3 URL or through the ClouidFront distribution. The Solutions Architect must serve the private content via CloudFront only, to secure the distribution of files.
+
+Which combination of actions should the Architect implement to meet the above requirements?
+
+Require the users to access the private content by using special CloudFront signed URLs or signed cookies
+
+Restrict access to files in the origin by creating an origin access control (OAC) and giving it permission to read the files in the bucket
+
+
+A company is designing a banking portal that uses Amazon ElastiCache for Rdis as its distributed session management component. To secure seession data and ensure that Cloud Engineers must authenticate before executing Redis commands, specifically MULTI EXEC commands, the system should enforce strong authentication by requirering users to enter a password. Additionally, access should be managed with long-lived credentials while supporting robust security practices.
+
+Which of the following actions should be taken to meet the above requirement?
+
+Authenticate the users using Redis AUTH by creating a new Redis Cluster with both the --transit-encryption-enabled and --auth-token parameters enabled.
+
+Using Redis AUTH command can improve security by requiring the user to enter a password before they are granted permission to execute Redis commands on a password-protected Redis server.
+
+To require that users enter a password on a password-protected Redis server, include the parameter --auth-token with the correct password when you create your replication group of cluster and on all subsequent commands to the replication group of cluster.
+
+Well Architect Framework:
+
+Performance Efficiency
+Cost Optimization
+Sustainability
+Operational Excellence
+Security
+Reliability
+
+
+Sample Microservice Design?
+Solution's Architect BnB
+
+Microservice with ALB
+
+Domain in Route 53 and hosted zone, record A for that custom domain will point to the ALB
+
+path based routing and target group
+
+www.store.com/browse > send traffic to a target group: EC2 + ASG + DB
+www.store.com/purchase > send to EC2
+www.store.com/return > different gbackend
+
+different text stack
+polyglot
+
+
+4 types of DR:
+1. Backup - 12 hours to get up
+2. Pilot Light - img of servers, backup to cloud, 
+3. Warmup Standby - ASG - 45 minutes to an hour
+4. Active - Active - 
