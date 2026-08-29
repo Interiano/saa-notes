@@ -5024,3 +5024,428 @@ polyglot
 2. Pilot Light - img of servers, backup to cloud, 
 3. Warmup Standby - ASG - 45 minutes to an hour
 4. Active - Active - 
+
+
+A startup launched a new FTP server using an On-Demand EC2 instance in a newly created VPC with default settings. The server should not be accessbile publicly but only through the IP address 175.45.116.100 and nowhere else.
+
+Which of the following is the most suitable way to implement this requirement?
+
+Create a new inbound rule in the security group of the EC2 instance with the following details:
+Protocol: TCP
+Port Range: 20-21
+Source: 175.45.116.100/32
+
+
+For data privacy, a healthcare company has been asked to comnply with the Health Insurance Portability and Accountability Act (HIPAA). The company stores all its backups on an Amazon S3 bucket. It is required that data stored on the S3 bucket must be encrypted.
+
+What is the best option to do this? 
+
+Before sending the data to S3 over HTTPS, encrypt the data locally first using your own encryption keys.
+
+Enable Server-Side Encryption on an S3 bucket to make use of AES-256 encryption.
+
+
+An application is hosted on an EC2 instance with multiple EBS volumes attached and uses Amazon Neptune as its database. To improve data security, you encrypted Amazoln Elastic Block Store volumes?
+
+Snapshots are automatically encrypted
+All data moving between the volume and the isntace are encrypted
+
+EBS provides block-level storage volumes for use with EC2 instances. EBS volumes are highly available and reliable storage volumes that can be attached to any running instance that is in the same AZ. EBS volumes that are attached to an EC2 instace are exposed as storage volumes that presist independently from the life of the instance
+
+When you create an encrypted EBS volume and attach it to a supported instance type, the following types of data are encrypted:
+    data at rest inside the volume
+    all data moving between the volume and the instance
+
+
+An organization needs to control access to severate Amazon S3 buckets. The organization plans to use a gateway endpoint to allow access to trusted buckets. The organization shall not use overly broad policies like AmazonS3FullAccess.
+
+Which of the following could help achieve this requirement?
+
+Generate an endpoint policy for trusted S3 buckets
+
+A Gateway endpoint is a type of VPC endpoint that provides reliable connectivity to Amazon S3 and DynamoDB without requirirng an internet gateway or a NAT device for your VPC. Instances in you r VPC do not require public IP addresses to communicate with resources in the service.
+
+When you create a Gateway endpoint, you can attach an endpoint policy that contorls accress to the service to which you are connecting. You can modify the endpoint policy attached to your endpoint and add or remove the route tables used byt he endpoint. An endpoint policy does not overrride or replace IAM user p9olicies or service-specified policies
+
+
+ A Solutions Architect created a brand new IAM user with a default setting using AWS CLI. This is intended to be used to send API requests to Amazon S3, DynamoDB, Lambda, and other AWS resources of the company's infrastructure.
+
+ Which of the following must be done to allow the user to make API calls to the AWS resources?
+
+ Create a set of Access Keys for the user and attach the necessary permissions.
+
+ You need two things every API call needs:
+ 1. Access keys
+ 2. IAM policy
+
+
+A company has a requirement to move an 80 TB data warehouse to the cloud. It would take 2 months to transfer the data based on the current bandwidth allocation. 
+
+Which option is the most cost-effective for quick data upload to AWS?
+
+AWS Data Transfer Terminal
+
+Replacing Snow Family
+
+A company has established a dedicated network connection from its on-premises data center to AWS Cloud using AWS Direct Connect (DX). The core network services, such as the Domain name System (DNS) service and Active Directory services, are all hosted on-premises. The company has new AWS accounts that will also require consistent and dedicated access to these network services.
+
+Which of the following can satisfy this requirement with the LEAST AMOUNT OF OPERATIONAL OVERHEAD and in a cost-effective manner?
+
+Create a new Direct Connect gateway and intergrate it with the existing Direct Connect connection. Set up a Transit Gateway between AWS accounts and associate it with the Direct Connect gateway.
+
+VPN connection traverses the public internet and doesnt use a dedicated connection
+
+
+A company has stored 200 TB of backup files in Amazon S3. The files are in a vender-proprietary format. The Solutions Architect needs to use the vender's proprietary file conversion to retrieve files from an S3 bucket, convert the files to an industry-standar5d format, and re-upload the converted files to S3. The solution must minimize the data transfer costs.
+
+Which of the following options can satisfy the given requiremtn?
+
+Deploy the Amazon EC2 instance in the same Region as S3. Install the file conversion software on the instance. Perform data transformation and re-upload it to S3.
+
+A car dealership website hosted in EC2 stores car listings in an Amazon Aurora database managed by Amazon RDS. Once a vehicle has been sold, its data must be removed from the current listings and forwarded to a distributed processing system.
+
+Which of the following options can satisfy the given requirement?
+
+Use an Aurora MySQL native function to invoke an AWS Lambda function whenever a vehicle listing is deleted. Configure  the lambda function to send the data to an SQS for the distributed processing system to consume.
+
+
+A company has a web application hosted in their on-premises infrastructure that they want to migrate to AWS cloud. 
+Your manager has instructed you to ensrue that there is no downtime while the migration process is on-going. In order to achieve this, your team decided to divert 50% of the traffic to the new application in AWS and the other 50% to the application hosted in their on-premises infrastructure. Once the migration is over and the application works with no issues, a full diversion to AWS will be implemented. The company's VPC is connected to this on-premises network via an AWS Direct Connect connection.
+
+Use a Application Elastic Load balancer with Weighted Target Groups to divert and proportion the traffic the on-premises and AWS-hosted application. Divert 50% of the traffic to the new application in AWS and the other 50% to the application hosted in their on-premises infrastructure
+
+Route 53 with Weighted routing policy to divert the tr4affic between the on-premises and AWS-hosted application. Divert 50% of the traffic to the new application in AWS and the other 50% to the aplication hosted in their on-premises infrstructure.
+
+
+What is AWS SAM?
+
+A travel company has a suite of web applications hosted in an Auto Scaling group of On-Demand EC2 instances bheind an Application Load Balancer that handles traffic from various web domains such as i-love-manila.com, i-love-boracay.com, i-love-cebu.com and many others. To improve secruity and lessen the overall cost, you are instructed to secure the system by allowing mulitple domains to serve SSL traffic without the need to reauthenticate and reprovision your certificate everything you add a new domain. This migration from HTTP to HTTPS will help imrpove their SEO and Google search ranking.
+
+Which of the following is the most cost-effective solution to meet the above requirement?
+
+Upload all SSL certificates of the domains in the ALB using the console and bind multiple certificates to the same secure listener on your load balancer. ALB will automatically choose the optimal TLS certificate for each client using Server Name Indication (SNI)
+
+
+An organization leverages Amazon VPC to host its multi-tier services. The organization aims to provide a web analytics service via RESTful APIs to a user base spanning millions. Access to these APIs requires user verification through an aut6hentication service. The APIs will be exposed through secure HTTP endpoints.
+
+
+CloudHSM question?
+Lost key, how can you get it back?
+
+Amazon Macie
+Amazon Kendra
+
+Prometheus
+Grafana
+
+Management Events
+
+A company is planning to deploy a High Performance Computing (HPC) cluster in its VPC that requires a scalable, high-performance file system. The storage service must be optimized for efficient workload processing, and the data must be accessible via a fast and scalable file system interface. It should also work natively with Amazon S3 that enables you to easily process your S3 data with a high-performance POSIX interface.
+
+Which of the following is the MOST suitable service that you should use for this scenario?
+
+Amazon Elastic File System (EFS)
+Amazon FSx for Windows File Server
+Amazon FSx for Lustre
+Amazon Elastic Block Storage (EBS)
+
+
+A company is using a combination of Amazon API Gateway and AWS Lambda for the web services of an online web portal that is accessed by hundreds of thousands of clients each day. The company will be announcing a new revolutionary product, and it is expected that the web portal will receive a massive number of visitors from all around the globe. 
+
+How can the back-end systems and applications, beyond the subnet-level filtering of network ACLs, be protected from traffic spikes?
+
+Use throttling limits in API Gateway
+
+For microservices, I can set throttoling limits in API Gateway to help against traffic spikes
+
+List to look over:
+Pagination
+Cache Stampede
+idempotency
+graphql
+gRPC
+OAuth
+Composite Index
+CAP Theorem
+Circuit Breaker
+Livelock
+CSRF
+False Sharing
+mTLS
+
+
+A real-time data analytics application is using AWS Lambda to process data and store results in JSON format to an S3 bucket. To speed up the existing workflow, you have to use a service where you can run sophisticated Big Data anaylytics on your data without moving them into a separrate anaylyticcs system.
+
+Which of the following grouip of services can you use to meet this requirement?
+
+Amazon Athena, Amazon Redshift Spectrum, AWS Glue
+
+Amazon Athena, Amazopn Redhshift Spectrum, and AWS Glue are highly relevat services for performing Big Data  analytics directly on data stored in Amazon S3, without needing to move the data to a separate system.
+
+Amazon Athena: allows usedrs to query data directly in S3 using SQL, providing a serverless approach to perform analytics on S3-stored data in formats such as JSON
+
+Amazon Redshift Spectrum extends the querying capabilities of Amazon Redshift to also access and analyze structured and semi-structured data in S3, supporting large-scale analytics.
+
+AWS Glue is a fully managed ETL (Extract, Transform, Load) service that helps catalog, prepare, and transform data in S3 for analytics, simplifying Big Data workflows.
+
+
+AWS License Manager is a service that makes it easier for you to manage your software licenses from software vendors (for example, Microsoft, SAP, Oracle, and IBM) centrally across AWS and your on-premises environments. This provides control and visibility into the usage of yoru licenses, enabling you to limit licensing overages and reduce the risk of non-complaince and misreporting. 
+
+A company is running a dashboard application on a Spot EC2 instance inside a private subnet. The dashboard is reachable via a domain name that maps to the private IPv4 address of the instance’s network interface. A solutions architect needs to increase network availability by allowing the traffic flow to resume in another instance if the primary instance is terminated.
+
+Which solution accomplishes these requirements?
+
+Create a secondary elastic network interface and point its private IPv4 address to the application’s domain name. Attach the new network interface to the primary instance. If the instance goes down, move the secondary network interface to another instance.
+
+Set up AWS Transfer for FTPS service in Implicit FTPS mode to automatically disable the source/destination checks on the instance’s primary elastic network interface and reassociate it to another instance.
+Use the AWS Network Firewall to detach the instance’s primary elastic network interface and move it to a new instance upon failure.
+Attach an elastic IP address to the instance’s primary network interface and point its IP address to the application’s domain name. Automatically move the EIP to a secondary instance if the primary instance becomes unavailable using the AWS Transit Gateway.
+
+
+on-premise MySQL database needs replication in S3 as CSV files
+eventually launched on aurora serverless cluster + rds proxy
+
+once db copied, ongoing changes to the on-premises database should be continually streamed to S3
+implement little management overhead and secure
+what ingestion pattern should take?
+
+Create a full load and change data capture (CDC) replication task using AWS Database Migration Service (AWS DMS)
+Ad a new Certificate Authority (CA) certificate and create a DMS endpoint with SSL
+
+
+A company has recently migrated its microservices-based application to EKS. As part of the migration, the company must ensure that all senstive configuration data and credentials, such as database passwords and API keys, are stored securely and encrypted within the EKS cluster's etcd key-value store.
+
+Enable secret encryption with a new AWS KMS key on an existing Amazon EKS cluster to encrypt sensitive data stored in the EKS cluster's etcd key-value store
+
+
+A FinTech startup deployed an application on an Amazon EC2 instance with attached Instance Store volumes and an Elastic IP address.
+
+
+A company wants to organize the way it tracks its spending on AWS resources. A report that summarizes the total billing accrued by each department must be generated at the end of the month. The company already uses a Savings Plan for pricing, but that does not break down costs by department.
+
+Which solution will meet the requirements?
+
+Tag resources with the department name and enable cost allocation tags
+
+A tag is a label that you or AWS assigns to an AWS resource. Each tag cosists of a key and a value. For each resource, each tag key must be unique, and each tag key can have only one value. You can use tags to organize your resources and cost allocation tags to track your AWS costs on a detailed level.
+
+After tags are applied to EC2 and S3, you activate the tags in the Billing and Cost Management console,
+AWS generates a cost allocation report as a comma-separated value (CSV file)
+
+
+A comapny has established a dedicated netwrok connection from its on-premises data center to AWS cloud using AWS DX. 
+
+Create a new Direct Connect gateway and integrate it with the existing Direct Connect connection. Set up a Transit Gateway between AWS accounts it with the Direct Connect gateway
+
+
+AWS Config provides a detailed view of the configuration of AWS resources in your AWS account. This includes how the resources are related to one another and how they were configured in the past so that you can see how the configurations and relationships change over time
+
+Use the AWS Config managed rule to check if the IAM user access keys are not rotated within 90 days. Create an Amazon EventBridge rule for the non-compliant keys, and define a target to invoke a custom AWS Lambda function to deactivate and delete the keys
+
+
+A company has a web application that uses Amazon CloudFront to distribute its images, videos, and other static content stored in its Amazon S3 bucket to users around the world. The company has recently introduced a new member-only access feature for some of its high-quality media files. There is a requirement to provide access to multiple private media files only to paying subscribers without having to change the current URLs.
+
+Which of the following is the most suitable solution to implement to satisfy this requirement?
+
+Use Signed Cookies to control who can access the private files in your CloudFront distribution by modifying your application to determine whether a user should have access to your content. For members, send the required Set-Cookie headers to the viewer which will unlock the content only to them.
+
+Many companies that distribute content over the internet want to restrict access to documents, business data, media streams, or content that is intended for selected users, for example, users who have paid a fee. To securely serve this private content by using CloudFront, you can do the following:
+
+1. Require that your users access your private content by using special CloudFront signed URLs or signed cookies.
+2. Require that your users access your content by using CloudFront URLs, not URLs that access content directly on the origin server (for example, Amazon S3 or a private HTTP server). Requiring CloudFront URLs isn't necessary, but we recommend it to prevent users from bypassing the restrictions that you specify in signed URLs or signed cookies
+
+signed URLs when:
+    1. you want to use an RTMP distribution. SIGNED COOKIES aren't supported for RTMP distributions
+    2. restrict access to individual files
+    3. your users are using a client that doesn't support cookies
+
+signed cookies when:
+    1. multiple restrictef files. files for a video in HLS format or all files in the subscribers area of a website
+    2. you don't want to change your current URLs
+
+
+A company is using Amazon S3 to store frequently accessed data. When an object is created or deleted, the S3 bucket will send an event notification to the Amazon SQS queue. A solutions architect needs to create a solution that will notify the development and operations team about the created or deleted objects.
+
+Which of the following would satisfy this requirement?
+
+Create an Amazon SNS topic and configure two SQS queues to subscribe to the topic. Grant S3 permission to send notifications to SNS and update the bucket to use the new SNS topic.
+
+You cannot attach two or more SNS topics or SQS queues for S3 event notifications
+
+
+A company is experiencing repeated outages in the availability Zone where its Amazon RDS database instance is deployed, resulting in a complete loss of access to the database during each incident. The team evaluated a multi-site active/active deployment but found that it requires cross-Region synchronization, whereas a simpler embedded solution would suffice.
+
+Enable Multi-AZ failover
+
+For Amazon Aurora, the failover involves promoting a replica to become the new writer instance.
+
+
+A global IT company with offices around the world has multiple AWS accounts. To improve efficiency and drive costs down, the CIO (Chief Information Officer) wants to set up a solkution that centrally manages their AWS resources. This will allow them to proure AWS resources centrally and share resources such as AWS tRansit Gzteways, AWS License manager configurations, or Amazon Route 53 Resolver rules across their various accounts
+
+Consolidate all of the company's accounts using AWS Organizations
+
+Use the AWS Resource Access Manager (RAM) service to easily and securely share your resources with your AWS accounts.
+
+
+A popular augmented reality (AR) mobile game is heavily using a RESTful API which is hosted in AWS. The API uses Amazon API Gateway and a DynamoDB table with a preconfigured read and write cpacity. Based on your systems monitoring, the DynamoDB tab le begins to throttle requests. during high peak loads which causes the slow performance of the game.
+
+Which of the following can you do to improve the performance of your app?
+
+Use DynamoDB Auto Scaling
+
+DynamoDB table doesnt Auto Scale like that
+
+
+A Solutions Architect is working for a large global media company with multiple office locations all around the world. The Architect is instructed to build a system to distribute training videos to all employees.
+
+Using Amazon CloudFront, what method would be used to serve content that is stored in Amazon S3 but not publicly accessible from S3 directly?
+
+Create an Orgin Access Control (OAC) for CloudFront and grant access to the objects in the S3 bucket to the OAC
+
+
+A media company recently launched their newly created web application. Many users tried to visit the website, but they are receiving a 503 Service Unavailable Error. The system administrator tracked the EC2 instance status and saw a capacity is reaching its maximum limit and unable to process all the requests. To gain insights from the application's data, they need to launch a real-time analytics service.
+
+Which of the following allows you to read records in batches?
+
+Create a Kinesis Data Stream and use AWS Lambda to read records from the data stream
+
+
+A Solutions Architect is managing a three-tier web application that processes credit card payments and online transactiopns. Static web pages are used on the front-end tier while the application tier contains a single EC2 instgance that handles long-running processes. The datga is stored in a MySQAL database. The Solutions Architect is instructed to decouple the tiers to create a highly available application
+
+
+AWS Network Firewall is a stateful, managed, network firewall, and intrusion detection and prevention service for your VPC. Network Firewall uses Suricata - open source intrusion prevention system for stateful inspection
+
+Network Access Analyzer
+feature of VPC that reports on unintended access to your AWS resources based on the security and compliance that you set. This service is not capable of performing deep packet inspection on traffic entering or leaving your VPC, unlike AWS Network Firewall
+
+
+Please Don’t overcomplicate it. 
+
+• Build a Password Manager to learn file handling, hashing (not full crypto)
+• Build a URL Shortener to understand routing, IDs, and persistence
+• Build a Todo App with deadlines to practice CRUD and basic state
+• Build a Web Scraper to learn requests, parsing, and rate limits
+• Build a CLI Expense Tracker to master logic, files, and edge cases
+• Build a Log Analyzer to work with files, timestamps, and patterns
+• Build a Simple Recommender using similarity rules (not ML magic)
+• Build an Email Automation Script using SMTP and scheduling
+
+PROJECTS. Not tutorials.
+
+A company is looking for a way to analyze the calls between customers and service agents. Each conversation is transcribed, JSON-formatted, and saved to an Amazon S3 bucket. The company’s solutions architect is tasked to design a solution for extracting and visualizing sentiments from the transcribed files.
+
+Which solution meets the requirements while minimizing the amount of operational overhead?
+
+Analyze the JSON files with Amazon Textract. Index the sentiment along with the transcript to an Amazon OpenSearch cluster. Visualize the results using Amazon Managed Grafana.
+Create an Amazon Comprehend analysis job. Index the sentiment along with the transcript to an Amazon OpenSearch cluster. Visualize the results using the OpenSearch Dashboard.
+Train a custom Natural Language Processing (NLP) model using Amazon SageMaker. Index the sentiment along with the transcript to an Amazon OpenSearch cluster. Visualize the results using the OpenSearch Dashboard.
+Create an Amazon Comprehend analysis job. Index the sentiment along with the transcript to an Amazon OpenSearch cluster. Visualize the results using Amazon Managed Grafana.
+
+
+A company has multiple AWS Site-to-Site VPN connections placed between their VPCs and their remote network. During peak hours, many employees are experiencing slow connectivitiy issues, which limits their productivity. The company has asked a solutions architect to scale the throughput of the VPN connections.
+
+Which solution should the architect carry out?
+
+Associate the VPCs to an Equal Cost Multipath Rou8ting (ECMR)-enabled transit gateway and attach additional VPN tunnels
+
+
+A company has a multiple AWS Site-to-Site VPN connections placed between their VPCs and their remote network. During peak hours, many employees are experiencing slow connectivity issues, which limits their productivitiy. The company has asked a solutions architect to scale the throughput of the VPN connections.
+
+Which solution should the architect carry out?
+
+How to scale the throuput of a VPN connection
+
+Associate the VPCs to an Equal Cost Multipath Routing (ECMR)-enabled transit gateway and attach additional VPN tunnels
+
+
+A game company has a requirement of load balancing the incoming TCP traffic at the transport level (Layer 4) to their containerized gaming servers hosted in AWS Fargate. To maintain performance, it should handle millions of requests per second sent by gamers around the globe while maintaining ultra-low latencies.
+
+Which of the following must be implemented in the current architecture to satisfy the new requirement?
+
+Launch a new Network Load Balancer
+
+ALB is Layer 7
+NLB is Layer 4
+
+
+A company that is rapidly growing in recent months has been in the process of setting up IAM users on its single AWS Account. A solutions architect has been tasked to handle the user management, which includes jgranting read-only access to users and denying permissions whenever an IAM user has no MFA setup. New users will be added frequently based on their respective departments.
+
+Which of the following actions is the MOST secrure way to grant permissions to the new users?
+
+Launch an IAM Group for each department. Create an IAM Policy that enforces MFA authentication with the least privilege permission. Attach the IAM Policy to each IAM Group.
+
+
+A company runs its multitier online shopping platform on AWS. 
+Every new sale transaction is published as a message in an open-source RabbitMQ queue that runs on an Amazon EC2 instance. 
+There is a consumer application is hosted on a separate EC2 instance that consumes the incoming messages, which then stores the transaction in a self-hosted PostgreSQL database on another EC2 instance.
+
+All of the EC2 instances used are in the same Availability Zone in the eu-central-1 Region. 
+A solutions architect needs to redesign its cloud architecture to provide the highest availability with the least amount of operational overhead.
+
+What should a solutions architect do to meet the company’s requirements above?
+
+
+An online cryptocurrency exchange platform is hosted in AWS, utilizing an Amazon ECS Cluster and Amazon RDS in a Multi-AZ Deployments configuration. 
+The application heavily uses the RDS instance to process complex read and write database operations. 
+To maintain reliability, availability, and performance, it is necessary to closely monitor how the different processes or threads on a DB instance use the CPU, including the percentage of CPU bandwidth and total memory consumed by each process.
+
+Which of the following is the most suitable solution to monitor the database properly?
+
+Enable Enhanced Monitoring in RDS
+
+Amazon RDS offers a powerful feature known as Enhanced Monitoring, which provides detailed metrics in real-time about the operating system (OS) underlying your database instances. This feature allows users to monitor performance at a granular level through the AWS Management Console or by accessing the Enhanced Monitoring JSON output via CloudWatch Logs. By default, these metrics are retained in CloudWatch Logs for 30 days, but this retention period can be adjusted by modifying the retention settings for the RDSOSMetrics log group in CloudWatch.
+
+
+A global IT company with offices around the world has multiple AWS accounts. To improve efficiency and drive costs down, the Chief Information Officer (CIO) wants to set up a solution that centrally manages their AWS resourcese. This will allow them to procure AWS resources centrally and share resources such as AWS Transit Gateways, AWS License Manager configurations, or Amazon Route 53 Resolver rules across their various accounts.
+
+As the Solutions Architect, which combination of options should you implement in this scenario?
+
+Consolidate AWS Organizations
+Use the AWS Resource Access Manager (RAM) service to easily and securely share your resources with your AWS accounts.
+
+
+WAF operates at Layer 7
+the application layer - it reads HTTP requests, sees the actual SQL in the payload
+
+Study SAA, Drink water, Gym, Python 1 Hour, SAA 4 hour block, Project CRUD 1 Hour
+
+
+A docker application, which is running on an ECS cluster behind a lod balancer
+heavy dynamoDB
+distribute workload evenly and provisioned throughput efficiently
+Currently, the table's write capacity units are unevenly consumed due to key distribution
+
+
+which of the following should be implemented for the dynamodb table?
+
+use partition keys with high-cardinality attributes, which have a large number of distinct values for each item.
+
+Partition key - also called a rang key
+Sort Key - range key
+
+
+I need to examing this question:
+A software development company is using serverless computing with AWS Lambda to build and run applications without having to set up or manage servers. The company has a Lambda function that connects to a MongoDB Atlas, which is a popular Database as a Service (DBaaS) platform, and also uses a third-party API to fetch certain data for its application. One of the developers was instructed to create the environment variables for the MongoDB database hostname, username, and password, as well as the API credentials that will be used by the Lambda function for DEV, SIT, UAT, and PROD environments.
+
+Considering that the Lambda function is storing sensitive database and API credentials, how can this information be secured to prevent other developers on the team, or anyone, from seeing these credentials in plain text? Select the best option that provides maximum security.
+
+There is no need to do anything because, by default, Lambda already encrypts the environment variables using the AWS Key Management Service.
+Create a new AWS KMS key and use it to enable encryption helpers that leverage on AWS Key Management Service to store and encrypt the sensitive information.
+Enable SSL encryption that leverages on AWS CloudHSM to store and encrypt the sensitive information.
+Lambda does not provide encryption for the environment variables. Deploy your code to an Amazon EC2 instance instead.
+Correct
+When you create or update Lambda functions that use environment variables, AWS Lambda encrypts them using the AWS Key Management Service. When your Lambda function is invoked, those values are decrypted and made available to the Lambda code.
+
+The first time you create or update Lambda functions that use environment variables in a region, a default service key is created for you automatically within AWS KMS. This key is used to encrypt environment variables. However, if you wish to use encryption helpers and use KMS to encrypt environment variables after your Lambda function is created, you must create your own AWS KMS key and choose it instead of the default key. The default key will give errors when chosen. Creating your own key gives you more flexibility, including the ability to create, rotate, disable, and define access controls, and to audit the encryption keys used to protect your data.
+
+Create a new KMS key and use it to enable encryption helpers that leverage on AWS Key Management Service to store and encrypt the sensitive information.
+
+Hence, the correct answer is: Create a new AWS KMS key and use it to enable encryption helpers that leverage on AWS Key Management Service to store and encrypt the sensitive information.
+
+The option that says: There is no need to do anything because, by default, Lambda already encrypts the environment variables using the AWS Key Management Service is incorrect. Although Lambda encrypts the environment variables in your function by default, the sensitive information would still be visible to other users who have access to the Lambda console. This is because Lambda uses a default KMS key to encrypt the variables, which is usually accessible by other users. The best option in this scenario is to use encryption helpers to secure your environment variables.
+
+The option that says: Enable SSL encryption that leverages on AWS CloudHSM to store and encrypt the sensitive information is also incorrect since enabling SSL would encrypt data only when in-transit. Your other teams would still be able to view the plaintext at-rest. Typically, AWS KMS is the recommended choice for encrypting sensitive data at rest.
+
+The option that says: Lambda does not provide encryption for the environment variables. Deploy your code to an Amazon EC2 instance instead is incorrect since, as mentioned, Lambda does provide encryption functionality of environment variables.
+
+
